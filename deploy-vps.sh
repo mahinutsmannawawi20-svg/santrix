@@ -53,7 +53,23 @@ else
     echo "Node.js already installed."
 fi
 
-# ===== 7. CLONE REPOSITORY =====
+# ===== 7. INSTALL PHPMYADMIN (OPTIONAL) =====
+echo "🗃️ Installing phpMyAdmin..."
+if ! command -v phpmyadmin &> /dev/null; then
+    # Pre-configure debconf for non-interactive install
+    export DEBIAN_FRONTEND=noninteractive
+    echo "phpmyadmin phpmyadmin/dbconfig-install boolean true" | debconf-set-selections
+    echo "phpmyadmin phpmyadmin/app-password-confirm password $DB_PASSWORD" | debconf-set-selections
+    echo "phpmyadmin phpmyadmin/mysql/admin-pass password $DB_PASSWORD" | debconf-set-selections
+    echo "phpmyadmin phpmyadmin/mysql/app-pass password $DB_PASSWORD" | debconf-set-selections
+    echo "phpmyadmin phpmyadmin/reconfigure-webserver multiselect none" | debconf-set-selections
+
+    apt install phpmyadmin -y
+else
+    echo "phpMyAdmin already installed."
+fi
+
+# ===== 8. CLONE REPOSITORY =====
 echo "📥 Setting up repository..."
 cd /var/www
 if [ ! -d "dashboard-riyadlul-huda" ]; then
@@ -67,7 +83,7 @@ fi
 
 cd dashboard-riyadlul-huda
 
-# ===== 8. INSTALL DEPENDENCIES =====
+# ===== 9. INSTALL DEPENDENCIES =====
 echo "📚 Installing PHP dependencies..."
 composer install --no-dev --optimize-autoloader
 
@@ -75,21 +91,36 @@ echo "📦 Installing Node dependencies & building assets..."
 npm install
 npm run build
 
-# ===== 9. CONFIGURE LARAVEL =====
+# ===== 10. CONFIGURE LARAVEL =====
 echo "⚙️ Configuring Laravel..."
 if [ ! -f .env ]; then
     cp .env.example .env
     php artisan key:generate
-    echo "⚠️  PLEASE EDIT .env FILE WITH DATABASE CREDENTIALS!"
+    # Auto configure DB in .env if config vars are set
+    sed -i "s/DB_DATABASE=laravel/DB_DATABASE=riyadlul_huda/" .env
+    sed -i "s/DB_USERNAME=root/DB_USERNAME=admin/" .env
+    sed -i "s/DB_PASSWORD=/DB_PASSWORD=$DB_PASSWORD/" .env
+    sed -i "s/APP_URL=http:\/\/localhost/APP_URL=http:\/\/$DOMAIN/" .env
 fi
 
-# ===== 10. SET PERMISSIONS =====
+# ===== 11. AUTOMATE DATABASE SETUP =====
+echo "🗄️ Setting up Database & User..."
+mysql -e "CREATE DATABASE IF NOT EXISTS riyadlul_huda;"
+mysql -e "CREATE USER IF NOT EXISTS 'admin'@'localhost' IDENTIFIED BY '$DB_PASSWORD';"
+mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'admin'@'localhost' WITH GRANT OPTION;"
+mysql -e "FLUSH PRIVILEGES;"
+
+# Run migrations automatically
+echo "🔄 Running migrations..."
+php artisan migrate --seed --force
+
+# ===== 12. SET PERMISSIONS =====
 echo "🔐 Setting permissions..."
 chown -R www-data:www-data /var/www/dashboard-riyadlul-huda
 chmod -R 755 /var/www/dashboard-riyadlul-huda
 chmod -R 775 storage bootstrap/cache
 
-# ===== 11. CREATE NGINX CONFIG =====
+# ===== 13. CREATE NGINX CONFIG =====
 echo "📝 Creating Nginx config..."
 cat > /etc/nginx/sites-available/dashboard-riyadlul-huda << EOF
 server {
@@ -105,6 +136,23 @@ server {
 
     location / {
         try_files \$uri \$uri/ /index.php?\$query_string;
+    }
+
+    # PHPMYADMIN CONFIGURATION
+    location /phpmyadmin {
+        root /usr/share/;
+        index index.php index.html index.htm;
+        location ~ ^/phpmyadmin/(.+\.php)$ {
+            try_files \$uri =404;
+            root /usr/share/;
+            fastcgi_pass unix:/var/run/php/php8.2-fpm.sock;
+            fastcgi_index index.php;
+            fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
+            include fastcgi_params;
+        }
+        location ~* ^/phpmyadmin/(.+\.(jpg|jpeg|gif|css|png|js|ico|html|xml|txt))$ {
+            root /usr/share/;
+        }
     }
 
     location = /favicon.ico { access_log off; log_not_found off; }
@@ -133,24 +181,19 @@ echo "✅ ============================================="
 echo "✅ DEPLOYMENT COMPLETE!"
 echo "✅ ============================================="
 echo ""
+echo "📌 ACCESS INFO:"
+echo "   🌐 Website:    http://$DOMAIN"
+echo "   🗃️ phpMyAdmin: http://$DOMAIN/phpmyadmin"
+echo ""
+echo "📌 CREDENTIALS:"
+echo "   Database User: admin"
+echo "   Database Pass: $DB_PASSWORD"
+echo ""
+echo "   Admin Login:   admin@riyadlulhuda.com"
+echo "   Admin Pass:    password"
+echo ""
 echo "📌 NEXT STEPS:"
-echo "1. Setup Database:"
-echo "   sudo mysql -u root"
-echo "   CREATE DATABASE riyadlul_huda;"
-echo "   CREATE USER 'admin'@'localhost' IDENTIFIED BY '$DB_PASSWORD';"
-echo "   GRANT ALL PRIVILEGES ON riyadlul_huda.* TO 'admin'@'localhost';"
-echo "   FLUSH PRIVILEGES;"
-echo "   EXIT;"
-echo ""
-echo "2. Edit .env file:"
-echo "   nano /var/www/dashboard-riyadlul-huda/.env"
-echo "   (Set DB_DATABASE=riyadlul_huda, DB_USERNAME=admin, DB_PASSWORD=$DB_PASSWORD)"
-echo ""
-echo "3. Run Migrations:"
-echo "   cd /var/www/dashboard-riyadlul-huda"
-echo "   php artisan migrate --seed"
-echo ""
-echo "4. Setup SSL (HTTPS):"
-echo "   apt install certbot python3-certbot-nginx"
-echo "   certbot --nginx -d $DOMAIN"
+echo "   1. Setup SSL (HTTPS):"
+echo "      apt install certbot python3-certbot-nginx"
+echo "      certbot --nginx -d $DOMAIN"
 echo ""
