@@ -25,6 +25,7 @@ class Santri extends Model
         'gender',
         'is_active',
         'tanggal_masuk',
+        'virtual_account_number',
     ];
     
     protected $casts = [

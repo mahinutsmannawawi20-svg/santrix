@@ -19,6 +19,12 @@
     </a>
 </li>
 <li class="sidebar-menu-item">
+    <a href="<?php echo e(route('sekretaris.kartu-digital')); ?>" class="sidebar-menu-link <?php echo e(request()->routeIs('sekretaris.kartu-digital*') ? 'active' : ''); ?>">
+        <i data-feather="credit-card" class="sidebar-menu-icon"></i>
+        <span>Kartu Digital</span>
+    </a>
+</li>
+<li class="sidebar-menu-item">
     <a href="<?php echo e(route('sekretaris.mutasi-santri')); ?>" class="sidebar-menu-link <?php echo e(request()->routeIs('sekretaris.mutasi-santri*') ? 'active' : ''); ?>">
         <i data-feather="repeat" class="sidebar-menu-icon"></i>
         <span>Mutasi Santri</span>

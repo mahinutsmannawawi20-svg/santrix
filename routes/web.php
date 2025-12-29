@@ -269,3 +269,18 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/pengaturan/user/{id}', [App\Http\Controllers\AdminController::class, 'updateUser'])->name('admin.pengaturan.user.update');
     Route::delete('/pengaturan/user/{id}', [App\Http\Controllers\AdminController::class, 'deleteUser'])->name('admin.pengaturan.user.delete');
 });
+
+// Kartu Digital Routes
+Route::middleware(['auth', 'role:sekretaris'])->prefix('sekretaris')->name('sekretaris.')->group(function () {
+    Route::get('/kartu-digital', [App\Http\Controllers\KartuDigitalController::class, 'index'])->name('kartu-digital');
+    Route::get('/kartu-digital/{id}/download', [App\Http\Controllers\KartuDigitalController::class, 'downloadPdf'])->name('kartu-digital.download');
+    Route::get('/kartu-digital/{id}/preview', [App\Http\Controllers\KartuDigitalController::class, 'previewPdf'])->name('kartu-digital.preview');
+});
+
+// Midtrans Routes
+Route::middleware('auth')->group(function () {
+    Route::post('/santri/{santri}/generate-va', [App\Http\Controllers\MidtransController::class, 'generateVa'])->name('santri.generate-va');
+    Route::post('/santri/generate-va-bulk', [App\Http\Controllers\MidtransController::class, 'generateVaBulk'])->name('santri.generate-va-bulk');
+});
+
+Route::post('/midtrans/webhook', [App\Http\Controllers\MidtransController::class, 'webhook'])->name('midtrans.webhook');
