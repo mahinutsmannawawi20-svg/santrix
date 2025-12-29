@@ -4,9 +4,9 @@
 # =====================================================
 
 # CONFIGURATION
-DOMAIN="your-domain.com"     # 🔴 GANTI INI
-VPS_IP="your-vps-ip"         # 🔴 GANTI INI
-DB_PASSWORD="your-db-password" # 🔴 GANTI INI
+DOMAIN="riyadlulhuda.my.id"  # ✅ DOMAIN SUDAH DISET
+VPS_IP="109.111.53.245"      # ✅ IP SUDAH DISET
+DB_PASSWORD="buat_password_db_baru" # 🔴 GANTI DENGAN PASSWORD BARU
 
 set -e  # Exit on any error
 
@@ -97,6 +97,7 @@ if [ ! -f .env ]; then
     cp .env.example .env
     php artisan key:generate
     # Auto configure DB in .env if config vars are set
+    sed -i "s/APP_NAME=Laravel/APP_NAME=\"Dashboard Riyadlul Huda\"/" .env
     sed -i "s/DB_DATABASE=laravel/DB_DATABASE=riyadlul_huda/" .env
     sed -i "s/DB_USERNAME=root/DB_USERNAME=admin/" .env
     sed -i "s/DB_PASSWORD=/DB_PASSWORD=$DB_PASSWORD/" .env
