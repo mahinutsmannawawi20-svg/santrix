@@ -376,14 +376,41 @@ class BendaharaController extends Controller
         if ($validated['is_lunas']) {
             try {
                 $telegram = new \App\Services\TelegramService();
-                $santri = Santri::find($validated['santri_id']);
+                $santri = Santri::with(['kelas', 'asrama'])->find($validated['santri_id']);
                 $bulanNama = ['', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 
                               'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
                 
+                // Calculate remaining arrears (sisa tunggakan)
+                $biayaBulanan = 500000;
+                $startDate = $santri->tanggal_masuk ?? $santri->created_at;
+                $endDate = now();
+                $allMonths = [];
+                $current = $startDate->copy()->startOfMonth();
+                while ($current <= $endDate) {
+                    $allMonths[] = $current->month . '-' . $current->year;
+                    $current->addMonth();
+                }
+                $paidMonths = Syahriah::where('santri_id', $santri->id)
+                    ->where('is_lunas', true)
+                    ->get()
+                    ->map(fn($item) => $item->bulan . '-' . $item->tahun)
+                    ->toArray();
+                $unpaidCount = 0;
+                foreach ($allMonths as $monthKey) {
+                    if (!in_array($monthKey, $paidMonths)) {
+                        $unpaidCount++;
+                    }
+                }
+                $sisaTunggakan = $unpaidCount * $biayaBulanan;
+                
                 $telegram->notifyPaymentReceived([
                     'nama_santri' => $santri->nama_santri ?? '-',
+                    'gender' => ucfirst($santri->gender ?? '-'),
+                    'kelas' => $santri->kelas->nama_kelas ?? '-',
+                    'asrama' => $santri->asrama->nama_asrama ?? '-',
                     'jumlah' => $validated['nominal'],
                     'keterangan' => "SPP {$bulanNama[$validated['bulan']]} {$validated['tahun']}",
+                    'sisa_tunggakan' => $sisaTunggakan,
                 ]);
             } catch (\Exception $e) {
                 \Log::warning('Telegram notification failed: ' . $e->getMessage());

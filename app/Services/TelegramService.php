@@ -80,11 +80,16 @@ class TelegramService
     public function notifyPaymentReceived(array $payment): bool
     {
         $amount = number_format($payment['jumlah'], 0, ',', '.');
+        $sisaTunggakan = isset($payment['sisa_tunggakan']) ? number_format($payment['sisa_tunggakan'], 0, ',', '.') : '0';
         
         $message = "💰 <b>PEMBAYARAN DITERIMA</b>\n\n";
         $message .= "📛 Santri: <b>{$payment['nama_santri']}</b>\n";
+        $message .= "👤 Gender: {$payment['gender']}\n";
+        $message .= "🏫 Kelas: {$payment['kelas']}\n";
+        $message .= "🏠 Asrama: {$payment['asrama']}\n";
         $message .= "💵 Jumlah: Rp {$amount}\n";
         $message .= "📝 Keterangan: {$payment['keterangan']}\n";
+        $message .= "💳 Sisa Tunggakan: Rp {$sisaTunggakan}\n";
         $message .= "📅 Tanggal: " . now()->format('d M Y H:i');
 
         return $this->sendMessage($message);
