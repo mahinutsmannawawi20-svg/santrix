@@ -182,10 +182,10 @@ class MidtransController extends Controller
         if (!$nis) return;
 
         $santri = Santri::where('nis', $nis)->first();
-        if (!$santri) {
-            Log::error("Midtrans Success for Unknown Santri NIS: $nis");
-            return;
-        }
+        if (!$santri) return;
+
+        // Common Data
+        $adminGroupId = env('FONNTE_ADMIN_GROUP_ID');
 
         // SMART PAYMENT LOGIC: Find oldest unpaid month
         $unpaidMonth = Syahriah::where('santri_id', $santri->id)
@@ -194,9 +194,6 @@ class MidtransController extends Controller
             ->orderBy('bulan', 'asc')
             ->first();
 
-        // Prepare Common Data
-        $adminGroupId = env('FONNTE_ADMIN_GROUP_ID');
-        
         if ($unpaidMonth) {
             // Mark as Paid
             $unpaidMonth->update([
@@ -209,41 +206,53 @@ class MidtransController extends Controller
             $monthName = \Carbon\Carbon::create()->month($unpaidMonth->bulan)->translatedFormat('F');
             $year = $unpaidMonth->tahun;
 
-            // 1. TELEGRAM NOTIFICATION (Admin Group)
+            // Calculate Remaining Arrears for Notification
+            $remainingArrearsCount = Syahriah::where('santri_id', $santri->id)->where('is_lunas', false)->count();
+            $arrearsInfo = "";
+            if ($remainingArrearsCount > 0) {
+                $totalArrears = Syahriah::where('santri_id', $santri->id)->where('is_lunas', false)->sum('nominal'); // approximation if nominal not set defined via relational default
+                // Better fallback if nominal is 0 in DB:
+                 $totalArrears = $remainingArrearsCount * 500000; // Assumption or need fetch
+                $arrearsInfo = "⚠️ Masih ada tunggakan $remainingArrearsCount bulan lagi.";
+            } else {
+                $arrearsInfo = "✅ Alhamdulillah lunas, tidak ada tunggakan.";
+            }
+
+            // 1. TELEGRAM (Admin Group)
             $telegramMsg = "✅ **PEMBAYARAN DITERIMA**\n\n";
             $telegramMsg .= "Santri: **{$santri->nama_santri}**\n";
             $telegramMsg .= "Bulan: **{$monthName} {$year}**\n";
             $telegramMsg .= "Nominal: Rp " . number_format($amount, 0, ',', '.') . "\n";
-            $telegramMsg .= "Status: **LUNAS**\n";
             $this->telegramService->sendMessage($telegramMsg);
             
-            // 2. WHATSAPP NOTIFICATION (Parent - Japri)
+            // 2. WHATSAPP (Parent - Japri Kuitansi)
             if ($santri->no_hp_ortu_wali) {
                 $this->fonnteService->notifyPaymentSuccess(
                     $santri->no_hp_ortu_wali, 
                     $santri->nama_santri, 
                     $amount, 
                     $monthName, 
-                    $year
+                    $year,
+                    $arrearsInfo
                 );
             }
 
-            // 3. WHATSAPP NOTIFICATION (Admin Group)
+            // 3. WHATSAPP (Admin Group - Laporan)
             if ($adminGroupId) {
-                $waAdminMsg = "*PEMBAYARAN DITERIMA* ✅\n\n";
-                $waAdminMsg .= "👤 Santri: *$santri->nama_santri*\n";
-                $waAdminMsg .= "📅 Bulan: *$monthName $year*\n";
-                $waAdminMsg .= "💰 Nominal: *Rp " . number_format($amount, 0, ',', '.') . "*\n";
-                $waAdminMsg .= "✓ Status: *LUNAS*\n\n";
-                $waAdminMsg .= "_Info Keuangan Riyadlul Huda_";
-                
-                $this->fonnteService->sendMessage($adminGroupId, $waAdminMsg);
+                $this->fonnteService->notifyAdminReport(
+                    $adminGroupId,
+                    $santri->nama_santri,
+                    $amount,
+                    $monthName,
+                    $year,
+                    'LUNAS'
+                );
             }
             
             Log::info("Payment Processed for Santri $nis - Month $monthName $year");
 
         } else {
-            // NO ARREARS -> ADVANCE PAYMENT
+            // ADVANCE PAYMENT
             $lastBill = Syahriah::where('santri_id', $santri->id)
                 ->orderBy('tahun', 'desc')
                 ->orderBy('bulan', 'desc')
@@ -276,34 +285,35 @@ class MidtransController extends Controller
 
             $monthName = \Carbon\Carbon::create()->month($nextMonth)->translatedFormat('F');
 
-            // 1. TELEGRAM NOTIFICATION
+            // 1. TELEGRAM
             $telegramMsg = "🌟 **PEMBAYARAN DEPOSIT (ADVANCE)**\n\n";
             $telegramMsg .= "Santri: **{$santri->nama_santri}**\n";
             $telegramMsg .= "Alokasi: **{$monthName} {$nextYear}**\n";
             $telegramMsg .= "Nominal: Rp " . number_format($amount, 0, ',', '.') . "\n";
             $this->telegramService->sendMessage($telegramMsg);
 
-            // 2. WHATSAPP NOTIFICATION (Parent)
+            // 2. WHATSAPP (Parent)
             if ($santri->no_hp_ortu_wali) {
-                $this->fonnteService->notifyPaymentSuccess(
+                 $this->fonnteService->notifyPaymentSuccess(
                     $santri->no_hp_ortu_wali, 
                     $santri->nama_santri, 
                     $amount, 
                     $monthName, 
-                    $nextYear
+                    $nextYear,
+                    "🌟 Dialokasikan untuk bulan depan (Advance)."
                 );
             }
 
-            // 3. WHATSAPP NOTIFICATION (Admin Group)
+            // 3. WHATSAPP (Admin Group)
             if ($adminGroupId) {
-                $waAdminMsg = "*PEMBAYARAN DEPOSIT (ADVANCE)* 🌟\n\n";
-                $waAdminMsg .= "👤 Santri: *$santri->nama_santri*\n";
-                $waAdminMsg .= "📅 Alokasi: *$monthName $nextYear*\n";
-                $waAdminMsg .= "💰 Nominal: *Rp " . number_format($amount, 0, ',', '.') . "*\n";
-                $waAdminMsg .= "✓ Status: *TERSIMPAN*\n\n";
-                $waAdminMsg .= "_Info Keuangan Riyadlul Huda_";
-
-                $this->fonnteService->sendMessage($adminGroupId, $waAdminMsg);
+                 $this->fonnteService->notifyAdminReport(
+                    $adminGroupId,
+                    $santri->nama_santri,
+                    $amount,
+                    $monthName,
+                    $nextYear,
+                    'ADVANCE / DEPOSIT'
+                );
             }
 
             Log::info("Advance Payment for Santri $nis - $monthName $nextYear");

@@ -55,46 +55,62 @@ class FonnteService
     }
 
     /**
-     * Send payment notification to parent
+     * Send payment notification to parent (Format: Kuitansi Resmi - Sopan)
      */
-    public function notifyPaymentSuccess($targetPhone, $santriName, $amount, $monthName, $year)
+    public function notifyPaymentSuccess($targetPhone, $santriName, $amount, $monthName, $year, $arrearsInfo = null)
     {
         $formattedAmount = number_format($amount, 0, ',', '.');
         
-        $message = "*PEMBAYARAN DITERIMA* ✅\n\n";
-        $message .= "Terima kasih, pembayaran syahriah telah kami terima dengan detail berikut:\n\n";
-        $message .= "👤 Nama: $santriName\n";
-        $message .= "📅 Bulan: $monthName $year\n";
-        $message .= "💰 Nominal: Rp $formattedAmount\n";
-        $message .= "✓ Status: LUNAS\n\n";
-        $message .= "_Pesan otomatis dari Sistem Informasi Riyadlul Huda_";
+        $message = "🏛️ BUKTI PEMBAYARAN SYAHRIAH\n\n";
+        $message .= "Terima kasih, pembayaran Syahriah telah kami terima.\n\n";
+        $message .= "👤 Data Santri\n";
+        $message .= "Nama   : $santriName\n";
+        // $message .= "Kelas  : [Kelas]\n"; // Optional if data passed
+        
+        $message .= "\n💰 Rincian Pembayaran\n";
+        $message .= "Bulan  : $monthName $year\n";
+        $message .= "Jumlah : Rp $formattedAmount\n";
+        $message .= "Status : ✅ LUNAS\n\n";
+        
+        if ($arrearsInfo) {
+            $message .= "ℹ️ Info Tagihan\n";
+            $message .= "$arrearsInfo\n\n";
+        }
+        
+        $message .= "_Semoga rezeki Bapak/Ibu semakin berkah. Aamiin._\n";
+        $message .= "📅 " . date('d-m-Y H:i');
 
         return $this->sendMessage($targetPhone, $message);
     }
 
     /**
-     * Send deposit notification to parent
+     * Send payment report to Admin Group (Format: Laporan Tegas - To The Point)
      */
-    public function notifyDepositSuccess($targetPhone, $santriName, $amount)
+    public function notifyAdminReport($targetGroup, $santriName, $amount, $monthName, $year, $status = 'LUNAS')
     {
         $formattedAmount = number_format($amount, 0, ',', '.');
         
-        $message = "*PEMBAYARAN DITERIMA (DEPOSIT)* 💰\n\n";
-        $message .= "Pembayaran diterima kami simpan sebagai saldo/deposit (karena tidak ada tagihan tertunggak):\n\n";
-        $message .= "👤 Nama: $santriName\n";
-        $message .= "💰 Nominal: Rp $formattedAmount\n";
-        $message .= "✓ Status: TERSIMPAN\n\n";
-        $message .= "_Pesan otomatis dari Sistem Informasi Riyadlul Huda_";
+        $message = "📥 LAPORAN PEMBAYARAN SYAHRIAH\n\n";
+        $message .= "Telah diterima pembayaran dari:\n";
+        $message .= "👤 $santriName\n";
+        // $message .= "🏠 [Kelas] - [Asrama]\n";
+        
+        $message .= "\n💰 Rp $formattedAmount\n";
+        $message .= "📅 Alokasi: $monthName $year\n";
+        $message .= "✓ Status: $status\n\n";
+        
+        $message .= "Via: Midtrans Virtual Account\n";
+        $message .= "⏰ " . date('d-m-Y H:i');
 
-        return $this->sendMessage($targetPhone, $message);
+        return $this->sendMessage($targetGroup, $message);
     }
-    
+
     /**
      * Send generic notification
      */
     public function notify($target, $title, $body)
     {
-        $message = "*$title*\n\n$body";
+        $message = "📢 $title\n\n$body";
         return $this->sendMessage($target, $message);
     }
 }
