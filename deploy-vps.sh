@@ -22,11 +22,16 @@ apt install nginx -y
 systemctl enable nginx
 systemctl start nginx
 
-# ===== 3. INSTALL MYSQL =====
-echo "🗄️ Installing MySQL..."
-apt install mysql-server -y
-systemctl enable mysql
-systemctl start mysql
+# ===== 3. CHECK DATABASE =====
+echo "🗄️ Checking Database Service..."
+if ! command -v mysql &> /dev/null; then
+    echo "Installing MariaDB Server..."
+    apt install mariadb-server -y
+    systemctl enable mariadb
+    systemctl start mariadb
+else
+    echo "✅ Database server already installed."
+fi
 
 # ===== 4. INSTALL PHP 8.2 =====
 echo "🐘 Installing PHP 8.2..."
