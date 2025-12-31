@@ -269,12 +269,8 @@ Route::prefix('pendidikan')->middleware(['auth', 'role:pendidikan'])->group(func
 |--------------------------------------------------------------------------
 */
 
-// Admin Routes
+// Admin Routes (Settings/Pengaturan only - Dashboard moved to line 60)
 Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('admin.dashboard');
-    
     // Settings/Pengaturan
     Route::get('/pengaturan', [App\Http\Controllers\AdminController::class, 'pengaturan'])->name('admin.pengaturan');
     Route::post('/pengaturan/app', [App\Http\Controllers\AdminController::class, 'updateAppSettings'])->name('admin.pengaturan.app');
