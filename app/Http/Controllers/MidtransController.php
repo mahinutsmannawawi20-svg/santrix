@@ -194,7 +194,7 @@ class MidtransController extends Controller
             $monthName = \Carbon\Carbon::create()->month($unpaidMonth->bulan)->translatedFormat('F');
             $year = $unpaidMonth->tahun;
 
-            // SMART NOTIFICATION
+            // SMART NOTIFICATION (TAGIHAN)
             $message = "✅ **PEMBAYARAN DITERIMA**\n\n";
             $message .= "Terima kasih, pembayaran Syahriah untuk:\n";
             $message .= "Santri: **{$santri->nama_santri}**\n";
@@ -203,17 +203,21 @@ class MidtransController extends Controller
             $message .= "Status: **LUNAS**\n\n";
             $message .= "_Pesan otomatis Dashboard Riyadlul Huda_";
 
-            // Send to Admin/Bendahara (Assuming ID stored in env or fixed chat ID)
             $this->telegramService->sendMessage($message);
-            
-            // Send to Wali (if configured)
-            // $this->telegramService->sendMessageToWali($santri->no_hp_ortu_wali, $message); 
-            // Note: Wali messages usually require whatsapp gateway, for Telegram bot users need to start bot first.
             
             Log::info("Payment Processed for Santri $nis - Month $monthName $year");
         } else {
-            Log::info("Payment Received for Santri $nis but NO Arrears found. Money kept in Balance (Not Implemented yet).");
-            // Could insert into a 'Deposit' table here
+            // NOTIFICATION (DEPOSIT / LEBIH BAYAR)
+            $message = "💰 **PEMBAYARAN DITERIMA (DEPOSIT)**\n\n";
+            $message .= "Pembayaran diterima tetapi tidak ada tagihan tertunggak:\n";
+            $message .= "Santri: **{$santri->nama_santri}**\n";
+            $message .= "Nominal: Rp " . number_format($amount, 0, ',', '.') . "\n";
+            $message .= "Keterangan: Disimpan sebagai saldo/deposit.\n\n";
+            $message .= "_Pesan otomatis Dashboard Riyadlul Huda_";
+
+            $this->telegramService->sendMessage($message);
+
+            Log::info("Payment Received for Santri $nis but NO Arrears found. Notification sent.");
         }
     }
 }
