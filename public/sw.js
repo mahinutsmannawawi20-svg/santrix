@@ -1,35 +1,36 @@
-// Service Worker for Dashboard Riyadlul Huda
-// Version 1.0.0
+// Service Worker for Riyadlul Huda PWA
+// Version: 2.0.0 - Offline Support
 
-const CACHE_NAME = 'riyadlul-huda-v1';
-const urlsToCache = [
+const CACHE_NAME = 'riyadlul-huda-v2';
+const OFFLINE_URL = '/offline.html';
+
+// Assets to cache for offline use
+const STATIC_ASSETS = [
     '/',
+    '/offline.html',
     '/css/design-system.css',
     '/css/navigation.css',
-    '/js/realtime.js',
-    '/js/modal.js',
-    '/js/rupiah-format.js',
-    '/images/logo.png',
-    '/manifest.json'
+    '/css/mobile.css',
+    '/images/logo-yayasan.png',
+    '/manifest.json',
+    'https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap',
+    'https://unpkg.com/feather-icons'
 ];
 
-// Install Service Worker
+// Install event - cache static assets
 self.addEventListener('install', (event) => {
     console.log('[SW] Installing Service Worker...');
     event.waitUntil(
         caches.open(CACHE_NAME)
             .then((cache) => {
-                console.log('[SW] Caching app shell');
-                return cache.addAll(urlsToCache);
+                console.log('[SW] Caching static assets');
+                return cache.addAll(STATIC_ASSETS);
             })
-            .catch((err) => {
-                console.log('[SW] Cache failed:', err);
-            })
+            .then(() => self.skipWaiting())
     );
-    self.skipWaiting();
 });
 
-// Activate Service Worker
+// Activate event - clean old caches
 self.addEventListener('activate', (event) => {
     console.log('[SW] Activating Service Worker...');
     event.waitUntil(
@@ -42,71 +43,88 @@ self.addEventListener('activate', (event) => {
                     }
                 })
             );
-        })
+        }).then(() => self.clients.claim())
     );
-    return self.clients.claim();
 });
 
-// Fetch Strategy: Network First, fallback to Cache
+// Fetch event - serve from cache, fallback to network
 self.addEventListener('fetch', (event) => {
+    // Skip non-GET requests
+    if (event.request.method !== 'GET') {
+        return;
+    }
+
+    // Skip API requests (always go to network)
+    if (event.request.url.includes('/api/')) {
+        return;
+    }
+
     event.respondWith(
-        fetch(event.request)
-            .then((response) => {
-                // Clone the response
-                const responseClone = response.clone();
+        caches.match(event.request)
+            .then((cachedResponse) => {
+                // Return cached version if available
+                if (cachedResponse) {
+                    // Fetch new version in background (stale-while-revalidate)
+                    event.waitUntil(
+                        fetch(event.request)
+                            .then((response) => {
+                                if (response && response.status === 200) {
+                                    const responseClone = response.clone();
+                                    caches.open(CACHE_NAME)
+                                        .then((cache) => cache.put(event.request, responseClone));
+                                }
+                            })
+                            .catch(() => {}) // Ignore network errors during background update
+                    );
+                    return cachedResponse;
+                }
 
-                // Cache the fetched response
-                caches.open(CACHE_NAME).then((cache) => {
-                    cache.put(event.request, responseClone);
-                });
-
-                return response;
-            })
-            .catch(() => {
-                // If network fails, try cache
-                return caches.match(event.request).then((response) => {
-                    if (response) {
+                // Try network first for non-cached requests
+                return fetch(event.request)
+                    .then((response) => {
+                        // Cache successful responses
+                        if (response && response.status === 200) {
+                            const responseClone = response.clone();
+                            caches.open(CACHE_NAME)
+                                .then((cache) => cache.put(event.request, responseClone));
+                        }
                         return response;
-                    }
-
-                    // If not in cache, return offline page
-                    if (event.request.mode === 'navigate') {
-                        return caches.match('/');
-                    }
-                });
+                    })
+                    .catch(() => {
+                        // If offline and request is for a page, show offline page
+                        if (event.request.destination === 'document') {
+                            return caches.match(OFFLINE_URL);
+                        }
+                        return new Response('Offline', { status: 503 });
+                    });
             })
     );
 });
 
-// Background Sync (optional - for future use)
-self.addEventListener('sync', (event) => {
-    if (event.tag === 'sync-data') {
-        console.log('[SW] Background sync triggered');
-        // Implement sync logic here
+// Handle push notifications (for future use)
+self.addEventListener('push', (event) => {
+    if (event.data) {
+        const data = event.data.json();
+        const options = {
+            body: data.body,
+            icon: '/images/logo-yayasan.png',
+            badge: '/images/logo-yayasan.png',
+            vibrate: [100, 50, 100],
+            data: {
+                url: data.url || '/'
+            }
+        };
+
+        event.waitUntil(
+            self.registration.showNotification(data.title, options)
+        );
     }
 });
 
-// Push Notifications (optional - for future use)
-self.addEventListener('push', (event) => {
-    const data = event.data ? event.data.json() : {};
-    const title = data.title || 'Dashboard Riyadlul Huda';
-    const options = {
-        body: data.body || 'Anda memiliki notifikasi baru',
-        icon: '/icons/icon-192x192.png',
-        badge: '/icons/icon-192x192.png',
-        vibrate: [200, 100, 200],
-        data: data.url || '/'
-    };
-
-    event.waitUntil(
-        self.registration.showNotification(title, options)
-    );
-});
-
-// Notification Click Handler
+// Handle notification click
 self.addEventListener('notificationclick', (event) => {
     event.notification.close();
     event.waitUntil(
-        clients.openWindow(event.notification.data)
+        clients.openWindow(event.notification.data.url)
     );
 });
