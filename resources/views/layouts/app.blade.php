@@ -13,7 +13,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Riyadlul Huda">
     <link rel="manifest" href="/manifest.json">
-    <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
+    <link rel="icon" type="image/png" href="{{ asset('images/logo-yayasan.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('images/logo-yayasan.png') }}">
     
     <!-- CSS -->
     <link rel="stylesheet" href="{{ asset('css/design-system.css') }}">
@@ -241,7 +242,7 @@
     <!-- Sidebar Navigation (Desktop & Tablet) -->
     <aside class="sidebar">
         <div class="sidebar-logo" style="display: flex; align-items: center; gap: 12px;">
-            <img src="{{ asset('images/logo.png') }}" alt="Logo" style="width: 32px; height: 32px;">
+            <img src="{{ asset('images/logo-yayasan.png') }}" alt="Logo" style="width: 32px; height: 32px;">
             <span class="sidebar-logo-text">Riyadlul Huda</span>
         </div>
         

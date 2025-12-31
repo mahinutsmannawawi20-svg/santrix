@@ -147,7 +147,7 @@
         <div class="card">
             
             <!-- LOGO PESANTREN -->
-            <img src="{{ public_path('images/logo-pesantren.png') }}" class="logo-school" alt="Logo">
+            <img src="{{ public_path('images/logo-yayasan.png') }}" class="logo-school" alt="Logo">
 
             <div class="header">
                 <div class="school-name">PONPES RIYADLUL HUDA</div>
