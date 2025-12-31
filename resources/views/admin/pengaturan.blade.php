@@ -1,48 +1,10 @@
 @extends('layouts.app')
 
 @section('title', 'Pengaturan Sistem')
-@section('page-title', 'Pengaturan Sistem - Dashboard Admin')
+@section('page-title', 'Pengaturan Sistem')
 
 @section('sidebar-menu')
-    <li class="sidebar-menu-item">
-        <a href="{{ route('admin.dashboard') }}" class="sidebar-menu-link">
-            <i data-feather="home" class="sidebar-menu-icon"></i>
-            <span>Dashboard</span>
-        </a>
-    </li>
-    <li class="sidebar-menu-item">
-        <a href="{{ route('sekretaris.dashboard') }}" class="sidebar-menu-link">
-            <i data-feather="users" class="sidebar-menu-icon"></i>
-            <span>Sekretaris</span>
-        </a>
-    </li>
-    <li class="sidebar-menu-item">
-        <a href="{{ route('bendahara.dashboard') }}" class="sidebar-menu-link">
-            <i data-feather="dollar-sign" class="sidebar-menu-icon"></i>
-            <span>Bendahara</span>
-        </a>
-    </li>
-    <li class="sidebar-menu-item">
-        <a href="{{ route('pendidikan.dashboard') }}" class="sidebar-menu-link">
-            <i data-feather="book-open" class="sidebar-menu-icon"></i>
-            <span>Pendidikan</span>
-        </a>
-    </li>
-    <li class="sidebar-menu-item">
-        <a href="{{ route('admin.pengaturan') }}" class="sidebar-menu-link active">
-            <i data-feather="settings" class="sidebar-menu-icon"></i>
-            <span>Pengaturan</span>
-        </a>
-    </li>
-    <li class="sidebar-menu-item">
-        <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <button type="submit" class="sidebar-menu-link" style="width: 100%; background: none; border: none; cursor: pointer; text-align: left;">
-                <i data-feather="log-out" class="sidebar-menu-icon"></i>
-                <span>Logout</span>
-            </button>
-        </form>
-    </li>
+    @include('admin.partials.sidebar-menu')
 @endsection
 
 @include('components.bottom-nav', ['active' => 'settings', 'context' => 'admin'])
