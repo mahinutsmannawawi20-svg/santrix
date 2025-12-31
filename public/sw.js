@@ -48,14 +48,25 @@ self.addEventListener('activate', (event) => {
 });
 
 // Fetch event - serve from cache, fallback to network
+// Fetch event - serve from cache, fallback to network
 self.addEventListener('fetch', (event) => {
     // Skip non-GET requests
     if (event.request.method !== 'GET') {
         return;
     }
 
-    // Skip API requests (always go to network)
-    if (event.request.url.includes('/api/')) {
+    const url = new URL(event.request.url);
+
+    // Skip API requests and Admin/Dashboard Routes (Always Network First/Only)
+    // Prevents caching of CSRF tokens in HTML forms
+    if (
+        url.pathname.startsWith('/api/') ||
+        url.pathname === '/login' ||
+        url.pathname.startsWith('/admin') ||
+        url.pathname.startsWith('/bendahara') ||
+        url.pathname.startsWith('/sekretaris') ||
+        url.pathname.startsWith('/pendidikan')
+    ) {
         return;
     }
 
@@ -74,7 +85,7 @@ self.addEventListener('fetch', (event) => {
                                         .then((cache) => cache.put(event.request, responseClone));
                                 }
                             })
-                            .catch(() => {}) // Ignore network errors during background update
+                            .catch(() => { }) // Ignore network errors during background update
                     );
                     return cachedResponse;
                 }
@@ -82,8 +93,13 @@ self.addEventListener('fetch', (event) => {
                 // Try network first for non-cached requests
                 return fetch(event.request)
                     .then((response) => {
-                        // Cache successful responses
-                        if (response && response.status === 200) {
+                        // Cache successful responses ONLY if they are static assets (images, css, js, fonts)
+                        // Do NOT cache HTML documents dynamically to avoid stale CSRF
+                        const contentType = response.headers.get('content-type');
+
+                        if (response && response.status === 200 &&
+                            (contentType && !contentType.includes('text/html'))) {
+
                             const responseClone = response.clone();
                             caches.open(CACHE_NAME)
                                 .then((cache) => cache.put(event.request, responseClone));
