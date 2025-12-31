@@ -4,9 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Traits\LogsActivity;
 
 class NilaiSantri extends Model
 {
+    use LogsActivity;
+    
     protected $table = 'nilai_santri';
     
     protected $fillable = [
