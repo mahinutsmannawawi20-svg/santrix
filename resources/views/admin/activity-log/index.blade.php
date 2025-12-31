@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('title', 'Riwayat Aktivitas')
+@section('page-title', 'Riwayat Aktivitas')
+
+@section('sidebar-menu')
+    @include('admin.partials.sidebar-menu')
+@endsection
 
 @section('content')
 <div style="padding: 24px; max-width: 1400px; margin: 0 auto;">
