@@ -1,8 +1,8 @@
-{{-- Developer Profile Floating Button & Modal --}}
+
 <style>
     .dev-profile-btn {
         position: fixed;
-        bottom: 160px;
+        bottom: 100px;
         right: 20px;
         width: 50px;
         height: 50px;
@@ -235,7 +235,7 @@
     }
 </style>
 
-{{-- Floating Button --}}
+
 <button class="dev-profile-btn" onclick="openDevModal()" title="Developer Profile">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
@@ -243,7 +243,7 @@
     </svg>
 </button>
 
-{{-- Modal --}}
+
 <div class="dev-modal-overlay" id="devModalOverlay" onclick="closeDevModal(event)">
     <div class="dev-modal" onclick="event.stopPropagation()">
         <div class="dev-modal-header">
@@ -253,7 +253,7 @@
                     <line x1="6" y1="6" x2="18" y2="18"></line>
                 </svg>
             </button>
-            <img src="{{ asset('images/developer-photo.jpg') }}" alt="Developer Photo" class="dev-photo">
+            <img src="<?php echo e(asset('images/developer-photo.jpg')); ?>" alt="Developer Photo" class="dev-photo">
             <h3 class="dev-name">Mahin Utsman Nawawi, S.H.</h3>
             <p class="dev-role">Founder & CEO - Velora</p>
         </div>
@@ -348,3 +348,4 @@
         }
     });
 </script>
+<?php /**PATH C:\Users\v\.gemini\antigravity\scratch\dashboard-riyadlul-huda\resources\views\components\developer-profile.blade.php ENDPATH**/ ?>
