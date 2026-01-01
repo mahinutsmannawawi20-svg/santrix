@@ -12,58 +12,58 @@ use App\Http\Controllers\MidtransController;
 */
 
 $centralDomains = config('tenancy.central_domains', []);
-$centralDomainsPattern = implode('|', array_map(function ($domain) {
-    return preg_quote($domain, '/');
-}, $centralDomains));
+$mainDomain = $centralDomains[0] ?? 'santrix.my.id'; 
 
-Route::domain('{central_domain}')
-    ->where(['central_domain' => $centralDomainsPattern])
-    ->group(function () {
-        
-        // Owner Dashboard Routes
-        Route::middleware(['auth', 'owner'])
-            ->prefix('owner')
-            ->name('owner.')
-            ->group(function () {
-                Route::get('/', [App\Http\Controllers\Owner\DashboardController::class, 'index'])->name('dashboard');
-                Route::get('/pesantren', [App\Http\Controllers\Owner\PesantrenController::class, 'index'])->name('pesantren.index');
-                Route::get('/pesantren/{id}', [App\Http\Controllers\Owner\PesantrenController::class, 'show'])->name('pesantren.show');
-                Route::get('/pesantren/{id}/edit', [App\Http\Controllers\Owner\PesantrenController::class, 'edit'])->name('pesantren.edit');
-                Route::put('/pesantren/{id}', [App\Http\Controllers\Owner\PesantrenController::class, 'update'])->name('pesantren.update');
-                Route::post('/pesantren/{id}/suspend', [App\Http\Controllers\Owner\PesantrenController::class, 'suspend'])->name('pesantren.suspend');
-                
-                // Withdrawal
-                // Withdrawal
-                Route::get('/withdrawal', [App\Http\Controllers\Owner\WithdrawalController::class, 'index'])->name('withdrawal.index');
-                Route::put('/withdrawal/{id}', [App\Http\Controllers\Owner\WithdrawalController::class, 'update'])->name('withdrawal.update');
-                
-                // Activity Logs
-                Route::get('/logs', [App\Http\Controllers\Owner\ActivityLogController::class, 'index'])->name('logs');
-            });
+// 1. OWNER SUBDOMAIN (owner.santrix.my.id)
+Route::domain('owner.' . $mainDomain)->group(function () {
+    // Auth Routes
+    Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
+    Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
-        // Landing Page (Public)
-        Route::get('/', function () {
-            // If logged in owner, go to owner dashboard
-            if (Auth::check() && Auth::user()->role === 'owner') {
-                return redirect('/owner');
-            }
-            return view('welcome'); // Or specific landing page
-        })->name('landing');
-
-        // Temporary Test Route
-        Route::get('/landing-test', function () {
-            return view('welcome');
+    // Owner Dashboard Routes
+    Route::middleware(['auth', 'owner'])
+        ->prefix('owner') // Optional prefix, but good for clarity
+        ->name('owner.')
+        ->group(function () {
+            Route::get('/', [App\Http\Controllers\Owner\DashboardController::class, 'index'])->name('dashboard');
+            Route::get('/pesantren', [App\Http\Controllers\Owner\PesantrenController::class, 'index'])->name('pesantren.index');
+            Route::get('/pesantren/{id}', [App\Http\Controllers\Owner\PesantrenController::class, 'show'])->name('pesantren.show');
+            Route::get('/pesantren/{id}/edit', [App\Http\Controllers\Owner\PesantrenController::class, 'edit'])->name('pesantren.edit');
+            Route::put('/pesantren/{id}', [App\Http\Controllers\Owner\PesantrenController::class, 'update'])->name('pesantren.update');
+            Route::post('/pesantren/{id}/suspend', [App\Http\Controllers\Owner\PesantrenController::class, 'suspend'])->name('pesantren.suspend');
+            
+            // Withdrawal
+            Route::get('/withdrawal', [App\Http\Controllers\Owner\WithdrawalController::class, 'index'])->name('withdrawal.index');
+            Route::put('/withdrawal/{id}', [App\Http\Controllers\Owner\WithdrawalController::class, 'update'])->name('withdrawal.update');
+            
+            // Activity Logs
+            Route::get('/logs', [App\Http\Controllers\Owner\ActivityLogController::class, 'index'])->name('logs');
         });
-
-        // Registration Routes (Central)
-        Route::get('/register-pesantren', [App\Http\Controllers\Auth\RegisterTenantController::class, 'showRegistrationForm'])->name('register.tenant');
-        Route::post('/register-pesantren', [App\Http\Controllers\Auth\RegisterTenantController::class, 'register'])->name('register.tenant.store');
-        
-        // Auth Routes for Central
-        Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
-        Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
-        Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
+    
+    // Redirect root to owner dashboard if logged in, else login
+    Route::get('/', function() {
+        return Auth::check() ? redirect()->route('owner.dashboard') : redirect()->route('login');
     });
+});
+
+// 2. MAIN LANDING DOMAIN (santrix.my.id)
+Route::domain($mainDomain)->group(function () use ($mainDomain) {
+    // Landing Page (Public) - Dynamic Data
+    Route::get('/', [App\Http\Controllers\LandingController::class, 'index'])->name('landing');
+
+    // Registration Routes (Central)
+    Route::get('/register-pesantren', [App\Http\Controllers\Auth\RegisterTenantController::class, 'showRegistrationForm'])->name('register.tenant');
+    Route::post('/register-pesantren', [App\Http\Controllers\Auth\RegisterTenantController::class, 'register'])->name('register.tenant.store');
+    
+    // Redirect Login to Owner Domain
+    Route::get('/login', function() use ($mainDomain) {
+        return redirect()->to('https://owner.' . $mainDomain . '/login');
+    })->name('login.redirect');
+    
+    // Auth Routes for Central (Logout Only)
+    Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout.redirect');
+});
 
 /*
 |--------------------------------------------------------------------------
