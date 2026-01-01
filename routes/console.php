@@ -38,3 +38,14 @@ Schedule::command('calendar:reminders')
     ->onFailure(function () {
         Log::error('❌ Calendar reminders failed (afternoon)');
     });
+
+// Trial Account Cleanup - runs daily at midnight to delete expired unpaid accounts
+Schedule::command('trial:cleanup')
+    ->daily()
+    ->at('00:00')
+    ->onSuccess(function () {
+        Log::info('✅ Trial account cleanup completed');
+    })
+    ->onFailure(function () {
+        Log::error('❌ Trial account cleanup failed');
+    });

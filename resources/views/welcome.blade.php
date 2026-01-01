@@ -53,7 +53,7 @@
 
                 <!-- CTA Button -->
                 <div class="hidden md:flex items-center gap-4">
-                    <a href="{{ route('register.tenant') }}" class="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-full transition-all shadow-lg hover:shadow-indigo-500/30 transform hover:-translate-y-0.5">
+                    <a href="#pricing" class="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-full transition-all shadow-lg hover:shadow-indigo-500/30 transform hover:-translate-y-0.5">
                         Daftar Sekarang
                     </a>
                 </div>
@@ -75,7 +75,7 @@
                 <a href="#pricing" class="block px-3 py-2 text-base font-medium text-slate-600 hover:text-indigo-600 hover:bg-slate-50 rounded-md">Harga</a>
                 <a href="#contact" class="block px-3 py-2 text-base font-medium text-slate-600 hover:text-indigo-600 hover:bg-slate-50 rounded-md">Kontak</a>
                 <div class="pt-4 mt-4 border-t border-slate-100">
-                    <a href="{{ route('register.tenant') }}" class="block w-full text-center px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700">
+                    <a href="#pricing" class="block w-full text-center px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700">
                         Daftar Sekarang
                     </a>
                 </div>
@@ -223,7 +223,7 @@
                         @endforeach
                     </ul>
 
-                    <a href="{{ route('register.tenant') }}" class="w-full py-4 rounded-xl font-bold text-center transition-all {{ $plan['is_featured'] ? 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg hover:shadow-indigo-500/30' : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200' }}">
+                    <a href="{{ route('register.tenant', ['package' => $plan['id']]) }}" class="w-full py-4 rounded-xl font-bold text-center transition-all {{ $plan['is_featured'] ? 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg hover:shadow-indigo-500/30' : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200' }}">
                         {{ $plan['button_text'] }}
                     </a>
                 </div>
