@@ -193,7 +193,7 @@
                 <p class="text-slate-500 text-lg">Harga transparan, sesuai dengan database billing sistem kami.</p>
             </div>
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
                 @foreach($plans as $plan)
                 <div class="relative bg-white rounded-3xl p-8 border {{ $plan['is_featured'] ? 'border-indigo-600 shadow-2xl scale-105 z-10' : 'border-slate-100 shadow-lg' }} flex flex-col h-full transition-transform hover:-translate-y-2">
                     
