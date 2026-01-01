@@ -25,7 +25,7 @@
 
 <div class="print-header">
     <h3>Laporan Status Keuangan Santri</h3>
-    <h2>Riyadlul Huda</h2>
+    <h2>{{ tenant_name() }}</h2>
     <p>{{ now()->format('d F Y H:i') }}</p>
 </div>
 
@@ -60,9 +60,9 @@
                     $message .= "Kami informasikan bahwa terdapat *tunggakan Syahriah* yang belum terbayarkan:\n\n";
                     $message .= "📅 *Bulan:* {$bulanList}\n";
                     $message .= "💰 *Total Tunggakan:* Rp " . number_format($totalTunggakan, 0, ',', '.') . "\n\n";
-                    $message .= "Mohon untuk dapat melunasi pembayaran melalui Bendahara Pondok Pesantren Riyadlul Huda.\n\n";
+                    $message .= "Mohon untuk dapat melunasi pembayaran melalui Bendahara " . tenant_name() . ".\n\n";
                     $message .= "Jazakumullahu Khairan.\n";
-                    $message .= "_Bendahara PP Riyadlul Huda_";
+                    $message .= "_Bendahara " . tenant_name() . "_";
                     
                     $waLink = "https://wa.me/{$phone}?text=" . urlencode($message);
                 @endphp

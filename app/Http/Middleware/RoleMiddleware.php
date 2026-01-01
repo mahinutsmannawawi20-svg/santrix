@@ -18,13 +18,13 @@ class RoleMiddleware
     {
         // Check if user is authenticated
         if (!Auth::check()) {
-            return redirect()->route('login');
+            return redirect('/login');
         }
 
         $user = Auth::user();
         
         // Admin is super user - can access everything
-        if ($user->role === 'admin') {
+        if ($user->role === 'admin' || $user->role === 'admin_pusat') {
             return $next($request);
         }
         
@@ -35,7 +35,7 @@ class RoleMiddleware
                 'pendidikan' => redirect()->route('pendidikan.dashboard'),
                 'sekretaris' => redirect()->route('sekretaris.dashboard'),
                 'bendahara' => redirect()->route('bendahara.dashboard'),
-                default => redirect()->route('login'),
+                default => redirect('/login'),
             };
         }
 

@@ -11,13 +11,28 @@ use Illuminate\Support\Facades\Validator;
 class AdminController extends Controller
 {
     /**
+     * Display dashboard page
+     */
+    public function dashboard()
+    {
+        return view('admin.dashboard');
+    }
+
+    /**
      * Display settings page
      */
     public function pengaturan()
     {
-        $users = User::orderBy('created_at', 'desc')->get();
+        // Only show users from the SAME pesantren
+        $users = User::where('pesantren_id', Auth::user()->pesantren_id)
+                     ->orderBy('created_at', 'desc')
+                     ->get();
+                     
+        // Fetch Kelas and Asrama for the current tenant
+        $kelas_list = \App\Models\Kelas::withCount('santri')->orderBy('tingkat')->orderBy('nama_kelas')->get();
+        $asrama_list = \App\Models\Asrama::withCount(['santri', 'kobong'])->get();
         
-        return view('admin.pengaturan', compact('users'));
+        return view('admin.pengaturan', compact('users', 'kelas_list', 'asrama_list'));
     }
 
     /**
@@ -53,22 +68,33 @@ class AdminController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:6',
-            'role' => 'required|in:admin,sekretaris,bendahara,pendidikan',
+            'password' => 'required|string|min:8',
+            'role' => 'required|in:admin_pusat,sekretaris,bendahara,pendidikan',
+        ], [
+            'password.min' => 'Password minimal harus 8 karakter.',
+            'email.unique' => 'Email ini sudah terdaftar.',
+            'email.required' => 'Email wajib diisi.',
+            'name.required' => 'Nama wajib diisi.',
         ]);
 
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+            return redirect()->back()->withErrors($validator)->withInput()->with('tab', 'users');
         }
 
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => $request->role,
-        ]);
+        try {
+            User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'role' => $request->role,
+                'pesantren_id' => Auth::user()->pesantren_id,
+            ]);
 
-        return redirect()->route('admin.pengaturan')->with('success', 'User berhasil ditambahkan!');
+            return redirect()->route('admin.pengaturan')->with('success', 'User berhasil ditambahkan!')->with('tab', 'users');
+        } catch (\Exception $e) {
+            \Log::error('Gagal membuat user: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Terjadi kesalahan sistem: ' . $e->getMessage())->withInput()->with('tab', 'users');
+        }
     }
 
     /**
@@ -82,11 +108,11 @@ class AdminController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $id,
             'password' => 'nullable|string|min:6',
-            'role' => 'required|in:admin,sekretaris,bendahara,pendidikan',
+            'role' => 'required|in:admin_pusat,sekretaris,bendahara,pendidikan',
         ]);
 
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+            return redirect()->back()->withErrors($validator)->withInput()->with('tab', 'users');
         }
 
         $user->name = $request->name;
@@ -99,7 +125,7 @@ class AdminController extends Controller
         
         $user->save();
 
-        return redirect()->route('admin.pengaturan')->with('success', 'User berhasil diperbarui!');
+        return redirect()->route('admin.pengaturan')->with('success', 'User berhasil diperbarui!')->with('tab', 'users');
     }
 
     /**
@@ -111,11 +137,181 @@ class AdminController extends Controller
         
         // Prevent deleting own account
         if ($user->id === Auth::id()) {
-            return redirect()->back()->with('error', 'Tidak dapat menghapus akun sendiri!');
+            return redirect()->back()->with('error', 'Tidak dapat menghapus akun sendiri!')->with('tab', 'users');
         }
 
         $user->delete();
 
-        return redirect()->route('admin.pengaturan')->with('success', 'User berhasil dihapus!');
+        return redirect()->route('admin.pengaturan')->with('success', 'User berhasil dihapus!')->with('tab', 'users');
+    }
+
+    // ==================== KELAS MANAGEMENT ====================
+
+    public function storeKelas(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'nama_kelas' => 'required|string|max:255',
+            'tingkat' => 'required|string|max:255',
+            'kapasitas' => 'required|integer|min:1',
+            'tahun_ajaran' => 'nullable|string|max:20',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput()->with('tab', 'kelas-asrama');
+        }
+
+        \App\Models\Kelas::create([
+            'nama_kelas' => $request->nama_kelas,
+            'tingkat' => $request->tingkat,
+            'kapasitas' => $request->kapasitas,
+            'tahun_ajaran' => $request->tahun_ajaran ?? date('Y') . '/' . (date('Y') + 1),
+            // Default level to 0 or derive from tingkat if possible, but keep simple for now
+            'level' => 0, 
+        ]);
+
+        return redirect()->route('admin.pengaturan')->with('success', 'Kelas berhasil ditambahkan!')->with('tab', 'kelas-asrama');
+    }
+
+    public function updateKelas(Request $request, $id)
+    {
+        $kelas = \App\Models\Kelas::findOrFail($id);
+
+        $validator = Validator::make($request->all(), [
+            'nama_kelas' => 'required|string|max:255',
+            'tingkat' => 'required|string|max:255',
+            'kapasitas' => 'required|integer|min:1',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput()->with('tab', 'kelas-asrama');
+        }
+
+        $kelas->update([
+            'nama_kelas' => $request->nama_kelas,
+            'tingkat' => $request->tingkat,
+            'kapasitas' => $request->kapasitas,
+        ]);
+
+        return redirect()->route('admin.pengaturan')->with('success', 'Kelas berhasil diperbarui!')->with('tab', 'kelas-asrama');
+    }
+
+    public function deleteKelas($id)
+    {
+        $kelas = \App\Models\Kelas::findOrFail($id);
+        
+        if ($kelas->santri()->count() > 0) {
+            return redirect()->back()->with('error', 'Gagal menghapus kelas. Masih ada santri di kelas ini.')->with('tab', 'kelas-asrama');
+        }
+
+        $kelas->delete();
+
+        return redirect()->route('admin.pengaturan')->with('success', 'Kelas berhasil dihapus!')->with('tab', 'kelas-asrama');
+    }
+
+    // ==================== ASRAMA MANAGEMENT ====================
+
+    public function storeAsrama(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'nama_asrama' => 'required|string|max:255',
+            'gender' => 'required|in:putra,putri',
+            'jumlah_kamar' => 'required|integer|min:1|max:50',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput()->with('tab', 'kelas-asrama');
+        }
+
+        $asrama = \App\Models\Asrama::create([
+            'nama_asrama' => $request->nama_asrama,
+            'gender' => $request->gender,
+        ]);
+
+        // Auto-generate Kobong (Kamar)
+        for ($i = 1; $i <= $request->jumlah_kamar; $i++) {
+            \App\Models\Kobong::create([
+                'asrama_id' => $asrama->id,
+                'nama_kobong' => 'Kamar ' . $i,
+                'kapasitas' => 20, // Default capacity
+            ]);
+        }
+
+        return redirect()->route('admin.pengaturan')->with('success', 'Asrama dan kamar berhasil dibuat!')->with('tab', 'kelas-asrama');
+    }
+
+    public function updateAsrama(Request $request, $id)
+    {
+        $asrama = \App\Models\Asrama::findOrFail($id);
+
+        $validator = Validator::make($request->all(), [
+            'nama_asrama' => 'required|string|max:255',
+            'gender' => 'required|in:putra,putri',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput()->with('tab', 'kelas-asrama');
+        }
+
+        $asrama->update([
+            'nama_asrama' => $request->nama_asrama,
+            'gender' => $request->gender,
+        ]);
+
+        return redirect()->route('admin.pengaturan')->with('success', 'Asrama berhasil diperbarui!')->with('tab', 'kelas-asrama');
+    }
+
+    public function deleteAsrama($id)
+    {
+        $asrama = \App\Models\Asrama::findOrFail($id);
+        
+        // Check if any santri is assigned to this asrama
+        if ($asrama->santri()->count() > 0) {
+            return redirect()->back()->with('error', 'Gagal menghapus asrama. Masih ada santri di asrama ini.')->with('tab', 'kelas-asrama');
+        }
+
+        // Check if any kobong has santri (if santri linked to kobong too)
+        // Assuming santri -> asrama + kobong check:
+        // Delete all kobong first
+        $asrama->kobong()->delete();
+        $asrama->delete();
+
+        return redirect()->route('admin.pengaturan')->with('success', 'Asrama berhasil dihapus!')->with('tab', 'kelas-asrama');
+    }
+
+    public function storeKobong(Request $request, $asrama_id)
+    {
+        $asrama = \App\Models\Asrama::findOrFail($asrama_id);
+
+        $validator = Validator::make($request->all(), [
+            'nama_kobong' => 'required|string|max:255',
+            'kapasitas' => 'required|integer|min:1',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput()->with('tab', 'kelas-asrama');
+        }
+
+        \App\Models\Kobong::create([
+            'asrama_id' => $asrama->id,
+            'nama_kobong' => $request->nama_kobong,
+            'kapasitas' => $request->kapasitas,
+        ]);
+
+        return redirect()->route('admin.pengaturan')->with('success', 'Kamar berhasil ditambahkan!')->with('tab', 'kelas-asrama');
+    }
+
+    public function deleteKobong($id)
+    {
+        $kobong = \App\Models\Kobong::findOrFail($id);
+        
+        // Check if santri linked to this kobong
+        // Assuming Santri model has kobong_id
+        if (\App\Models\Santri::where('kobong_id', $id)->count() > 0) {
+            return redirect()->back()->with('error', 'Gagal menghapus kamar. Masih ada santri di kamar ini.')->with('tab', 'kelas-asrama');
+        }
+
+        $kobong->delete();
+
+        return redirect()->route('admin.pengaturan')->with('success', 'Kamar berhasil dihapus!')->with('tab', 'kelas-asrama');
     }
 }

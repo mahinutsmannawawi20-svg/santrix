@@ -59,6 +59,21 @@
         </div>
     @endif
 
+    <!-- Welcome Banner for Pendidikan -->
+    <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); border-radius: 16px; padding: 24px 32px; margin-bottom: 24px; box-shadow: 0 10px 30px rgba(79, 172, 254, 0.3); position: relative; overflow: hidden;">
+        <div style="position: absolute; top: -30px; right: -30px; width: 120px; height: 120px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+        <div style="position: absolute; bottom: -40px; left: 40%; width: 80px; height: 80px; background: rgba(255,255,255,0.05); border-radius: 50%;"></div>
+        <div style="display: flex; align-items: center; gap: 16px; position: relative; z-index: 1;">
+            <div style="background: rgba(255,255,255,0.2); width: 56px; height: 56px; border-radius: 12px; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px);">
+                <i data-feather="book-open" style="width: 28px; height: 28px; color: white;"></i>
+            </div>
+            <div>
+                <h2 style="font-size: 1.5rem; font-weight: 700; color: white; margin: 0 0 4px 0;">Assalamualaikum {{ ucwords(str_replace('_', ' ', auth()->user()->role)) }} {{ auth()->user()->pesantren->nama ?? '' }}</h2>
+                <p style="color: rgba(255,255,255,0.9); font-size: 0.875rem; margin: 0;">Kelola Akademik, Nilai, dan Absensi Santri.</p>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Sticky Header and Filter Container -->
     <div class="filter-sticky">

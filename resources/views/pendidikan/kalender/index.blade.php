@@ -155,7 +155,7 @@
                                             "&text=" . urlencode($event->judul) .
                                             "&dates=" . $startDate . "/" . $endDate .
                                             "&details=" . urlencode($event->deskripsi ?? '') .
-                                            "&location=" . urlencode("Pondok Pesantren Riyadlul Huda");
+                                            "&location=" . urlencode(tenant_name());
                                     @endphp
                                     <a href="{{ $gcalUrl }}" target="_blank" style="background: #dcfce7; color: #16a34a; border: none; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; text-decoration: none;"
                                             title="Tambah ke Google Calendar"

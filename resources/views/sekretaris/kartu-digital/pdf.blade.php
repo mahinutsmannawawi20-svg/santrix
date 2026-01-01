@@ -150,7 +150,7 @@
             <img src="{{ public_path('images/logo-yayasan.png') }}" class="logo-school" alt="Logo">
 
             <div class="header">
-                <div class="school-name">PONPES RIYADLUL HUDA</div>
+                <div class="school-name">{{ strtoupper(tenant_name()) }}</div>
                 <div class="card-title">Kartu Syahriah Digital</div>
             </div>
 

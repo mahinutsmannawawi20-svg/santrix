@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Dashboard Riyadlul Huda</title>
+    <title>Login - SANTRIX</title>
     <link rel="icon" href="{{ asset('favicon.ico') }}">
     <script src="https://unpkg.com/feather-icons"></script>
     <style>
@@ -443,7 +443,9 @@
                     <i data-feather="home" style="width: 32px; height: 32px;"></i>
                 </div>
                 <h1 class="login-title">Selamat Datang</h1>
-                <p class="login-subtitle">Dashboard Riyadlul Huda</p>
+                <p class="login-subtitle" style="font-size: 1.1rem; color: #4a5568; margin-bottom: 8px;">
+                    {{ $pesantren_nama ?? 'Sistem Manajemen Pesantren Modern' }}
+                </p>
             </div>
 
             @if ($errors->any())
@@ -452,7 +454,7 @@
                 </div>
             @endif
 
-            <form method="POST" action="{{ route('login') }}">
+            <form method="POST" action="{{ url('/login') }}">
                 @csrf
                 <div class="form-group">
                     <label class="form-label" for="email">Email</label>
@@ -470,14 +472,20 @@
 
                 <div class="form-group">
                     <label class="form-label" for="password">Password</label>
-                    <input 
-                        type="password" 
-                        id="password" 
-                        name="password" 
-                        class="form-input" 
-                        placeholder="••••••••"
-                        required
-                    >
+                    <div style="position: relative;">
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password" 
+                            class="form-input" 
+                            placeholder="••••••••"
+                            required
+                            style="padding-right: 40px;"
+                        >
+                        <button type="button" onclick="toggleLoginPassword()" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: #a0aec0; display: flex; align-items: center; justify-content: center;">
+                            <i data-feather="eye" id="toggleIcon" style="width: 20px; height: 20px;"></i>
+                        </button>
+                    </div>
                 </div>
 
                 <button type="submit" class="btn-login">
@@ -500,6 +508,23 @@
 
     <script>
         feather.replace();
+
+        function toggleLoginPassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('toggleIcon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                // Switch to eye-off icon
+                toggleIcon.innerHTML = `<polyline points="17.94 17.94 24 24 0.94 0.94 7.03 7.03"></polyline><path d="M22.73 17.3a13.3 13.3 0 0 0 1.94-3.8c-2.3-5.5-7.8-9.4-14.3-9.4a13.2 13.2 0 0 0-3.6.5"></path><path d="M1 1l22 22"></path><path d="M9.9 4.24a9.12 9.12 0 0 1 2.55-.23 13.26 13.26 0 0 1 10.22 5.39"></path>`;
+                toggleIcon.classList.add('feather-eye-off');
+            } else {
+                passwordInput.type = 'password';
+                // Switch to eye icon
+                toggleIcon.innerHTML = `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>`;
+                toggleIcon.classList.remove('feather-eye-off');
+            }
+        }
     </script>
 </body>
 </html>

@@ -24,10 +24,24 @@
         }
         
         .header {
-            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
             margin-bottom: 15px;
             border-bottom: 3px solid #000;
             padding-bottom: 10px;
+        }
+        
+        .header .logo {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+        }
+        
+        .header .header-text {
+            text-align: center;
+            flex: 1;
         }
         
         .header h1 {
@@ -164,11 +178,21 @@
 
     <!-- Header -->
     <div class="header">
-        <h1>Pondok Pesantren Riyadlul Huda</h1>
-        <h2>Rekapitulasi Nilai Ujian</h2>
-        <p>Kelas: {{ $kelas->nama_kelas }} | Semester: {{ $semester == 1 ? 'Ganjil' : 'Genap' }} | Tahun Ajaran: {{ $tahunAjaran }}</p>
-        @if($gender && $gender !== 'all')
-            <p style="font-style: italic;">Filter: {{ ucfirst($gender) }}</p>
+        <img src="{{ tenant_logo() }}" class="logo" alt="Logo Pesantren">
+        
+        <div class="header-text">
+            <h1>{{ tenant_name() }}</h1>
+            <h2>Rekapitulasi Nilai Ujian</h2>
+            <p>Kelas: {{ $kelas->nama_kelas }} | Semester: {{ $semester == 1 ? 'Ganjil' : 'Genap' }} | Tahun Ajaran: {{ $tahunAjaran }}</p>
+            @if($gender && $gender !== 'all')
+                <p style="font-style: italic;">Filter: {{ ucfirst($gender) }}</p>
+            @endif
+        </div>
+        
+        @if(tenant()->logo_pendidikan_url)
+            <img src="{{ tenant()->logo_pendidikan_url }}" class="logo" alt="Logo Pendidikan">
+        @else
+            <img src="{{ tenant_logo() }}" class="logo" alt="Logo">
         @endif
     </div>
 

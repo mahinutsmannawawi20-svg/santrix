@@ -3,13 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Traits\BelongsToPesantren;
 
 class Kobong extends Model
 {
+    use BelongsToPesantren;
     protected $table = 'kobong';
     
     protected $fillable = [
-        'asrama_id',
+        'pesantren_id',
+        'nama_kobong',
         'nomor_kobong',
     ];
     

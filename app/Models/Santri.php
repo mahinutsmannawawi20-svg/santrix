@@ -4,14 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\LogsActivity;
+use App\Models\Traits\BelongsToPesantren;
 
 class Santri extends Model
 {
-    use LogsActivity;
+    use LogsActivity, BelongsToPesantren;
     
     protected $table = 'santri';
     
     protected $fillable = [
+        'pesantren_id',
         'nis',
         'nama_santri',
         'negara',

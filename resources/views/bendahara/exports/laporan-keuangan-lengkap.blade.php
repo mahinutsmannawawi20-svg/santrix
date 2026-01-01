@@ -100,7 +100,7 @@
 
     <p style="margin-top: 30px; text-align: center; font-size: 12px; color: #666;">
         Dicetak pada: {{ now()->format('d/m/Y H:i:s') }}<br>
-        Yayasan Pondok Pesantren Riyadlul Huda
+        {{ tenant()->nama ?? 'Yayasan Pondok Pesantren' }}
     </p>
 </body>
 </html>

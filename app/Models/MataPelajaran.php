@@ -4,16 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Traits\BelongsToPesantren;
 use App\Traits\LogsActivity;
 
 class MataPelajaran extends Model
 {
+    use BelongsToPesantren;
     use LogsActivity;
     
     protected $table = 'mata_pelajaran';
     
     protected $fillable = [
-        'nama_mapel',
+        'pesantren_id',
+        'nama_pelajaran',
         'kode_mapel',
         'kategori',
         'guru_pengampu',

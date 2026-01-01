@@ -36,7 +36,7 @@
 
 @section('drawer-menu')
     <li class="drawer-menu-item">
-        <form method="POST" action="{{ route('logout') }}">
+        <form method="POST" action="{{ route('tenant.logout') }}">
             @csrf
             <button type="submit" class="drawer-menu-link" style="width: 100%; background: none; border: none; cursor: pointer; text-align: left;">
                 <i data-feather="log-out"></i>
@@ -71,8 +71,8 @@
                 <i data-feather="briefcase" style="width: 28px; height: 28px; color: white;"></i>
             </div>
             <div>
-                <h2 style="font-size: 1.5rem; font-weight: 700; color: white; margin: 0 0 4px 0;">Dashboard Sekretaris</h2>
-                <p style="color: rgba(255,255,255,0.9); font-size: 0.875rem; margin: 0;">Kelola Data Santri, Asrama, dan Mutasi</p>
+                <h2 style="font-size: 1.5rem; font-weight: 700; color: white; margin: 0 0 4px 0;">Assalamualaikum {{ ucwords(str_replace('_', ' ', auth()->user()->role)) }} {{ auth()->user()->pesantren->nama ?? '' }}</h2>
+                <p style="color: rgba(255,255,255,0.9); font-size: 0.875rem; margin: 0;">Kelola Data Santri, Asrama, dan Mutasi dengan mudah.</p>
             </div>
         </div>
     </div>

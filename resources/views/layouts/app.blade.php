@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Dashboard') - Riyadlul Huda</title>
+    <title>@yield('title', 'Dashboard') - SANTRIX</title>
     
     <!-- CSS -->
     <link rel="stylesheet" href="{{ asset('css/design-system.css') }}">
@@ -196,6 +196,10 @@
     </style>
     
     @stack('styles')
+    
+    <!-- Load compiled assets (including Turbo) -->
+    @vite(['resources/js/app.js'])
+
     <!-- Currency Formatter Script -->
     <script>
         document.addEventListener('turbo:load', function() {
@@ -232,15 +236,8 @@
     <!-- Sidebar Navigation (Desktop & Tablet) -->
     <aside class="sidebar">
         <div class="sidebar-logo" style="display: flex; align-items: center; gap: 12px;">
-            <img src="{{ asset('images/logo-yayasan.png') }}" alt="Logo" style="width: 32px; height: 32px;">
-            <span class="sidebar-logo-text">Riyadlul Huda</span>
-        </div>
-        
-        <div style="padding: 16px 0;">
-            <a href="{{ route('backup.download') }}" class="backup-btn" title="Download Database Backup (Realtime)">
-                <i data-feather="database" style="width: 14px; height: 14px;"></i>
-                <span>Backup Data</span>
-            </a>
+            <img src="{{ tenant_logo() }}" alt="Logo" style="width: 32px; height: 32px; object-fit: contain;">
+            <span class="sidebar-logo-text">SANTRIX</span>
         </div>
         
         <ul class="sidebar-menu" style="list-style: none; padding: 0;">
@@ -250,7 +247,7 @@
         <!-- Bottom Sidebar Info -->
         <div style="position: absolute; bottom: 0; width: 100%; padding: 24px; border-top: 1px solid rgba(255,255,255,0.05);">
             <div style="font-size: 12px; color: #718096;">
-                &copy; {{ date('Y') }} Riyadlul Huda
+                &copy; {{ date('Y') }} SANTRIX
                 <br>
                 <span style="opacity: 0.6;">Ver 2.0.0 (Aesthetic)</span>
             </div>
@@ -522,10 +519,7 @@
     <script src="{{ asset('js/modal.js') }}"></script>
     <script src="{{ asset('js/rupiah-format.js') }}"></script>
     <script>
-        feather.replace();
-        document.addEventListener('turbo:load', function() {
-            feather.replace();
-        });
+        // Loading indicator for Turbo
         document.addEventListener('turbo:before-visit', function() {
             document.body.style.cursor = 'wait';
         });

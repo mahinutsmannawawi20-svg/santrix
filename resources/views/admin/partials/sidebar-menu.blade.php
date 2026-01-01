@@ -16,6 +16,24 @@
         <span>Pengaturan</span>
     </a>
 </li>
+<li class="sidebar-menu-item">
+    <a href="{{ route('admin.billing.index') }}" class="sidebar-menu-link {{ request()->routeIs('admin.billing.*') ? 'active' : '' }}">
+        <i data-feather="credit-card" class="sidebar-menu-icon"></i>
+        <span>Billing & Langganan</span>
+    </a>
+</li>
+<li class="sidebar-menu-item">
+    <a href="{{ route('admin.withdrawal.index') }}" class="sidebar-menu-link {{ request()->routeIs('admin.withdrawal.*') ? 'active' : '' }}">
+        <i data-feather="download" class="sidebar-menu-icon"></i>
+        <span>Tarik Dana</span>
+    </a>
+</li>
+<li class="sidebar-menu-item">
+    <a href="{{ route('admin.settings.pesantren') }}" class="sidebar-menu-link {{ request()->routeIs('admin.settings.pesantren*') ? 'active' : '' }}">
+        <i data-feather="image" class="sidebar-menu-icon"></i>
+        <span>Branding Pesantren</span>
+    </a>
+</li>
 
 <li class="sidebar-menu-item" style="margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.1);">
     <span style="font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #64748b; padding: 0 16px;">Akses Modul</span>
@@ -47,7 +65,7 @@
 </li>
 
 <li class="sidebar-menu-item" style="margin-top: 8px;">
-    <form method="POST" action="{{ route('logout') }}">
+    <form method="POST" action="{{ route('tenant.logout') }}">
         @csrf
         <button type="submit" class="sidebar-menu-link" style="width: 100%; background: none; border: none; cursor: pointer; text-align: left;">
             <i data-feather="log-out" class="sidebar-menu-icon"></i>

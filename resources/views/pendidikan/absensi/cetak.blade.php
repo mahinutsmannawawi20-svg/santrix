@@ -31,7 +31,7 @@
 
     <div class="header">
         <h1>LAPORAN ABSENSI SANTRI</h1>
-        <p>RIYADLUL HUDA</p>
+        <p>{{ strtoupper(tenant_name()) }}</p>
         <p>Periode: 
             @if(request('tahun')) Tahun {{ request('tahun') }} @endif
             @if(request('minggu_ke')) Minggu Ke-{{ request('minggu_ke') }} @endif

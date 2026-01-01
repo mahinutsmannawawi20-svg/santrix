@@ -80,7 +80,7 @@
         <div style="font-size: 13px; color: white; font-weight: 600;">{{ auth()->user()->name }}</div>
         <div style="font-size: 11px; color: rgba(255,255,255,0.7);">{{ auth()->user()->email }}</div>
     </div>
-    <form method="POST" action="{{ route('logout') }}" style="margin: 0;">
+    <form method="POST" action="{{ route('tenant.logout') }}" style="margin: 0;">
         @csrf
         <button type="submit" class="sidebar-menu-link" style="width: 100%; text-align: left; background: none; border: none; cursor: pointer; color: #ff6b6b;">
             <i data-feather="log-out" class="sidebar-menu-icon"></i>

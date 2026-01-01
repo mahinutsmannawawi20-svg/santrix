@@ -273,7 +273,7 @@
                                     } elseif (substr($phone, 0, 2) !== '62') {
                                         $phone = '62' . $phone;
                                     }
-                                    $msg = "Assalamu'alaikum Wr. Wb.\n\nYth. Wali dari Ananda *{$item['santri']->nama_santri}*\nNIS: {$item['santri']->nis}\nKelas: " . ($item['santri']->kelas->nama_kelas ?? '-') . "\n\nKami informasikan bahwa terdapat *tunggakan Syahriah* sebanyak {$item['unpaid_months']} bulan.\n\n💰 *Total Tunggakan:* Rp " . number_format($item['total_arrears'], 0, ',', '.') . "\n\nMohon dapat melunasi melalui Bendahara PP Riyadlul Huda.\n\nJazakumullahu Khairan.\n_Bendahara PP Riyadlul Huda_";
+                                    $msg = "Assalamu'alaikum Wr. Wb.\\n\\nYth. Wali dari Ananda *{$item['santri']->nama_santri}*\\nNIS: {$item['santri']->nis}\\nKelas: " . ($item['santri']->kelas->nama_kelas ?? '-') . "\\n\\nKami informasikan bahwa terdapat *tunggakan Syahriah* sebanyak {$item['unpaid_months']} bulan.\\n\\n💰 *Total Tunggakan:* Rp " . number_format($item['total_arrears'], 0, ',', '.') . "\\n\\nMohon dapat melunasi melalui Bendahara " . tenant_name() . ".\\n\\nJazakumullahu Khairan.\\n_Bendahara " . tenant_name() . "_";
                                     $waUrl = "https://wa.me/{$phone}?text=" . urlencode($msg);
                                 @endphp
                                 <a href="{{ $waUrl }}" target="_blank" style="background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); color: white; border: none; padding: 8px 12px; border-radius: 8px; font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 4px; text-decoration: none;" title="Kirim Tagihan via WhatsApp">

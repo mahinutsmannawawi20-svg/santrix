@@ -142,9 +142,18 @@ class MidtransController extends Controller
         }
 
         // 2. Log Transaction to payment_gateway table
-        // Extract NIS from Order ID (Format: SPP-NIS-TIMESTAMP)
+        // Extract Data from Order ID (Format: SPP-PESANTREN_ID-NIS-TIMESTAMP)
         $parts = explode('-', $orderId);
-        $nis = isset($parts[1]) ? $parts[1] : null;
+        
+        $nis = null;
+        if (count($parts) >= 4) {
+             // New Format
+             $pesantrenId = $parts[1];
+             $nis = $parts[2];
+        } else {
+             // Fallback/Legacy Format (SPP-NIS-TIMESTAMP)
+             $nis = isset($parts[1]) ? $parts[1] : null;
+        }
 
         // Store log
         DB::table('payment_gateway')->updateOrInsert(
@@ -184,6 +193,14 @@ class MidtransController extends Controller
         $santri = Santri::where('nis', $nis)->first();
         if (!$santri) return;
 
+        // CRITICAL: Update Saldo Pesantren (Advance Funding Logic)
+        if ($santri->pesantren) {
+             // Only if package is advance/enterprise? Or update all anyway?
+             // Better update all, logic withdrawal restricts based on package.
+             $santri->pesantren->increment('saldo_pg', $amount);
+             Log::info("Saldo PG Updated for Pesantren {$santri->pesantren_id}: +{$amount}");
+        }
+
         // Common Data
         $adminGroupId = env('FONNTE_ADMIN_GROUP_ID');
 
@@ -210,7 +227,6 @@ class MidtransController extends Controller
             $remainingArrearsCount = Syahriah::where('santri_id', $santri->id)->where('is_lunas', false)->count();
             $arrearsInfo = "";
             if ($remainingArrearsCount > 0) {
-                $totalArrears = Syahriah::where('santri_id', $santri->id)->where('is_lunas', false)->sum('nominal'); // approximation if nominal not set defined via relational default
                 // Better fallback if nominal is 0 in DB:
                  $totalArrears = $remainingArrearsCount * 500000; // Assumption or need fetch
                 $arrearsInfo = "⚠️ Masih ada tunggakan $remainingArrearsCount bulan lagi.";

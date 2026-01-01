@@ -54,7 +54,7 @@
         </a>
     </li>
     <li class="drawer-menu-item">
-        <form method="POST" action="{{ route('logout') }}">
+        <form method="POST" action="{{ route('tenant.logout') }}">
             @csrf
             <button type="submit" class="drawer-menu-link" style="width: 100%; background: none; border: none; cursor: pointer; text-align: left;">
                 <i data-feather="log-out"></i>
@@ -238,7 +238,7 @@
                 <i data-feather="briefcase" style="width: 32px; height: 32px; color: white;"></i>
             </div>
             <div>
-                <h2 style="font-size: 1.875rem; font-weight: 800; margin: 0 0 6px 0; letter-spacing: -0.025em;">Selamat Datang, {{ auth()->user()->name }} 👋</h2>
+                <h2 style="font-size: 1.875rem; font-weight: 800; margin: 0 0 6px 0; letter-spacing: -0.025em;">Assalamualaikum {{ ucwords(str_replace('_', ' ', auth()->user()->role)) }} {{ auth()->user()->pesantren->nama ?? '' }} 👋</h2>
                 <p style="opacity: 0.9; font-size: 1.05rem; font-weight: 400; margin: 0;">Dashboard Bendahara - Kelola keuangan pesantren dengan transparan dan akuntabel.</p>
             </div>
         </div>
@@ -310,6 +310,24 @@
                     </h3>
                 </div>
             </div>
+        </div>
+
+        <!-- Saldo Payment Gateway (NEW) -->
+        <div style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); border-radius: 16px; padding: 16px; box-shadow: 0 10px 20px rgba(139, 92, 246, 0.2); transition: transform 0.3s ease; position: relative; overflow: hidden; cursor: help;" onmouseover="this.style.transform='translateY(-5px)';" onmouseout="this.style.transform='translateY(0)';" title="Dana ini ada di sistem Midtrans/Payment Gateway. Hubungi Owner untuk pencairan.">
+             <div style="position: absolute; top: -10px; right: -10px; width: 60px; height: 60px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+            <div style="display: flex; flex-direction: column; gap: 8px; position: relative; z-index: 1;">
+                <div style="width: 36px; height: 36px; background: rgba(255,255,255,0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.3);">
+                    <i data-feather="cloud-lightning" style="width: 18px; height: 18px; color: white;"></i>
+                </div>
+                <div>
+                     <p style="font-size: 10px; color: rgba(255,255,255,0.9); font-weight: 700; margin-bottom: 2px; text-transform: uppercase;">Saldo Payment Gateway</p>
+                    <h3 style="font-size: 1.1rem; font-weight: 800; color: white; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                        Rp {{ number_format($saldoPaymentGateway, 0, ',', '.') }}
+                    </h3>
+                    <p style="font-size: 10px; color: rgba(255,255,255,0.8); margin-top: 4px; font-weight: 500;">*Perlu dicairkan Owner</p>
+                </div>
+            </div>
+             <i data-feather="lock" style="position: absolute; right: -10px; bottom: -10px; width: 80px; height: 80px; color: rgba(255,255,255,0.1);"></i>
         </div>
 
         <!-- Total Pemasukan -->

@@ -58,8 +58,8 @@ class MidtransService
      */
     public function createTransaction($santri, $nominal = 505000)
     {
-        // Unique Order ID per transaction attempt
-        $orderId = 'SPP-' . $santri->nis . '-' . time();
+        // Unique Order ID per transaction attempt (Prefix with Pesantren ID to avoid collision)
+        $orderId = 'SPP-' . $santri->pesantren_id . '-' . $santri->nis . '-' . time();
 
         $params = [
             'payment_type' => 'bank_transfer',

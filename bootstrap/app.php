@@ -11,9 +11,18 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->alias([
-            'role' => \App\Http\Middleware\RoleMiddleware::class,
+        $middleware->web(append: [
+            \App\Http\Middleware\ResolveTenant::class,
+            \App\Http\Middleware\CheckSubscription::class,
         ]);
+        $middleware->alias([
+            'owner' => \App\Http\Middleware\OwnerMiddleware::class,
+            'role' => \App\Http\Middleware\RoleMiddleware::class,
+            'subscription' => \App\Http\Middleware\CheckSubscription::class,
+        ]);
+        
+        // Redirect guests to /login using URL instead of route to avoid central_domain parameter issue
+        $middleware->redirectGuestsTo(fn () => url('/login'));
         
         // Exclude webhook routes from CSRF verification
         $middleware->validateCsrfTokens(except: [

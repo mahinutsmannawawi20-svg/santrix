@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laporan Mutasi Santri - Riyadlul Huda</title>
+    <title>Laporan Mutasi Santri - {{ tenant_name() }}</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -99,7 +99,7 @@
 </head>
 <body>
     <h1>LAPORAN MUTASI SANTRI</h1>
-    <p class="subtitle">Yayasan Pondok Pesantren Riyadlul Huda</p>
+    <p class="subtitle">{{ tenant()->nama ?? 'Yayasan Pondok Pesantren' }}</p>
     <p class="subtitle">Tanggal Cetak: {{ date('d F Y') }}</p>
     
     <div class="period">
@@ -176,7 +176,7 @@
 
     <div class="footer">
         <p>Dibuat oleh Mahin Utsman Nawawi, S.H</p>
-        <p>Dashboard Riyadlul Huda - Sistem Informasi Pondok Pesantren</p>
+        <p>Dashboard {{ tenant_name() }} - Sistem Informasi Pondok Pesantren</p>
     </div>
 </body>
 </html>

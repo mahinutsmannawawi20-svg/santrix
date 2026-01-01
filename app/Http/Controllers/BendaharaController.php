@@ -257,8 +257,11 @@ class BendaharaController extends Controller
             return \App\Models\Kobong::all();
         });
         
+        
+        $saldoPaymentGateway = Auth::user()->pesantren->saldo_pg ?? 0;
+
         return view('bendahara.dashboard', compact(
-            'saldoDana', 'totalPemasukan', 'totalPengeluaran',
+            'saldoDana', 'saldoPaymentGateway', 'totalPemasukan', 'totalPengeluaran',
             'totalSantriAktif', 'totalSantriPutra', 'totalSantriPutri',
             'totalSantriPutraLunas', 'totalSantriPutriLunas',
             'totalSyahriah', 'totalTunggakan',

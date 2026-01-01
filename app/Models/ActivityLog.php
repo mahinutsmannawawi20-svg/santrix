@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Facades\Auth;
 
 class ActivityLog extends Model
 {
+    protected $table = 'activity_logs';
+
     protected $fillable = [
         'user_id',
         'log_name',
@@ -24,84 +25,30 @@ class ActivityLog extends Model
         'properties' => 'array',
     ];
 
-    /**
-     * Get the subject of the activity (the model that was changed)
-     */
-    public function subject(): MorphTo
+    // Relationships
+    public function causer()
+    {
+        return $this->belongsTo(User::class, 'causer_id');
+    }
+
+    public function subject()
     {
         return $this->morphTo();
     }
 
-    /**
-     * Get the causer (usually the user who made the change)
-     */
-    public function causer(): MorphTo
+    // Helper to log activity
+    public static function logActivity($description, $subject = null, $properties = [], $event = null)
     {
-        return $this->morphTo();
-    }
-
-    /**
-     * Get the user who performed this activity
-     */
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    /**
-     * Get old values from properties
-     */
-    public function getOldAttribute(): ?array
-    {
-        return $this->properties['old'] ?? null;
-    }
-
-    /**
-     * Get new values from properties
-     */
-    public function getNewAttribute(): ?array
-    {
-        return $this->properties['attributes'] ?? null;
-    }
-
-    /**
-     * Log an activity
-     */
-    public static function logActivity(
-        Model $subject,
-        string $event,
-        string $description = null,
-        array $properties = []
-    ): self {
-        $user = auth()->user();
-
-        return static::create([
-            'user_id' => $user?->id,
-            'log_name' => strtolower(class_basename($subject)),
-            'description' => $description ?? ucfirst($event) . ' ' . class_basename($subject),
-            'subject_type' => get_class($subject),
-            'subject_id' => $subject->getKey(),
-            'causer_type' => $user ? get_class($user) : null,
-            'causer_id' => $user?->id,
+        return self::create([
+            'user_id' => Auth::id(),
+            'log_name' => 'owner',
+            'description' => $description,
+            'subject_type' => $subject ? get_class($subject) : null,
+            'subject_id' => $subject?->id,
+            'causer_type' => Auth::check() ? get_class(Auth::user()) : null,
+            'causer_id' => Auth::id(),
             'properties' => $properties,
             'event' => $event,
         ]);
-    }
-
-    /**
-     * Scope for filtering by log name
-     */
-    public function scopeForLog($query, string $logName)
-    {
-        return $query->where('log_name', $logName);
-    }
-
-    /**
-     * Scope for filtering by subject
-     */
-    public function scopeForSubject($query, Model $subject)
-    {
-        return $query->where('subject_type', get_class($subject))
-                     ->where('subject_id', $subject->getKey());
     }
 }

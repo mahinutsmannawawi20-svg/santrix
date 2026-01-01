@@ -3,12 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Traits\BelongsToPesantren;
 
 class Asrama extends Model
 {
+    use BelongsToPesantren;
     protected $table = 'asrama';
     
     protected $fillable = [
+        'pesantren_id',
         'nama_asrama',
         'gender',
     ];

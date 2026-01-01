@@ -543,9 +543,9 @@
         <div class="border-frame-inner"></div>
 
         <!-- Watermark Text - Curved Background -->
-        <div class="watermark-text">RIYADLUL HUDA</div>
-        <div class="watermark-text-2">RIYADLUL HUDA</div>
-        <div class="watermark-text-3">RIYADLUL HUDA</div>
+        <div class="watermark-text">{{ strtoupper(tenant_name()) }}</div>
+        <div class="watermark-text-2">{{ strtoupper(tenant_name()) }}</div>
+        <div class="watermark-text-3">{{ strtoupper(tenant_name()) }}</div>
 
         <!-- Nomor Ijazah -->
         <div class="nomor-ijazah">
@@ -556,18 +556,18 @@
         <div class="content">
             <!-- Header with Logos -->
             <div class="header">
-                @if($reportSettings->logo_pondok_path)
-                    <img src="{{ asset('storage/' . $reportSettings->logo_pondok_path) }}" class="logo" alt="Logo Yayasan">
-                @endif
+                <img src="{{ tenant_logo() }}" class="logo" alt="Logo Pesantren">
                 
                 <div class="header-text">
-                    <div class="yayasan-name">{{ $reportSettings->nama_yayasan ?? 'Yayasan Riyadlul Huda' }}</div>
-                    <div class="pondok-name">{{ $reportSettings->nama_pondok ?? 'Pondok Pesantren Riyadlul Huda' }}</div>
-                    <div class="pondok-address">{{ $reportSettings->alamat ?? 'Alamat Pondok' }}</div>
+                    <div class="yayasan-name">{{ tenant()->nama ?? 'Yayasan Pondok Pesantren' }}</div>
+                    <div class="pondok-name">{{ tenant()->nama ?? 'Pondok Pesantren' }}</div>
+                    <div class="pondok-address">{{ tenant()->alamat ?? 'Alamat Pondok' }}</div>
                 </div>
                 
-                @if($reportSettings->logo_pendidikan_path)
-                    <img src="{{ asset('storage/' . $reportSettings->logo_pendidikan_path) }}" class="logo" alt="Logo Pendidikan">
+                @if(tenant()->logo_pendidikan_url)
+                    <img src="{{ tenant()->logo_pendidikan_url }}" class="logo" alt="Logo Pendidikan">
+                @else
+                    <img src="{{ tenant_logo() }}" class="logo" alt="Logo">
                 @endif
             </div>
 
@@ -589,7 +589,7 @@
 
             <!-- Description -->
             <div class="description">
-                Telah menyelesaikan {{ $jenjang }} pada {{ $reportSettings->nama_pondok ?? 'Pondok Pesantren Riyadlul Huda' }}
+                Telah menyelesaikan {{ $jenjang }} pada {{ tenant()->nama ?? 'Pondok Pesantren' }}
                 dengan hasil nilai rata-rata sebagai berikut:
             </div>
 
@@ -621,15 +621,15 @@
                 <!-- Pimpinan -->
                 <div class="signature-box">
                     <div class="signature-title">
-                        {{ $reportSettings->kota_terbit ?? 'Jombang' }}, {{ $settings->tanggal_ijazah?->translatedFormat('d F Y') ?? now()->translatedFormat('d F Y') }}<br>
-                        Pimpinan Umum
+                        {{ tenant()->kota ?? 'Jombang' }}, {{ $settings->tanggal_ijazah?->translatedFormat('d F Y') ?? now()->translatedFormat('d F Y') }}<br>
+                        {{ tenant()->pimpinan_jabatan ?? 'Pimpinan Umum' }}
                     </div>
-                    @if($reportSettings->pimpinan_ttd_path)
-                        <img src="{{ asset('storage/' . $reportSettings->pimpinan_ttd_path) }}" class="signature-image">
+                    @if(tenant()->pimpinan_ttd_path)
+                        <img src="{{ asset('storage/' . tenant()->pimpinan_ttd_path) }}" class="signature-image">
                     @else
                         <div style="height: 110px;"></div> {{-- Placeholder space --}}
                     @endif
-                    <div class="signature-name">{{ $reportSettings->pimpinan_nama ?? '............................' }}</div>
+                    <div class="signature-name">{{ tenant()->pimpinan_nama ?? '............................' }}</div>
                     <div class="signature-nip">NIP: {{ \App\Models\IjazahSetting::generateNIP('PTU') }}</div>
                 </div>
             </div>
@@ -647,7 +647,7 @@
         <!-- QR/Barcode Footer -->
         <div class="footer">
             @php
-                $qrMessage = "DOKUMEN RESMI YAYASAN PONDOK PESANTREN RIYADLUL HUDA. Ijazah ini dinyatakan SAH dan VALID untuk Santri: " . $santri->nama_santri . " - No: " . $nomorIjazah . ". Ditandatangani secara elektronik pada " . ($settings->tanggal_ijazah?->translatedFormat('d F Y') ?? now()->translatedFormat('d F Y')) . ".";
+                $qrMessage = "DOKUMEN RESMI " . strtoupper(tenant()->nama ?? 'PONDOK PESANTREN') . ". Ijazah ini dinyatakan SAH dan VALID untuk Santri: " . $santri->nama_santri . " - No: " . $nomorIjazah . ". Ditandatangani secara elektronik pada " . ($settings->tanggal_ijazah?->translatedFormat('d F Y') ?? now()->translatedFormat('d F Y')) . ".";
             @endphp
             <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ urlencode($qrMessage) }}" 
                  class="qr-code" alt="QR Code">

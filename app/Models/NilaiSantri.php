@@ -5,14 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Traits\LogsActivity;
+use App\Models\Traits\BelongsToPesantren;
 
 class NilaiSantri extends Model
 {
     use LogsActivity;
+    use BelongsToPesantren;
     
     protected $table = 'nilai_santri';
     
     protected $fillable = [
+        'pesantren_id',
         'santri_id',
         'mapel_id',
         'kelas_id',

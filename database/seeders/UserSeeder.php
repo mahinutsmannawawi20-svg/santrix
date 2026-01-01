@@ -16,28 +16,36 @@ class UserSeeder extends Seeder
         // Create default users for testing
         $users = [
             [
-                'name' => 'Admin Riyadlul Huda',
-                'email' => 'admin@riyadlulhuda.com',
+                'name' => 'Admin Santrix',
+                'email' => 'admin@santrix.com',
                 'password' => Hash::make('password'),
                 'role' => 'admin',
             ],
             [
                 'name' => 'Staff Pendidikan',
-                'email' => 'pendidikan@riyadlulhuda.com',
+                'email' => 'pendidikan@santrix.com',
                 'password' => Hash::make('password'),
                 'role' => 'pendidikan',
             ],
             [
                 'name' => 'Staff Sekretaris',
-                'email' => 'sekretaris@riyadlulhuda.com',
+                'email' => 'sekretaris@santrix.com',
                 'password' => Hash::make('password'),
                 'role' => 'sekretaris',
             ],
             [
                 'name' => 'Staff Bendahara',
-                'email' => 'bendahara@riyadlulhuda.com',
+                'email' => 'bendahara@santrix.com',
                 'password' => Hash::make('password'),
                 'role' => 'bendahara',
+            ],
+            [
+                'name' => 'Owner Santrix',
+                'email' => 'nawawimahinutsman@gmail.com',
+                'password' => Hash::make('OwnerSantrix200601'),
+                // 'role' => 'owner', // Role manually handled or enum updated
+                'role' => 'owner',
+                'pesantren_id' => null, 
             ],
         ];
 
@@ -49,9 +57,9 @@ class UserSeeder extends Seeder
         }
 
         $this->command->info('✅ Default users created successfully!');
-        $this->command->info('📧 Email: admin@riyadlulhuda.com | Password: password');
-        $this->command->info('📧 Email: pendidikan@riyadlulhuda.com | Password: password');
-        $this->command->info('📧 Email: sekretaris@riyadlulhuda.com | Password: password');
-        $this->command->info('📧 Email: bendahara@riyadlulhuda.com | Password: password');
+        $this->command->info('📧 Email: admin@santrix.com | Password: password');
+        $this->command->info('📧 Email: pendidikan@santrix.com | Password: password');
+        $this->command->info('📧 Email: sekretaris@santrix.com | Password: password');
+        $this->command->info('📧 Email: bendahara@santrix.com | Password: password');
     }
 }

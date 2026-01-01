@@ -5,14 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Traits\LogsActivity;
+use App\Models\Traits\BelongsToPesantren;
 
 class JadwalPelajaran extends Model
 {
+    use BelongsToPesantren;
     use LogsActivity;
     
     protected $table = 'jadwal_pelajaran';
     
     protected $fillable = [
+        'pesantren_id',
         'kelas_id',
         'mapel_id',
         'hari',

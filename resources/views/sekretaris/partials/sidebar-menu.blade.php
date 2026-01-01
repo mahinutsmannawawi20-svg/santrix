@@ -49,7 +49,7 @@
     </a>
 </li>
 <li class="sidebar-menu-item">
-    <form method="POST" action="{{ route('logout') }}">
+    <form method="POST" action="{{ route('tenant.logout') }}">
         @csrf
         <button type="submit" class="sidebar-menu-link" style="width: 100%; background: none; border: none; cursor: pointer; text-align: left;">
             <i data-feather="log-out" class="sidebar-menu-icon"></i>

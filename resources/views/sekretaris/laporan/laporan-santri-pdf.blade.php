@@ -14,7 +14,7 @@
 </head>
 <body>
     <div class="header">
-        <h2>PONTREN RIYADLUL HUDA</h2>
+        <h2>{{ strtoupper(tenant_name()) }}</h2>
         <p>Laporan Data Santri Aktif</p>
         <p>Per Tanggal: {{ date('d F Y') }}</p>
     </div>

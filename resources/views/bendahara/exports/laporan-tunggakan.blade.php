@@ -24,7 +24,7 @@
 </head>
 <body>
     <h2>LAPORAN TUNGGAKAN SANTRI</h2>
-    <p class="subtitle">Yayasan Pondok Pesantren Riyadlul Huda</p>
+    <p class="subtitle">{{ tenant()->nama ?? 'Yayasan Pondok Pesantren' }}</p>
     
     <div class="header-info">
         <div>
@@ -105,7 +105,7 @@
 
     <p class="footer">
         Dicetak pada: {{ now()->format('d/m/Y H:i:s') }}<br>
-        Yayasan Pondok Pesantren Riyadlul Huda<br>
+        {{ tenant()->nama ?? 'Yayasan Pondok Pesantren' }}<br>
         <em>Dokumen ini digenerate secara otomatis oleh sistem.</em>
     </p>
 </body>

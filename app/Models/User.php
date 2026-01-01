@@ -22,6 +22,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'pesantren_id',
     ];
 
     /**
@@ -45,5 +46,12 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+    /**
+     * Get the pesantren that the user belongs to.
+     */
+    public function pesantren()
+    {
+        return $this->belongsTo(Pesantren::class);
     }
 }
