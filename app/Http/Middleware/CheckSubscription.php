@@ -37,20 +37,29 @@ class CheckSubscription
         }
 
         // 1. Allow access to billing routes always (so they can pay)
-        if ($request->is('billing*') || $request->routeIs('billing.*')) {
+        if ($request->is('admin/billing*') || $request->routeIs('admin.billing.*')) {
             return $next($request);
         }
 
-        // 2. Real-time Expiration Check
+        // 2. Check if still in trial period
+        if ($pesantren->trial_ends_at && Carbon::parse($pesantren->trial_ends_at)->isFuture()) {
+            // Still in trial, allow access
+            return $next($request);
+        }
+
+        // 3. Real-time Expiration Check
         $isExpired = !$pesantren->expired_at || Carbon::parse($pesantren->expired_at)->isPast();
         
         if ($isExpired) {
-            return redirect()->route('billing.index')->with('warning', 'Masa aktif langganan Anda telah habis. Silakan lakukan perpanjangan.');
+            return redirect()->route('admin.billing.index')->with('warning', 'Masa aktif langganan Anda telah habis. Silakan lakukan perpanjangan.');
         }
 
-        // 3. Package Gating
-        if ($requiredPackage === 'advance' && $pesantren->package !== 'advance') {
-            return redirect()->route('billing.plans')->with('error', 'Fitur ini hanya tersedia pada paket ADVANCE. Silakan upgrade paket Anda.');
+        // 4. Package Gating (check if advance features required)
+        if ($requiredPackage === 'advance') {
+            // Check if user has any advance package (advance-3 or advance-6)
+            if (!str_starts_with($pesantren->package, 'advance')) {
+                return redirect()->route('admin.billing.plans')->with('error', 'Fitur ini hanya tersedia pada paket ADVANCE. Silakan upgrade paket Anda.');
+            }
         }
 
         return $next($request);
