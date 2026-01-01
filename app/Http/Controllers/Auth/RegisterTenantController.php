@@ -28,12 +28,17 @@ class RegisterTenantController extends Controller
         // Validate package parameter
         $package = $request->query('package');
         
-        if (!in_array($package, ['basic', 'advance'])) {
+        $validPackages = ['basic-3', 'basic-6', 'advance-3', 'advance-6'];
+        if (!in_array($package, $validPackages)) {
             return redirect()->route('landing')->with('error', 'Silakan pilih paket terlebih dahulu.');
         }
 
         $packageData = config('subscription.plans');
         $selectedPlan = collect($packageData)->firstWhere('id', $package);
+
+        if (!$selectedPlan) {
+            return redirect()->route('landing')->with('error', 'Paket tidak ditemukan.');
+        }
 
         return view('auth.register-tenant', compact('package', 'selectedPlan'));
     }
@@ -42,12 +47,20 @@ class RegisterTenantController extends Controller
     {
         // Validate package
         $package = $request->input('package');
-        if (!in_array($package, ['basic', 'advance'])) {
+        $validPackages = ['basic-3', 'basic-6', 'advance-3', 'advance-6'];
+        
+        if (!in_array($package, $validPackages)) {
             return back()->with('error', 'Paket tidak valid.')->withInput();
         }
 
+        // Get package details from config
+        $packageConfig = collect(config('subscription.plans'))->firstWhere('id', $package);
+        if (!$packageConfig) {
+            return back()->with('error', 'Paket tidak ditemukan.')->withInput();
+        }
+
         $validationRules = [
-            'package' => 'required|in:basic,advance',
+            'package' => 'required|in:basic-3,basic-6,advance-3,advance-6',
             'nama_pesantren' => 'required|string|max:255',
             'subdomain' => [
                 'required',
@@ -64,8 +77,8 @@ class RegisterTenantController extends Controller
             'phone' => 'required|string|max:20',
         ];
 
-        // Add bank account validation for advance package
-        if ($package === 'advance') {
+        // Add bank account validation for advance packages
+        if (str_starts_with($package, 'advance')) {
             $validationRules['bank_name'] = 'required|string|max:100';
             $validationRules['bank_account_number'] = 'required|string|max:50';
             $validationRules['bank_account_name'] = 'required|string|max:255';
@@ -96,8 +109,8 @@ class RegisterTenantController extends Controller
                 'telepon' => $request->phone,
             ];
 
-            // Add bank details if advance
-            if ($package === 'advance') {
+            // Add bank details if advance package
+            if (str_starts_with($package, 'advance')) {
                 $pesantrenData['bank_name'] = $request->bank_name;
                 $pesantrenData['bank_account_number'] = $request->bank_account_number;
                 $pesantrenData['bank_account_name'] = $request->bank_account_name;
@@ -115,9 +128,10 @@ class RegisterTenantController extends Controller
             ]);
 
             // 3. Create Trial Subscription Record (7 days)
+            $packageName = $packageConfig['name'] . ' ' . $packageConfig['duration_months'] . ' Bulan';
             $subscription = Subscription::create([
                 'pesantren_id' => $pesantren->id,
-                'package_name' => ucfirst($package) . ' (Trial)',
+                'package_name' => $packageName . ' (Trial)',
                 'price' => 0,
                 'started_at' => now(),
                 'expired_at' => $trialEndsAt,
@@ -125,7 +139,9 @@ class RegisterTenantController extends Controller
             ]);
 
             // 4. Create Pending Invoice (due after trial)
-            $amount = ($package === 'advance') ? 3000000 : 1500000;
+            $amount = $packageConfig['price'];
+            $durationMonths = $packageConfig['duration_months'];
+            
             $invoice = $this->invoiceService->createInvoice(
                 $pesantren,
                 $package,
