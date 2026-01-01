@@ -40,7 +40,7 @@
             <div class="flex justify-between items-center h-20">
                 <!-- Logo -->
                 <a href="#" class="flex items-center gap-2">
-                    <img src="{{ asset('images/default-logo.png') }}" alt="SANTRIX Logo" class="h-10 w-auto">
+                    <img src="https://image2url.com/r2/default/images/1767309844662-1c2f0d54-4d4a-4f3b-a71d-c723fbba97e1.png" alt="SANTRIX Logo" class="h-10 w-auto">
                 </a>
                 
                 <!-- Desktop Menu -->
@@ -238,7 +238,7 @@
             <div class="grid md:grid-cols-4 gap-12 mb-12">
                 <div class="col-span-2">
                     <a href="#" class="flex items-center gap-2 mb-6 text-white font-bold text-2xl">
-                        <img src="{{ asset('images/default-logo.png') }}" alt="Logo" class="h-8 w-auto brightness-0 invert">
+                        <img src="https://image2url.com/r2/default/images/1767309844662-1c2f0d54-4d4a-4f3b-a71d-c723fbba97e1.png" alt="Logo" class="h-8 w-auto brightness-0 invert">
                         SANTRIX
                     </a>
                     <p class="text-slate-400 leading-relaxed max-w-sm">

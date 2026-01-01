@@ -19,8 +19,8 @@
             <!-- Brand -->
             <div class="h-20 flex items-center px-8 border-b border-slate-800 bg-slate-900">
                 <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white font-bold shadow-lg shadow-indigo-500/30">
-                        S
+                    <div class="flex items-center justify-center">
+                        <img src="https://image2url.com/r2/default/images/1767309844662-1c2f0d54-4d4a-4f3b-a71d-c723fbba97e1.png" alt="SANTRIX" class="h-10 w-auto">
                     </div>
                     <div>
                         <h1 class="text-xl font-bold tracking-wide text-white">SANTRIX</h1>
