@@ -779,7 +779,7 @@ class BendaharaController extends Controller
                     '💵'
                 );
             } catch (\Exception $e) {
-                \Log::warning('Telegram notification failed: ' . $e->getMessage());
+                Log::warning('Telegram notification failed: ' . $e->getMessage());
             }
         }
         
