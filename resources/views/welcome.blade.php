@@ -40,7 +40,7 @@
             <div class="flex justify-between items-center h-20">
                 <!-- Logo -->
                 <a href="#" class="flex items-center gap-2">
-                    <img src="https://image2url.com/r2/default/images/1767309844662-1c2f0d54-4d4a-4f3b-a71d-c723fbba97e1.png" alt="SANTRIX Logo" class="h-10 md:h-14 w-auto">
+                    <img src="https://image2url.com/r2/default/images/1767309844662-1c2f0d54-4d4a-4f3b-a71d-c723fbba97e1.png" alt="SANTRIX Logo" class="h-14 md:h-20 w-auto object-contain">
                 </a>
                 
                 <!-- Desktop Menu -->
