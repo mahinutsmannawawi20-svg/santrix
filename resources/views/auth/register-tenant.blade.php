@@ -18,79 +18,79 @@
 </head>
 <body class="bg-slate-50 antialiased">
 
-    <div class="min-h-screen py-12 px-4">
+    <div class="min-h-screen py-6 sm:py-12 px-4">
         <div class="max-w-4xl mx-auto">
             
             <!-- Header -->
-            <div class="text-center mb-8">
-                <a href="/" class="inline-flex items-center gap-2 text-xl font-bold text-slate-900 mb-4">
-                    <img src="{{ asset('images/default-logo.png') }}" alt="SANTRIX" class="h-8 w-auto">
+            <div class="text-center mb-6 sm:mb-8">
+                <a href="/" class="inline-flex items-center gap-2 text-lg sm:text-xl font-bold text-slate-900 mb-4">
+                    <img src="{{ asset('images/default-logo.png') }}" alt="SANTRIX" class="h-6 sm:h-8 w-auto">
                     SANTRIX
                 </a>
-                <h1 class="text-3xl font-extrabold text-slate-900 mb-2">Buat Akun Pesantren Anda</h1>
-                <p class="text-slate-600">Nikmati trial <strong>7 hari gratis</strong> untuk paket {{ $selectedPlan['name'] }}</p>
+                <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-2">Buat Akun Pesantren Anda</h1>
+                <p class="text-sm sm:text-base text-slate-600">Nikmati trial <strong>7 hari gratis</strong> untuk paket {{ $selectedPlan['name'] }}</p>
             </div>
 
             <!-- Package Indicator -->
-            <div class="bg-white rounded-2xl p-6 shadow-lg mb-6 border-2 border-indigo-200">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <div class="text-sm font-semibold text-indigo-600 uppercase tracking-wide mb-1">Paket Dipilih</div>
-                        <div class="text-2xl font-bold text-slate-900">{{ $selectedPlan['name'] }}</div>
-                        <div class="text-slate-600 mt-1">{{ $selectedPlan['formatted_price'] ?? 'Rp ' . number_format($selectedPlan['price']) }} <span class="text-sm">/ {{ $selectedPlan['period'] }}</span></div>
+            <div class="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg mb-4 sm:mb-6 border-2 border-indigo-200">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div class="flex-1">
+                        <div class="text-xs sm:text-sm font-semibold text-indigo-600 uppercase tracking-wide mb-1">Paket Dipilih</div>
+                        <div class="text-xl sm:text-2xl font-bold text-slate-900">{{ $selectedPlan['name'] }}</div>
+                        <div class="text-sm sm:text-base text-slate-600 mt-1">{{ $selectedPlan['formatted_price'] ?? 'Rp ' . number_format($selectedPlan['price']) }} <span class="text-xs sm:text-sm">/ {{ $selectedPlan['period'] }}</span></div>
                     </div>
-                    <div class="bg-indigo-100 rounded-full p-4">
-                        <i data-feather="package" class="text-indigo-600 w-8 h-8"></i>
+                    <div class="bg-indigo-100 rounded-full p-3 sm:p-4">
+                        <i data-feather="package" class="text-indigo-600 w-6 h-6 sm:w-8 sm:h-8"></i>
                     </div>
                 </div>
             </div>
 
             @if(session('error'))
-            <div class="bg-red-50 border-2 border-red-200 text-red-700 px-4 py-3 rounded-xl mb-6">
+            <div class="bg-red-50 border-2 border-red-200 text-red-700 px-4 py-3 rounded-xl mb-4 sm:mb-6 text-sm">
                 {{ session('error') }}
             </div>
             @endif
 
             <!-- Form -->
-            <form action="{{ route('register.tenant.store') }}" method="POST" class="bg-white rounded-2xl shadow-lg p-8">
+            <form action="{{ route('register.tenant.store') }}" method="POST" class="bg-white rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-8">
                 @csrf
                 <input type="hidden" name="package" value="{{ $package }}">
                 
                 <!-- Pesantren Info -->
-                <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
-                    <i data-feather="home" class="w-5 h-5 text-indigo-600"></i>
+                <h3 class="text-base sm:text-lg font-bold text-slate-900 mb-3 sm:mb-4 flex items-center gap-2">
+                    <i data-feather="home" class="w-4 h-4 sm:w-5 sm:h-5 text-indigo-600"></i>
                     Data Pesantren
                 </h3>
                 
-                <div class="grid md:grid-cols-2 gap-4 mb-6">
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-2">Nama Pesantren *</label>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-4 sm:mb-6">
+                    <div class="sm:col-span-2 md:col-span-1">
+                        <label class="block text-xs sm:text-sm font-semibold text-slate-700 mb-2">Nama Pesantren *</label>
                         <input type="text" name="nama_pesantren" value="{{ old('nama_pesantren') }}" 
-                            class="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all" 
+                            class="w-full px-3 sm:px-4 py-2 sm:py-2.5 text-sm sm:text-base border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all" 
                             placeholder="Contoh: Ponpes Al-Hidayah" required>
-                        @error('nama_pesantren') <div class="text-red-600 text-sm mt-1">{{ $message }}</div> @enderror
+                        @error('nama_pesantren') <div class="text-red-600 text-xs sm:text-sm mt-1">{{ $message }}</div> @enderror
                     </div>
 
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-2">Subdomain (URL) *</label>
+                    <div class="sm:col-span-2 md:col-span-1">
+                        <label class="block text-xs sm:text-sm font-semibold text-slate-700 mb-2">Subdomain (URL) *</label>
                         <div class="flex">
                             <input type="text" name="subdomain" value="{{ old('subdomain') }}" 
-                                class="flex-1 px-4 py-2.5 border border-slate-300 rounded-l-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" 
+                                class="flex-1 px-3 sm:px-4 py-2 sm:py-2.5 text-sm sm:text-base border border-slate-300 rounded-l-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" 
                                 placeholder="namapesantren" pattern="[a-z0-9-]+" required>
-                            <span class="px-4 py-2.5 bg-slate-100 border border-l-0 border-slate-300 rounded-r-lg text-slate-600">.santrix.my.id</span>
+                            <span class="px-2 sm:px-4 py-2 sm:py-2.5 bg-slate-100 border border-l-0 border-slate-300 rounded-r-lg text-slate-600 text-xs sm:text-sm">.santrix.my.id</span>
                         </div>
                         <small class="text-slate-500 text-xs">Huruf kecil, angka, dan dash (-) saja</small>
-                        @error('subdomain') <div class="text-red-600 text-sm mt-1">{{ $message }}</div> @enderror
+                        @error('subdomain') <div class="text-red-600 text-xs sm:text-sm mt-1">{{ $message }}</div> @enderror
                     </div>
                 </div>
 
                 <!-- Owner Info -->
-                <h3 class="text-lg font-bold text-slate-900 mb-4 mt-8 flex items-center gap-2">
-                    <i data-feather="user" class="w-5 h-5 text-indigo-600"></i>
+                <h3 class="text-base sm:text-lg font-bold text-slate-900 mb-3 sm:mb-4 mt-6 sm:mt-8 flex items-center gap-2">
+                    <i data-feather="user" class="w-4 h-4 sm:w-5 sm:h-5 text-indigo-600"></i>
                     Akun Pemilik
                 </h3>
 
-                <div class="grid md:grid-cols-2 gap-4 mb-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-4 sm:mb-6">
                     <div>
                         <label class="block text-sm font-semibold text-slate-700 mb-2">Nama Lengkap *</label>
                         <input type="text" name="name" value="{{ old('name') }}" 
