@@ -30,7 +30,8 @@ class FonnteService
         }
 
         try {
-            $response = Http::withoutVerifying()
+            // SECURITY: SSL verification enabled for production
+            $response = Http::timeout(10)
                 ->withHeaders([
                     'Authorization' => $this->token,
                 ])
@@ -41,7 +42,7 @@ class FonnteService
                 ]);
 
             if ($response->successful()) {
-                Log::info("Fonnte message sent to {$target}");
+                Log::info("Fonnte message sent to " . substr($target, 0, 4) . "***"); // Mask phone
                 return true;
             }
 

@@ -36,10 +36,10 @@ class TelegramService
         }
 
         try {
-            // Note: withoutVerifying() is used for Windows development environments
-            // Remove in production with proper SSL certificates
-            /** @var \Illuminate\Http\Client\Response $response */
-            $response = Http::withoutVerifying()->post("{$this->apiUrl}/sendMessage", [
+            // SECURITY: SSL verification enabled for production
+            // If you get SSL errors in development, install proper certificates
+            // or use: config('app.env') === 'local' ? Http::withoutVerifying() : Http
+            $response = Http::timeout(10)->post("{$this->apiUrl}/sendMessage", [
                 'chat_id' => $targetChatId,
                 'text' => $message,
                 'parse_mode' => 'HTML',
