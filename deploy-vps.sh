@@ -4,7 +4,10 @@
 # Run this on fresh Ubuntu 22.04 LTS as root
 
 # --- CONFIGURATION ---
-DOMAIN="santrix.my.id"
+read -p "Enter your Domain Name (e.g. santrix.my.id): " INPUT_DOMAIN
+DOMAIN=${INPUT_DOMAIN:-santrix.my.id}
+echo "Using Domain: $DOMAIN"
+
 REPO="https://github.com/mahinutsmannawawi20-svg/santrix.git"
 DB_NAME="santrix"
 DB_USER="santrix"
