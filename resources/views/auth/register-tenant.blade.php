@@ -28,7 +28,10 @@
                     SANTRIX
                 </a>
                 <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-2">Buat Akun Pesantren Anda</h1>
-                <p class="text-sm sm:text-base text-slate-600">Nikmati trial <strong>7 hari gratis</strong> untuk paket {{ $selectedPlan['name'] }}</p>
+                @php
+                    $trialDays = ($selectedPlan['duration_months'] == 3) ? 2 : 4;
+                @endphp
+                <p class="text-sm sm:text-base text-slate-600">Nikmati trial <strong>{{ $trialDays }} hari gratis</strong> untuk paket {{ $selectedPlan['name'] }} {{ $selectedPlan['duration_months'] }} Bulan</p>
             </div>
 
             <!-- Package Indicator -->
@@ -173,7 +176,7 @@
                 <!-- Submit -->
                 <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-indigo-500/30 flex items-center justify-center gap-2">
                     <i data-feather="check-circle" class="w-5 h-5"></i>
-                    Buat Akun & Mulai Trial 7 Hari
+                    Buat Akun & Mulai Trial {{ $trialDays }} Hari
                 </button>
 
                 <p class="text-center text-sm text-slate-600 mt-6">
