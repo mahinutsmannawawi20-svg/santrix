@@ -20,8 +20,8 @@ class CheckSubscription
     {
         $user = Auth::user();
         
-        // Skip for owner (central level) or if not logged in
-        if (!$user || $user->role === 'owner') {
+        // Skip for platform owner (central level, no pesantren_id) or if not logged in
+        if (!$user || ($user->role === 'owner' && !$user->pesantren_id)) {
             return $next($request);
         }
 

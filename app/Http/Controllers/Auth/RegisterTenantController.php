@@ -130,12 +130,12 @@ class RegisterTenantController extends Controller
 
             $pesantren = Pesantren::create($pesantrenData);
 
-            // 2. Create Owner User
+            // 2. Create Admin User (Tenant Admin, NOT Platform Owner)
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
-                'role' => 'owner',
+                'role' => 'admin', // SECURITY: Tenant admin, not platform owner
                 'pesantren_id' => $pesantren->id,
             ]);
 
