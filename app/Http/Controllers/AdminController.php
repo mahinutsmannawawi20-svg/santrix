@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 class AdminController extends Controller
 {
@@ -92,7 +93,7 @@ class AdminController extends Controller
 
             return redirect()->route('admin.pengaturan')->with('success', 'User berhasil ditambahkan!')->with('tab', 'users');
         } catch (\Exception $e) {
-            \Log::error('Gagal membuat user: ' . $e->getMessage());
+            Log::error('Gagal membuat user: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Terjadi kesalahan sistem: ' . $e->getMessage())->withInput()->with('tab', 'users');
         }
     }

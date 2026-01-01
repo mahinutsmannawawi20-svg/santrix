@@ -57,7 +57,9 @@ class SubscriptionService
                     // Upgrade: Update package and extend from today (or max(expired_at, now))
                     // Per user request: upgrade = langsung ganti package, masa aktif tetap:
                     // expired_at = max(expired_at, today) + 6 bulan
-                    $newExpiry = Carbon::max($subscription->expired_at, $now)->addMonths(6);
+                    // $newExpiry = Carbon::max($subscription->expired_at, $now)->addMonths(6);
+                    $maxDate = $subscription->expired_at->gt($now) ? $subscription->expired_at : $now;
+                    $newExpiry = $maxDate->copy()->addMonths(6);
                     $subscription->update([
                         'package_name' => $package,
                         'expired_at' => $newExpiry,
