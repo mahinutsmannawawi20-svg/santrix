@@ -227,10 +227,10 @@
                 <!-- Card 3 -->
                 <div class="p-8 rounded-3xl bg-slate-50 hover:bg-white hover:shadow-xl transition-all duration-300 border border-transparent hover:border-slate-100 group">
                     <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-sm mb-6 group-hover:scale-110 transition-transform duration-300">
-                        <i data-feather="smartphone" class="text-purple-500 w-7 h-7"></i>
+                        <i data-feather="pie-chart" class="text-purple-500 w-7 h-7"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3 text-slate-900">Portal Wali Santri</h3>
-                    <p class="text-slate-500 leading-relaxed">Orang tua bisa pantau hafalan, absensi, dan riwayat pembayaran SPP dari HP masing-masing.</p>
+                    <h3 class="text-xl font-bold mb-3 text-slate-900">Laporan Keuangan Yayasan</h3>
+                    <p class="text-slate-500 leading-relaxed">Pantau arus kas masuk dan keluar secara real-time. Laporan keuangan otomatis siap cetak untuk yayasan.</p>
                 </div>
             </div>
         </div>
@@ -246,16 +246,34 @@
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
-                <!-- Basic Plan 6B -->
+                <!-- Basic Plan 3 Bulan -->
                 <div class="relative bg-white rounded-3xl p-8 border border-slate-100 shadow-lg flex flex-col h-full transition-transform hover:-translate-y-2">
                     <h3 class="text-xl font-bold text-slate-900 mb-2">Basic</h3>
                     <div class="flex items-baseline gap-1 mb-6">
                         <span class="text-4xl font-extrabold text-slate-900">Rp 750rb</span>
-                        <span class="text-slate-500 font-medium">/ 6 bulan</span>
+                        <span class="text-slate-500 font-medium">/ 3 bulan</span>
                     </div>
                     <p class="text-slate-500 mb-8 text-sm">Fitur lengkap manajemen pesantren (Non-Payment Gateway).</p>
                     <ul class="space-y-4 mb-8 flex-1">
                         <li class="flex items-start gap-3 text-sm text-slate-700">
+                            <i data-feather="check-circle" class="w-5 h-5 text-indigo-600 shrink-0"></i> Data Santri Unlimited
+                        </li>
+                    </ul>
+                    <a href="{{ route('register.tenant', ['package' => 'basic-3']) }}" class="w-full py-4 rounded-xl font-bold text-center transition-all bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200">
+                        Pilih Paket
+                    </a>
+                </div>
+
+                <!-- Basic Plan 6 Bulan -->
+                <div class="relative bg-white rounded-3xl p-8 border border-slate-100 shadow-lg flex flex-col h-full transition-transform hover:-translate-y-2">
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">Basic</h3>
+                    <div class="flex items-baseline gap-1 mb-6">
+                        <span class="text-4xl font-extrabold text-slate-900">Rp 1.500rb</span>
+                        <span class="text-slate-500 font-medium">/ 6 bulan</span>
+                    </div>
+                    <p class="text-slate-500 mb-8 text-sm">Lebih hemat untuk jangka menengah.</p>
+                    <ul class="space-y-4 mb-8 flex-1">
+                         <li class="flex items-start gap-3 text-sm text-slate-700">
                             <i data-feather="check-circle" class="w-5 h-5 text-indigo-600 shrink-0"></i> Data Santri Unlimited
                         </li>
                     </ul>
@@ -264,25 +282,7 @@
                     </a>
                 </div>
 
-                <!-- Basic Plan 12B -->
-                <div class="relative bg-white rounded-3xl p-8 border border-slate-100 shadow-lg flex flex-col h-full transition-transform hover:-translate-y-2">
-                    <h3 class="text-xl font-bold text-slate-900 mb-2">Basic</h3>
-                    <div class="flex items-baseline gap-1 mb-6">
-                        <span class="text-4xl font-extrabold text-slate-900">Rp 1.500rb</span>
-                        <span class="text-slate-500 font-medium">/ tahun</span>
-                    </div>
-                    <p class="text-slate-500 mb-8 text-sm">Hemat 2 bulan dengan langganan tahunan.</p>
-                    <ul class="space-y-4 mb-8 flex-1">
-                         <li class="flex items-start gap-3 text-sm text-slate-700">
-                            <i data-feather="check-circle" class="w-5 h-5 text-indigo-600 shrink-0"></i> Data Santri Unlimited
-                        </li>
-                    </ul>
-                    <a href="{{ route('register.tenant', ['package' => 'basic-12']) }}" class="w-full py-4 rounded-xl font-bold text-center transition-all bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200">
-                        Pilih Paket
-                    </a>
-                </div>
-
-                <!-- Advance Plan 6B -->
+                <!-- Advance Plan 3 Bulan -->
                 <div class="relative bg-white rounded-3xl p-8 border border-indigo-600 shadow-2xl scale-105 z-10 flex flex-col h-full transition-transform hover:-translate-y-2">
                     <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                         <span class="bg-indigo-600 text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wide">Paling Laris</span>
@@ -290,7 +290,7 @@
                     <h3 class="text-xl font-bold text-slate-900 mb-2">Advance</h3>
                     <div class="flex items-baseline gap-1 mb-6">
                         <span class="text-4xl font-extrabold text-slate-900">Rp 1.500rb</span>
-                        <span class="text-slate-500 font-medium">/ 6 bulan</span>
+                        <span class="text-slate-500 font-medium">/ 3 bulan</span>
                     </div>
                     <p class="text-slate-500 mb-8 text-sm">Solusi lengkap dengan otomatisasi payment gateway & WhatsApp broadcast.</p>
                     <ul class="space-y-4 mb-8 flex-1">
@@ -301,17 +301,17 @@
                             <i data-feather="check-circle" class="w-5 h-5 text-indigo-600 shrink-0"></i> WhatsApp Notif
                         </li>
                     </ul>
-                    <a href="{{ route('register.tenant', ['package' => 'advance-6']) }}" class="w-full py-4 rounded-xl font-bold text-center transition-all bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg hover:shadow-indigo-500/30">
+                    <a href="{{ route('register.tenant', ['package' => 'advance-3']) }}" class="w-full py-4 rounded-xl font-bold text-center transition-all bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg hover:shadow-indigo-500/30">
                         Pilih Paket
                     </a>
                 </div>
 
-                <!-- Advance Plan 12B -->
+                <!-- Advance Plan 6 Bulan -->
                 <div class="relative bg-white rounded-3xl p-8 border border-slate-100 shadow-lg flex flex-col h-full transition-transform hover:-translate-y-2">
                     <h3 class="text-xl font-bold text-slate-900 mb-2">Advance</h3>
                     <div class="flex items-baseline gap-1 mb-6">
                         <span class="text-4xl font-extrabold text-slate-900">Rp 3.000rb</span>
-                        <span class="text-slate-500 font-medium">/ tahun</span>
+                        <span class="text-slate-500 font-medium">/ 6 bulan</span>
                     </div>
                     <p class="text-slate-500 mb-8 text-sm">Value terbaik untuk jangka panjang.</p>
                     <ul class="space-y-4 mb-8 flex-1">
@@ -319,7 +319,7 @@
                             <i data-feather="check-circle" class="w-5 h-5 text-indigo-600 shrink-0"></i> All Features Included
                         </li>
                     </ul>
-                    <a href="{{ route('register.tenant', ['package' => 'advance-12']) }}" class="w-full py-4 rounded-xl font-bold text-center transition-all bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200">
+                    <a href="{{ route('register.tenant', ['package' => 'advance-6']) }}" class="w-full py-4 rounded-xl font-bold text-center transition-all bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200">
                         Pilih Paket
                     </a>
                 </div>

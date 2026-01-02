@@ -1,271 +1,130 @@
-# 🏫 Dashboard Riyadlul Huda
+# 🕌 Santrix - Sistem Manajemen Pesantren Modern No. #1
 
-Sistem Manajemen Pondok Pesantren berbasis web untuk mengelola data santri, pendidikan, keuangan, dan administrasi secara terpadu.
+**Platform Manajemen Pesantren Cloud-Based Terlengkap & Aman**
 
-![Laravel](https://img.shields.io/badge/Laravel-12-red?logo=laravel)
-![PHP](https://img.shields.io/badge/PHP-8.2+-blue?logo=php)
-![MySQL](https://img.shields.io/badge/MySQL-8.0-orange?logo=mysql)
-![License](https://img.shields.io/badge/License-MIT-green)
-
----
-
-## 📸 Screenshot
-
-### 🔐 Halaman Login
-![Login Page](docs/screenshots/login-page.png)
-
-Halaman login dengan tampilan modern dan sistem **Multi-Role**. Pengguna dapat memilih role (Admin, Pendidikan, Sekretaris, Bendahara) dan login dengan kredensial masing-masing. Desain menggunakan gradient purple yang elegan dengan animasi background.
+[![Laravel](https://img.shields.io/badge/Laravel-10-red?logo=laravel)](https://laravel.com)
+[![PHP](https://img.shields.io/badge/PHP-8.2+-blue?logo=php)](https://www.php.net)
+[![Tenancy](https://img.shields.io/badge/Tenancy-Multi--Tenant-green)](https://tenancyforlaravel.com)
+[![License](https://img.shields.io/badge/License-MIT-purple)]()
 
 ---
 
-### 👨‍💼 Dashboard Admin
-![Dashboard Admin](docs/screenshots/dashboard-admin.png)
+![Santrix Landing Page](https://santrix.my.id/images/seo-og-image.jpg)
 
-**Pusat Kontrol Sistem** - Admin memiliki akses penuh ke seluruh modul:
-- 📊 Statistik total santri, kelas, mata pelajaran, dan dana
-- 🔗 Quick access ke modul Sekretaris, Bendahara, Pendidikan
-- ℹ️ Informasi sistem (Database, Status, Framework, Developer)
-- 📅 Tanggal real-time
+## 📖 Tentang Santrix
+Santrix adalah solusi **SaaS (Software as a Service)** untuk digitalisasi administrasi pesantren. Didesain untuk menangani kompleksitas manajemen pesantren modern maupun salaf, mulai dari **Keuangan Syahriah, Akademik Kitab Kuning/Umum, hingga Laporan Keuangan Yayasan.**
 
----
-
-### 📚 Dashboard Pendidikan
-![Dashboard Pendidikan](docs/screenshots/dashboard-pendidikan.png)
-
-**Modul Akademik Lengkap** untuk mengelola:
-- 📈 Grafik rata-rata nilai per kelas
-- 📊 Sebaran nilai santri
-- 🎓 Statistik: Total santri aktif, kelas, mata pelajaran
-- 📉 Tingkat kehadiran (53%) dan guru mengajar (28)
-- 📝 Input nilai terbaru & data absensi terbaru
-- 🔍 Filter berdasarkan tahun ajaran, semester, kelas, gender
+### � Keunggulan Utama
+- **Multi-Tenant Architecture**: Satu aplikasi untuk ribuan pesantren dengan database terpisah (Data isolation).
+- **Subdomain Otomatis**: Setiap pesantren mendapatkan subdomain unik (contoh: `al-ikhlas.santrix.my.id`).
+- **Owner Dashboard**: Panel kontrol pusat untuk memantau seluruh tenant pesantren.
+- **Security First**: Otomatis HTTPS/SSL (Let's Encrypt), Proteksi CSRF/XSS, dan Backup Berkala.
 
 ---
 
-### 📋 Dashboard Sekretaris
-![Dashboard Sekretaris](docs/screenshots/dashboard-sekretaris.png)
+## ✨ Fitur Unggulan
 
-**Manajemen Data Santri** dengan fitur:
-- 👥 Total santri putra (55) dan putri (54)
-- 🏠 Jumlah asrama (5), kelas (9), dan kobong (100)
-- ⚡ Quick Actions: Data Santri, Tambah Santri, Mutasi, Laporan
-- 📋 Panduan penggunaan untuk staff baru
-- 🎨 UI colorful dengan gradient cards
+### � 1. Keuangan & SPP (Syahriah)
+- Dashboard Arus Kas Real-time
+- Tagihan Syahriah & Tabungan Santri
+- **WhatsApp Gateway**: Kirim tagihan & bukti bayar otomatis ke Wali Santri.
+- Laporan Keuangan Harian/Bulanan (PDF/Excel)
 
----
+### 📚 2. Akademik & Pendidikan
+- Manajemen Kelas & Asrama (Kobong)
+- Input Nilai Hafalan (Talaran) & Kitab Kuning
+- Absensi Harian/Mingguan
+- Cetak Rapor Standar Pondok/Diknas (PDF)
 
-### 💰 Dashboard Bendahara
-![Dashboard Bendahara](docs/screenshots/dashboard-bendahara.png)
-
-**Sistem Keuangan Terintegrasi**:
-- 💵 Saldo kas: Rp 1.000.000
-- 📈 Pemasukan: Rp 1.000.000 | Pengeluaran: Rp 500.000
-- ⚠️ Total tunggakan: Rp 54.000.000
-- 📊 **5 Grafik Interaktif**:
-  - Keuangan bulanan (bar chart)
-  - Per asrama (bar chart)
-  - Per kelas (bar chart)
-  - Putra/Putri (pie chart)
-  - Status Syahriah (donut chart)
-- ⚡ Aksi Cepat: Tambah Syahriah, Catat Pemasukan/Pengeluaran, Bayar Gaji
+### � 3. Keamanan & Akses
+- **Multi-Role**: Admin, Sekretaris, Bendahara, Pendidikan, Owner.
+- **Secure Login**: Dilengkapi fitur "Show Password" toggle & Rate Limiting.
+- **HTTPS Forced**: Keamanan data terenkripsi standar perbankan.
 
 ---
 
-## ✨ Fitur Utama
-
-### 🔐 Multi-Role Authentication
-- **Admin** - Akses penuh ke semua modul
-- **Pendidikan** - Kelola nilai, absensi, rapor
-- **Sekretaris** - Kelola data santri, mutasi
-- **Bendahara** - Kelola keuangan, syahriah
-
-### 📚 Modul Pendidikan
-- Input & rekap nilai semester
-- Smart Scoring (nilai otomatis minimal 5 untuk rapor)
-- Absensi mingguan (Sorogan, Tahajud, dll)
-- Sistem Talaran (tracking setoran hafalan)
-- Ujian Mingguan dengan status kelulusan
-- Cetak Rapor & Ijazah (PDF)
-- Jadwal pelajaran
-
-### 📋 Modul Sekretaris
-- Data Santri (CRUD, import/export)
-- Mutasi santri (keluar/pindah/lulus)
-- Kenaikan kelas massal
-- Perpindahan asrama/kobong
-
-### 💰 Modul Bendahara
-- Syahriah (SPP bulanan)
-- Cek tunggakan + **Kirim tagihan via WhatsApp**
-- Pemasukan & pengeluaran
-- Gaji pegawai
-- Laporan keuangan dengan grafik
-
-### 🛠️ Fitur Sistem
-- 📱 PWA (Progressive Web App) - installable
-- 🔔 Notifikasi real-time
-- ❓ FAQ/Bantuan context-aware per halaman
-- 💾 Backup database otomatis
-- 📊 Dashboard dengan statistik & grafik
+## 🛠️ Teknologi yang Digunakan
+- **Framework**: Laravel 10 (PHP 8.2)
+- **Database**: MariaDB / MySQL 8.0
+- **Frontend**: Blade, Tailwind CSS, Alpine.js, Feather Icons
+- **Server**: Nginx (Ubuntu VPS)
+- **Tools**: Composer, NPM (Vite), Certbot (SSL), Git
 
 ---
 
-## 🚀 Instalasi
+## 🚀 Instalasi (Development)
 
-### Persyaratan
-- PHP 8.2+
-- Composer
-- MySQL 8.0+
-- Node.js (opsional, untuk build assets)
+Jika Anda ingin menjalankan project ini di lokal:
 
-### Langkah Instalasi
+1. **Clone Repository**
+   ```bash
+   git clone https://github.com/mahinutsmannawawi20-svg/santrix.git
+   cd santrix
+   ```
 
-```bash
-# Clone repository
-git clone https://github.com/username/dashboard-riyadlul-huda.git
-cd dashboard-riyadlul-huda
+2. **Install Dependencies**
+   ```bash
+   composer install
+   npm install && npm run build
+   ```
 
-# Install dependencies
-composer install
+3. **Setup Environment**
+   - Copy `.env.example` ke `.env`
+   - Setup database connection
+   - **PENTING**: Setup `CENTRAL_DOMAINS` untuk tenancy
+     ```env
+     CENTRAL_DOMAINS=santrix.test,owner.santrix.test
+     ```
 
-# Copy environment file
-cp .env.example .env
+4. **Migrate & Seed**
+   ```bash
+   php artisan migrate --seed
+   ```
 
-# Generate application key
-php artisan key:generate
-
-# Konfigurasi database di .env
-# DB_DATABASE=riyadlul_huda
-# DB_USERNAME=root
-# DB_PASSWORD=
-
-# Jalankan migrasi & seeder
-php artisan migrate --seed
-
-# Jalankan server development
-php artisan serve
-```
-
-Buka `http://localhost:8000` di browser.
+5. **Jalankan Server**
+   ```bash
+   php artisan serve
+   ```
+   Akses di `http://santrix.test` (Gunakan Laravel Valet atau Laragon untuk support subdomain).
 
 ---
 
-## 👤 Akun Default
+## ☁️ Deployment (Production VPS)
+
+Panduan singkat deploy di VPS (Ubuntu 22.04):
+
+1. **Setup DNS**: A Record `*` (Wildcard) dan `@` ke IP VPS.
+2. **Nginx Config**: Setup block server untuk handle Wildcard Subdomains.
+3. **SSL (Certbot)**:
+   ```bash
+   certbot --nginx -d santrix.my.id -d owner.santrix.my.id
+   ```
+4. **Env Variables**:
+   ```env
+   APP_URL=https://santrix.my.id
+   CENTRAL_DOMAINS=santrix.my.id,owner.santrix.my.id
+   SESSION_DOMAIN=.santrix.my.id
+   ```
+5. **Optimize**:
+   ```bash
+   php artisan config:cache
+   php artisan route:cache
+   php artisan view:cache
+   ```
+
+---
+
+## � Akun Demo (Owner)
 
 | Role | Email | Password |
 |------|-------|----------|
-| Admin | admin@riyadlulhuda.com | password |
-| Pendidikan | pendidikan@riyadlulhuda.com | password |
-| Sekretaris | sekretaris@riyadlulhuda.com | password |
-| Bendahara | bendahara@riyadlulhuda.com | password |
-
-> ⚠️ **Segera ganti password setelah deploy ke production!**
+| **Owner** | `nawawimahinutsman@gmail.com` | `OwnerSantrix200601` |
 
 ---
 
-## 📁 Struktur Folder
+## 👨‍� Developer & Credits
 
-```
-├── app/
-│   ├── Console/Commands/     # Artisan commands (backup, migrasi tahun ajaran)
-│   ├── Http/Controllers/     # Controllers per modul
-│   ├── Models/               # Eloquent models
-│   └── Http/Middleware/      # Role-based access control
-├── database/
-│   ├── migrations/           # Database schema
-│   └── seeders/              # Data awal
-├── resources/views/
-│   ├── admin/                # Views modul admin
-│   ├── pendidikan/           # Views modul pendidikan
-│   ├── sekretaris/           # Views modul sekretaris
-│   ├── bendahara/            # Views modul bendahara
-│   ├── layouts/              # Layout utama
-│   └── components/           # Komponen reusable
-├── public/
-│   ├── css/                  # Stylesheets
-│   ├── js/                   # JavaScript
-│   ├── images/               # Gambar & logo
-│   └── icons/                # PWA icons
-└── routes/web.php            # Definisi routes
-```
+Dibuat dengan ❤️ oleh **Mahin Utsman Nawawi** & Team Velora.
+Dedikasi untuk kemajuan Pesantren Indonesia.
 
----
-
-## 🌐 Deployment
-
-### Shared Hosting (Hostinger/cPanel)
-1. Upload semua file ke `public_html`
-2. Jalankan `composer install` via SSH
-3. Copy `.env.production` → `.env`, edit kredensial
-4. `php artisan key:generate && php artisan migrate --seed`
-
-Lihat panduan lengkap: [Hostinger Deploy Guide](docs/hostinger-deploy.md)
-
-### VPS/Cloud
-```bash
-# Production optimization
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
-```
-
----
-
-## 🔧 Konfigurasi
-
-### Backup Otomatis
-Backup database berjalan otomatis setiap hari jam 02:00.
-```bash
-# Manual backup
-php artisan db:backup
-```
-
-### Migrasi Tahun Ajaran
-```bash
-php artisan migrasi:tahun-ajaran
-```
-
----
-
-## 📝 Testing
-
-```bash
-# Jalankan semua test
-php artisan test
-
-# Test spesifik
-php artisan test --filter=AuthTest
-php artisan test --filter=SantriTest
-php artisan test --filter=NilaiTest
-```
-
----
-
-## 🤝 Contributing
-
-1. Fork repository ini
-2. Buat branch fitur (`git checkout -b feature/AmazingFeature`)
-3. Commit perubahan (`git commit -m 'Add some AmazingFeature'`)
-4. Push ke branch (`git push origin feature/AmazingFeature`)
-5. Buat Pull Request
-
----
-
-## 📄 License
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
----
-
-## 👨‍💻 Developer
-
-**Mahin Utsman Nawawi, S.H.**
-
----
-
-## 🙏 Acknowledgments
-
-- [Laravel](https://laravel.com)
-- [Feather Icons](https://feathericons.com)
-- [Chart.js](https://www.chartjs.org)
-- [DomPDF](https://github.com/dompdf/dompdf)
+**© 2026 Santrix Project.** All rights reserved.

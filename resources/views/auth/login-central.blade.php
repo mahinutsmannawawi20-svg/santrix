@@ -151,7 +151,13 @@
 
             <div class="form-group">
                 <label class="form-label">Password</label>
-                <input type="password" name="password" class="form-input" placeholder="••••••••" required>
+                <div style="position: relative;">
+                    <input type="password" id="passwordInput" name="password" class="form-input" placeholder="••••••••" required style="padding-right: 45px;">
+                    <button type="button" onclick="togglePassword()" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #94a3b8; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                        <span id="icon-eye"><i data-feather="eye" style="width: 18px; height: 18px;"></i></span>
+                        <span id="icon-eye-off" style="display: none;"><i data-feather="eye-off" style="width: 18px; height: 18px;"></i></span>
+                    </button>
+                </div>
             </div>
 
             <button type="submit" class="btn-login">Sign In</button>
@@ -160,6 +166,22 @@
 
     <script>
         feather.replace();
+
+        function togglePassword() {
+            const input = document.getElementById('passwordInput');
+            const eye = document.getElementById('icon-eye');
+            const eyeOff = document.getElementById('icon-eye-off');
+
+            if (input.type === 'password') {
+                input.type = 'text';
+                eye.style.display = 'none';
+                eyeOff.style.display = 'block';
+            } else {
+                input.type = 'password';
+                eye.style.display = 'block';
+                eyeOff.style.display = 'none';
+            }
+        }
     </script>
 </body>
 </html>
