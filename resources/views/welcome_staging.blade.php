@@ -265,7 +265,9 @@
                     
                     <p class="text-slate-500 mb-8 text-sm">{{ $plan['description'] }}</p>
 
-                    <ul class="space-y-4 mb-8 flex-1">
+                    <!-- DEBUG: Commented out inner loop to fix syntax error -->
+                     <ul class="space-y-4 mb-8 flex-1">
+                        {{-- 
                         @foreach($plan['features'] as $feature)
                         <li class="flex items-start gap-3 text-sm {{ $feature['included'] ? 'text-slate-700' : 'text-slate-400 line-through' }}">
                             @if($feature['included'])
@@ -276,6 +278,12 @@
                             {{ $feature['name'] }}
                         </li>
                         @endforeach
+                        --}}
+                        <!-- Placeholder Feature -->
+                         <li class="flex items-start gap-3 text-sm text-slate-700">
+                             <i data-feather="check-circle" class="w-5 h-5 text-indigo-600 shrink-0"></i>
+                             Data Santri Unlimited
+                         </li>
                     </ul>
 
                     <a href="{{ route('register.tenant', ['package' => $plan['id']]) }}" class="w-full py-4 rounded-xl font-bold text-center transition-all {{ $plan['is_featured'] ? 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg hover:shadow-indigo-500/30' : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200' }}">
