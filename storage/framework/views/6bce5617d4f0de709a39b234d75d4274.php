@@ -19,12 +19,9 @@
             <!-- Brand -->
             <div class="h-20 flex items-center px-8 border-b border-slate-800 bg-slate-900">
                 <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white font-bold shadow-lg shadow-indigo-500/30">
-                        S
-                    </div>
-                    <div>
-                        <h1 class="text-xl font-bold tracking-wide text-white">SANTRIX</h1>
-                        <p class="text-[10px] text-slate-400 font-medium tracking-widest uppercase">Owner Panel</p>
+                    <div class="flex flex-col">
+                        <h1 class="text-2xl font-bold tracking-tight text-white leading-none">SANTRIX</h1>
+                        <p class="text-[10px] text-slate-400 font-medium tracking-widest uppercase">by Velora</p>
                     </div>
                 </div>
             </div>
@@ -129,4 +126,4 @@
     </div>
 </body>
 </html>
-<?php /**PATH C:\Users\v\.gemini\antigravity\scratch\santrix\resources\views/owner/layouts/app.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\Users\v\.gemini\antigravity\scratch\santrix\resources\views\owner\layouts\app.blade.php ENDPATH**/ ?>
