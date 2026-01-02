@@ -16,6 +16,14 @@
 
     <div class="max-w-3xl mx-auto px-4 py-8">
         
+        <!-- Back Link -->
+        <div class="mb-4">
+            <a href="{{ route('landing') }}" class="inline-flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-indigo-600 transition-colors">
+                <i data-feather="arrow-left" class="w-4 h-4"></i>
+                Kembali ke Beranda
+            </a>
+        </div>
+
         <!-- Card Container -->
         <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
             
