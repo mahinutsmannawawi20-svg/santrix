@@ -14,7 +14,7 @@
 ## 📖 Tentang Santrix
 Santrix adalah solusi **SaaS (Software as a Service)** untuk digitalisasi administrasi pesantren. Didesain untuk menangani kompleksitas manajemen pesantren modern maupun salaf, mulai dari **Keuangan Syahriah, Akademik Kitab Kuning/Umum, hingga Laporan Keuangan Yayasan.**
 
-### � Keunggulan Utama
+### 🚀 Keunggulan Utama
 - **Multi-Tenant Architecture**: Satu aplikasi untuk ribuan pesantren dengan database terpisah (Data isolation).
 - **Subdomain Otomatis**: Setiap pesantren mendapatkan subdomain unik (contoh: `al-ikhlas.santrix.my.id`).
 - **Owner Dashboard**: Panel kontrol pusat untuk memantau seluruh tenant pesantren.
@@ -24,7 +24,7 @@ Santrix adalah solusi **SaaS (Software as a Service)** untuk digitalisasi admini
 
 ## ✨ Fitur Unggulan
 
-### � 1. Keuangan & SPP (Syahriah)
+### 💰 1. Keuangan & SPP (Syahriah)
 - Dashboard Arus Kas Real-time
 - Tagihan Syahriah & Tabungan Santri
 - **WhatsApp Gateway**: Kirim tagihan & bukti bayar otomatis ke Wali Santri.
@@ -36,7 +36,7 @@ Santrix adalah solusi **SaaS (Software as a Service)** untuk digitalisasi admini
 - Absensi Harian/Mingguan
 - Cetak Rapor Standar Pondok/Diknas (PDF)
 
-### � 3. Keamanan & Akses
+### 👮 3. Keamanan & Akses
 - **Multi-Role**: Admin, Sekretaris, Bendahara, Pendidikan, Owner.
 - **Secure Login**: Dilengkapi fitur "Show Password" toggle & Rate Limiting.
 - **HTTPS Forced**: Keamanan data terenkripsi standar perbankan.
@@ -114,15 +114,7 @@ Panduan singkat deploy di VPS (Ubuntu 22.04):
 
 ---
 
-## � Akun Demo (Owner)
-
-| Role | Email | Password |
-|------|-------|----------|
-| **Owner** | `nawawimahinutsman@gmail.com` | `OwnerSantrix200601` |
-
----
-
-## 👨‍� Developer & Credits
+## 👨‍💻 Developer & Credits
 
 Dibuat dengan ❤️ oleh **Mahin Utsman Nawawi** & Team Velora.
 Dedikasi untuk kemajuan Pesantren Indonesia.
