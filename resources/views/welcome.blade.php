@@ -165,140 +165,158 @@
                 </div>
             </div>
             
-            <!-- Dashboard Preview -->
-            <div class="mt-20 relative max-w-5xl mx-auto" data-aos="zoom-in-up" data-aos-duration="1000" data-aos-delay="300">
-                <div class="absolute inset-0 bg-indigo-600 blur-3xl opacity-20 -z-10 rounded-full"></div>
-            <!-- Dashboard Carousel -->
+            <!-- Dashboard Preview Carousel -->
             <div class="mt-20 relative max-w-6xl mx-auto" data-aos="zoom-in-up" data-aos-duration="1000" data-aos-delay="300">
-                <div class="absolute inset-0 bg-indigo-600 blur-3xl opacity-20 -z-10 rounded-full"></div>
+                <div style="position: absolute; inset: 0; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); filter: blur(60px); opacity: 0.15; z-index: -1; border-radius: 50%;"></div>
                 
-                <!-- Main Slider Container -->
-                <div class="rounded-3xl border-8 border-slate-900/5 shadow-2xl overflow-hidden bg-white relative group">
+                <!-- Image Container -->
+                <div style="background: white; border-radius: 24px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); overflow: hidden; border: 4px solid rgba(241, 245, 249, 0.8);">
                     
-                    <!-- Carousel Wrapper -->
-                    <div id="dashboardCarousel" class="relative" style="width: 100%; padding-bottom: 56.25%; position: relative; overflow: hidden; background: #f1f5f9;">
+                    <!-- Carousel Images -->
+                    <div id="carouselImages" style="position: relative; width: 100%; padding-bottom: 52%; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); overflow: hidden;">
                         
                         <!-- Slide 1: Admin -->
-                        <div class="carousel-item" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; transition: opacity 0.7s ease-in-out; opacity: 1; z-index: 10;" data-index="0">
-                            <img src="{{ asset('images/preview-admin.png') }}" style="width: 100%; height: 100%; object-fit: contain; object-position: top; background: #f8fafc;" alt="Dashboard Admin">
-                            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.6) 50%, rgba(15, 23, 42, 0) 100%); padding: 32px; color: white;">
-                                <h3 class="text-2xl md:text-3xl font-bold mb-2" style="color: white; margin-bottom: 8px;">Dashboard Admin & Yayasan</h3>
-                                <p style="color: #cbd5e1; font-size: 1rem; margin: 0; max-width: 600px;">Kontrol penuh sistem dengan manajemen user, backup data otomatis, dan monitoring aktivitas real-time.</p>
-                            </div>
+                        <div class="slide-image" data-index="0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 1; transition: opacity 0.6s ease-in-out;">
+                            <img src="{{ asset('images/preview-admin.png') }}" alt="Dashboard Admin" style="width: 100%; height: 100%; object-fit: cover; object-position: top center;">
                         </div>
-
+                        
                         <!-- Slide 2: Bendahara -->
-                        <div class="carousel-item" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; transition: opacity 0.7s ease-in-out; opacity: 0; z-index: 0;" data-index="1">
-                            <img src="{{ asset('images/preview-bendahara.png') }}" style="width: 100%; height: 100%; object-fit: contain; object-position: top; background: #f8fafc;" alt="Dashboard Bendahara">
-                            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.6) 50%, rgba(15, 23, 42, 0) 100%); padding: 32px; color: white;">
-                                <h3 class="text-2xl md:text-3xl font-bold mb-2" style="color: white; margin-bottom: 8px;">Keuangan & SPP</h3>
-                                <p style="color: #cbd5e1; font-size: 1rem; margin: 0; max-width: 600px;">Transparansi arus kas, pemasukan SPP Syahriah, dan monitoring tagihan santri yang akurat.</p>
-                            </div>
+                        <div class="slide-image" data-index="1" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.6s ease-in-out;">
+                            <img src="{{ asset('images/preview-bendahara.png') }}" alt="Dashboard Bendahara" style="width: 100%; height: 100%; object-fit: cover; object-position: top center;">
                         </div>
-
+                        
                         <!-- Slide 3: Sekretaris -->
-                        <div class="carousel-item" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; transition: opacity 0.7s ease-in-out; opacity: 0; z-index: 0;" data-index="2">
-                            <img src="{{ asset('images/preview-sekretaris.png') }}" style="width: 100%; height: 100%; object-fit: contain; object-position: top; background: #f8fafc;" alt="Dashboard Sekretaris">
-                            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.6) 50%, rgba(15, 23, 42, 0) 100%); padding: 32px; color: white;">
-                                <h3 class="text-2xl md:text-3xl font-bold mb-2" style="color: white; margin-bottom: 8px;">Database Santri Terpadu</h3>
-                                <p style="color: #cbd5e1; font-size: 1rem; margin: 0; max-width: 600px;">Kelola data diri, asrama, mutasi, dan administrasi kessantrian dalam satu pintu.</p>
-                            </div>
+                        <div class="slide-image" data-index="2" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.6s ease-in-out;">
+                            <img src="{{ asset('images/preview-sekretaris.png') }}" alt="Dashboard Sekretaris" style="width: 100%; height: 100%; object-fit: cover; object-position: top center;">
                         </div>
-
+                        
                         <!-- Slide 4: Akademik -->
-                        <div class="carousel-item" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; transition: opacity 0.7s ease-in-out; opacity: 0; z-index: 0;" data-index="3">
-                            <img src="{{ asset('images/preview-akademik.png') }}" style="width: 100%; height: 100%; object-fit: contain; object-position: top; background: #f8fafc;" alt="Rekap Nilai">
-                            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.6) 50%, rgba(15, 23, 42, 0) 100%); padding: 32px; color: white;">
-                                <h3 class="text-2xl md:text-3xl font-bold mb-2" style="color: white; margin-bottom: 8px;">Akademik & E-Rapor Digital</h3>
-                                <p style="color: #cbd5e1; font-size: 1rem; margin: 0; max-width: 600px;">Input nilai ujian, hitung rata-rata otomatis, dan cetak rapor santri dengan mudah.</p>
-                            </div>
+                        <div class="slide-image" data-index="3" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.6s ease-in-out;">
+                            <img src="{{ asset('images/preview-akademik.png') }}" alt="Rekap Nilai" style="width: 100%; height: 100%; object-fit: cover; object-position: top center;">
+                        </div>
+                        
+                        <!-- Slide 5: Login -->
+                        <div class="slide-image" data-index="4" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.6s ease-in-out;">
+                            <img src="{{ asset('images/preview-login.png') }}" alt="Login Page" style="width: 100%; height: 100%; object-fit: cover; object-position: center center;">
                         </div>
 
-                         <!-- Slide 5: Login -->
-                         <div class="carousel-item" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; transition: opacity 0.7s ease-in-out; opacity: 0; z-index: 0;" data-index="4">
-                            <img src="{{ asset('images/preview-login.png') }}" style="width: 100%; height: 100%; object-fit: contain; object-position: top; background: #f8fafc;" alt="Login Page">
-                            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.6) 50%, rgba(15, 23, 42, 0) 100%); padding: 32px; color: white;">
-                                <h3 class="text-2xl md:text-3xl font-bold mb-2" style="color: white; margin-bottom: 8px;">Sistem Akses Multi-Role</h3>
-                                <p style="color: #cbd5e1; font-size: 1rem; margin: 0; max-width: 600px;">Keamanan terjamin dengan pemisahan hak akses spesifik untuk setiap jabatan.</p>
+                        <!-- Navigation Arrows -->
+                        <button id="prevBtn" style="position: absolute; top: 50%; left: 20px; transform: translateY(-50%); width: 56px; height: 56px; background: rgba(255,255,255,0.95); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: none; cursor: pointer; box-shadow: 0 10px 25px rgba(0,0,0,0.15); z-index: 10; transition: all 0.3s ease;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                        </button>
+                        <button id="nextBtn" style="position: absolute; top: 50%; right: 20px; transform: translateY(-50%); width: 56px; height: 56px; background: rgba(255,255,255,0.95); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: none; cursor: pointer; box-shadow: 0 10px 25px rgba(0,0,0,0.15); z-index: 10; transition: all 0.3s ease;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </button>
+                    </div>
+
+                    <!-- Caption Card Below Image -->
+                    <div style="background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4338ca 100%); padding: 32px 40px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px;">
+                        
+                        <!-- Text Content -->
+                        <div style="flex: 1; min-width: 280px;">
+                            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                                <div id="captionIcon" style="width: 44px; height: 44px; background: rgba(255,255,255,0.15); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                                </div>
+                                <h3 id="captionTitle" style="color: white; font-size: 1.5rem; font-weight: 700; margin: 0;">Dashboard Admin & Yayasan</h3>
                             </div>
+                            <p id="captionDesc" style="color: rgba(199, 210, 254, 0.9); font-size: 1rem; margin: 0; line-height: 1.6; max-width: 600px;">Kontrol penuh sistem dengan manajemen user, backup data otomatis, dan monitoring aktivitas real-time.</p>
                         </div>
-
-                        <!-- Controls -->
-                        <button onclick="moveSlide(-1)" style="position: absolute; top: 50%; left: 16px; transform: translateY(-50%); width: 48px; height: 48px; background: rgba(255, 255, 255, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; border: none; cursor: pointer; backdrop-filter: blur(4px); z-index: 20;">
-                            <i data-feather="chevron-left" style="width: 24px; height: 24px;"></i>
-                        </button>
-                        <button onclick="moveSlide(1)" style="position: absolute; top: 50%; right: 16px; transform: translateY(-50%); width: 48px; height: 48px; background: rgba(255, 255, 255, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; border: none; cursor: pointer; backdrop-filter: blur(4px); z-index: 20;">
-                            <i data-feather="chevron-right" style="width: 24px; height: 24px;"></i>
-                        </button>
-
+                        
                         <!-- Indicators -->
-                        <div style="position: absolute; bottom: 24px; right: 32px; z-index: 20; display: flex; gap: 8px;">
-                            <button onclick="goToSlide(0)" class="indicator" style="width: 32px; height: 10px; border-radius: 10px; background: white; border: none; transition: all 0.3s;"></button>
-                            <button onclick="goToSlide(1)" class="indicator" style="width: 10px; height: 10px; border-radius: 50%; background: rgba(255, 255, 255, 0.5); border: none; transition: all 0.3s;"></button>
-                            <button onclick="goToSlide(2)" class="indicator" style="width: 10px; height: 10px; border-radius: 50%; background: rgba(255, 255, 255, 0.5); border: none; transition: all 0.3s;"></button>
-                            <button onclick="goToSlide(3)" class="indicator" style="width: 10px; height: 10px; border-radius: 50%; background: rgba(255, 255, 255, 0.5); border: none; transition: all 0.3s;"></button>
-                            <button onclick="goToSlide(4)" class="indicator" style="width: 10px; height: 10px; border-radius: 50%; background: rgba(255, 255, 255, 0.5); border: none; transition: all 0.3s;"></button>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <button class="dot-indicator" data-slide="0" style="width: 40px; height: 8px; border-radius: 10px; background: white; border: none; cursor: pointer; transition: all 0.3s ease;"></button>
+                            <button class="dot-indicator" data-slide="1" style="width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.4); border: none; cursor: pointer; transition: all 0.3s ease;"></button>
+                            <button class="dot-indicator" data-slide="2" style="width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.4); border: none; cursor: pointer; transition: all 0.3s ease;"></button>
+                            <button class="dot-indicator" data-slide="3" style="width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.4); border: none; cursor: pointer; transition: all 0.3s ease;"></button>
+                            <button class="dot-indicator" data-slide="4" style="width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.4); border: none; cursor: pointer; transition: all 0.3s ease;"></button>
                         </div>
                     </div>
                 </div>
             </div>
 
             <script>
-                let currentSlide = 0;
-                const slides = document.querySelectorAll('.carousel-item');
-                const indicators = document.querySelectorAll('.indicator');
-                const totalSlides = slides.length;
-                let slideInterval;
-
-                function updateSlides() {
-                    slides.forEach((slide, index) => {
-                        if (index === currentSlide) {
-                            slide.classList.remove('opacity-0', 'z-0');
-                            slide.classList.add('opacity-100', 'z-10');
-                        } else {
-                            slide.classList.remove('opacity-100', 'z-10');
-                            slide.classList.add('opacity-0', 'z-0');
-                        }
+                (function() {
+                    const slideData = [
+                        { title: 'Dashboard Admin & Yayasan', desc: 'Kontrol penuh sistem dengan manajemen user, backup data otomatis, dan monitoring aktivitas real-time.' },
+                        { title: 'Keuangan & SPP', desc: 'Transparansi arus kas, pemasukan SPP Syahriah, dan monitoring tagihan santri yang akurat.' },
+                        { title: 'Database Santri Terpadu', desc: 'Kelola data diri, asrama, mutasi, dan administrasi kesantrian dalam satu pintu.' },
+                        { title: 'Akademik & E-Rapor Digital', desc: 'Input nilai ujian, hitung rata-rata otomatis, dan cetak rapor santri dengan mudah.' },
+                        { title: 'Sistem Akses Multi-Role', desc: 'Keamanan terjamin dengan pemisahan hak akses spesifik untuk setiap jabatan.' }
+                    ];
+                    
+                    let current = 0;
+                    let autoSlideTimer;
+                    const totalSlides = slideData.length;
+                    
+                    const images = document.querySelectorAll('.slide-image');
+                    const dots = document.querySelectorAll('.dot-indicator');
+                    const titleEl = document.getElementById('captionTitle');
+                    const descEl = document.getElementById('captionDesc');
+                    const prevBtn = document.getElementById('prevBtn');
+                    const nextBtn = document.getElementById('nextBtn');
+                    
+                    function updateCarousel() {
+                        // Update images
+                        images.forEach((img, i) => {
+                            img.style.opacity = (i === current) ? '1' : '0';
+                        });
+                        
+                        // Update dots
+                        dots.forEach((dot, i) => {
+                            if (i === current) {
+                                dot.style.width = '40px';
+                                dot.style.borderRadius = '10px';
+                                dot.style.background = 'white';
+                            } else {
+                                dot.style.width = '8px';
+                                dot.style.borderRadius = '50%';
+                                dot.style.background = 'rgba(255,255,255,0.4)';
+                            }
+                        });
+                        
+                        // Update caption
+                        titleEl.textContent = slideData[current].title;
+                        descEl.textContent = slideData[current].desc;
+                    }
+                    
+                    function goTo(index) {
+                        current = (index + totalSlides) % totalSlides;
+                        updateCarousel();
+                        resetAutoSlide();
+                    }
+                    
+                    function next() { goTo(current + 1); }
+                    function prev() { goTo(current - 1); }
+                    
+                    function startAutoSlide() {
+                        autoSlideTimer = setInterval(next, 5000);
+                    }
+                    
+                    function resetAutoSlide() {
+                        clearInterval(autoSlideTimer);
+                        startAutoSlide();
+                    }
+                    
+                    // Event listeners
+                    prevBtn.addEventListener('click', prev);
+                    nextBtn.addEventListener('click', next);
+                    dots.forEach((dot, i) => {
+                        dot.addEventListener('click', () => goTo(i));
                     });
-
-                    indicators.forEach((dot, index) => {
-                        if (index === currentSlide) {
-                             dot.classList.add('w-8', 'bg-white');
-                             dot.classList.remove('bg-white/50');
-                        } else {
-                             dot.classList.remove('w-8', 'bg-white');
-                             dot.classList.add('bg-white/50');
-                        }
+                    
+                    // Hover effects
+                    prevBtn.addEventListener('mouseenter', () => { prevBtn.style.transform = 'translateY(-50%) scale(1.1)'; });
+                    prevBtn.addEventListener('mouseleave', () => { prevBtn.style.transform = 'translateY(-50%) scale(1)'; });
+                    nextBtn.addEventListener('mouseenter', () => { nextBtn.style.transform = 'translateY(-50%) scale(1.1)'; });
+                    nextBtn.addEventListener('mouseleave', () => { nextBtn.style.transform = 'translateY(-50%) scale(1)'; });
+                    
+                    // Initialize
+                    document.addEventListener('DOMContentLoaded', () => {
+                        updateCarousel();
+                        startAutoSlide();
                     });
-                }
-
-                function moveSlide(direction) {
-                    currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
-                    updateSlides();
-                    resetTimer();
-                }
-
-                function goToSlide(index) {
-                    currentSlide = index;
-                    updateSlides();
-                    resetTimer();
-                }
-
-                function startTimer() {
-                    slideInterval = setInterval(() => {
-                        moveSlide(1);
-                    }, 5000); // 5 seconds per slide
-                }
-
-                function resetTimer() {
-                    clearInterval(slideInterval);
-                    startTimer();
-                }
-
-                // Initialize
-                document.addEventListener('DOMContentLoaded', () => {
-                    startTimer();
-                });
+                })();
             </script>
         </div>
     </section>
