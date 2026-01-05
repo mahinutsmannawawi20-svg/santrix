@@ -115,9 +115,18 @@
                         {{ $p->created_at->format('d M Y') }}
                     </td>
                     <td class="px-6 py-4 text-right">
-                        <a href="{{ route('owner.pesantren.show', $p->id) }}" class="inline-flex items-center px-3 py-1.5 border border-slate-200 shadow-sm text-xs font-medium rounded-lg text-slate-700 bg-white hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
-                            Detail
-                        </a>
+                        <div class="flex items-center justify-end gap-2">
+                            <a href="{{ route('owner.pesantren.show', $p->id) }}" class="inline-flex items-center px-3 py-1.5 border border-slate-200 shadow-sm text-xs font-medium rounded-lg text-slate-700 bg-white hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
+                                Detail
+                            </a>
+                            <form action="{{ route('owner.pesantren.destroy', $p->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data pesantren ini secara permanen?');" class="inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="inline-flex items-center px-3 py-1.5 border border-red-200 shadow-sm text-xs font-medium rounded-lg text-red-700 bg-red-50 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors">
+                                    Hapus
+                                </button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
                 @empty

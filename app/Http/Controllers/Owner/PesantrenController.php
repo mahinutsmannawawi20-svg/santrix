@@ -112,6 +112,29 @@ class PesantrenController extends Controller
             $newStatus === 'suspended' ? 'suspended' : 'reactivated'
         );
 
-        return back()->with('success', $message);
+        return back()->withErrors(['message' => $message]);
+    }
+
+    public function destroy($id)
+    {
+        $pesantren = Pesantren::findOrFail($id);
+        
+        // Log activity
+        ActivityLog::logActivity(
+            'Deleted tenant: ' . $pesantren->nama,
+            $pesantren,
+            ['id' => $pesantren->id, 'nama' => $pesantren->nama, 'subdomain' => $pesantren->subdomain],
+            'deleted'
+        );
+        
+        // Note: Ensure database foreign keys have ON DELETE CASCADE or handle relations here
+        // For safety, let's delete the admin user associated if exists
+        if ($pesantren->admin) {
+             $pesantren->admin->delete();
+        }
+
+        $pesantren->delete();
+
+        return redirect()->route('owner.pesantren.index')->with('success', 'Tenant ' . $pesantren->nama . ' has been deleted successfully.');
     }
 }

@@ -201,6 +201,11 @@ Route::middleware([\App\Http\Middleware\ResolveTenant::class])->group(function (
     Route::post('/midtrans/webhook', [App\Http\Controllers\MidtransController::class, 'webhook'])->name('midtrans.webhook');
     Route::post('/api/midtrans/callback', [App\Http\Controllers\MidtransController::class, 'webhook'])->name('midtrans.callback');
 
+    // Redirect /owner to central owner dashboard
+    Route::get('/owner', function() {
+        return redirect()->to('https://owner.' . config('tenancy.central_domains')[0] . '/owner');
+    })->name('tenant.owner.redirect');
+
 });
 
 /*
@@ -238,6 +243,7 @@ Route::domain('owner.' . $mainDomain)->group(function () {
             Route::get('/pesantren/{id}/edit', [App\Http\Controllers\Owner\PesantrenController::class, 'edit'])->name('pesantren.edit');
             Route::put('/pesantren/{id}', [App\Http\Controllers\Owner\PesantrenController::class, 'update'])->name('pesantren.update');
             Route::post('/pesantren/{id}/suspend', [App\Http\Controllers\Owner\PesantrenController::class, 'suspend'])->name('pesantren.suspend');
+            Route::delete('/pesantren/{id}', [App\Http\Controllers\Owner\PesantrenController::class, 'destroy'])->name('pesantren.destroy');
             
             // Withdrawal
             Route::get('/withdrawal', [App\Http\Controllers\Owner\WithdrawalController::class, 'index'])->name('withdrawal.index');

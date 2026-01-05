@@ -51,6 +51,14 @@
                         </button>
                     @endif
                 </form>
+
+                <form action="{{ route('owner.pesantren.destroy', $pesantren->id) }}" method="POST" onsubmit="return confirm('PERINGATAN: Tindakan ini tidak dapat dibatalkan.\n\nApakah Anda yakin ingin MENGHAPUS PERMANEN data pesantren ini beserta seluruh datanya?');">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="px-4 py-2 bg-red-50 border border-red-200 text-red-700 font-medium rounded-lg hover:bg-red-100 transition-colors">
+                        Hapus Pesantren
+                    </button>
+                </form>
             </div>
         </div>
         <!-- Background Pattern -->

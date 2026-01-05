@@ -68,9 +68,13 @@ class LoginController extends Controller
             $user = Auth::user();
 
             // Tenant Safety Check
-            if (app()->has('CurrentTenant') && $user->pesantren_id !== app('CurrentTenant')->id) {
-                Auth::logout();
                 return back()->withErrors(['email' => 'User tidak terdaftar di pesantren ini.']);
+            }
+
+            // Block Owner from logging in via Tenant Subdomain
+            if (app()->has('CurrentTenant') && $user->role === 'owner') {
+                Auth::logout();
+                return back()->withErrors(['email' => 'Akun Owner harus login melalui portal Owner.']);
             }
 
             // 2. CHECK SECURITY VERIFICATION (Owner & Admin Only)
@@ -138,7 +142,7 @@ class LoginController extends Controller
         $user = Auth::user();
         
         return match($user->role) {
-            'owner' => redirect('/owner'),
+            'owner' => redirect()->to('https://owner.' . config('tenancy.central_domains')[0] . '/owner'),
             'admin' => redirect()->route('admin.dashboard'),
             'pendidikan' => redirect()->route('pendidikan.dashboard'),
             'sekretaris' => redirect()->route('sekretaris.dashboard'),

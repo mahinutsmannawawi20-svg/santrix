@@ -67,6 +67,11 @@ class ResolveTenant
             \Illuminate\Support\Facades\URL::defaults(['central_domain' => $centralDomain]);
         }
 
+        // Security: Prevent Owner from accessing tenant dashboard
+        if (auth()->check() && auth()->user()->role === 'owner') {
+             abort(403, 'Akses Ditolak: Akun Owner tidak diperbolehkan mengakses dashboard tenant secara langsung. Silakan gunakan Dashboard Owner.');
+        }
+
         return $next($request);
     }
 }
