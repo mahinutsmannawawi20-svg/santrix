@@ -59,95 +59,103 @@ Route::middleware([\App\Http\Middleware\ResolveTenant::class])->group(function (
         ->middleware(['auth', 'role:admin'])
         ->name('backup.download');
 
+        ->name('backup.download');
+
     // Activity Log Route (Admin only)
     Route::get('/activity-logs', [App\Http\Controllers\ActivityLogController::class, 'index'])
         ->middleware(['auth', 'role:admin'])
         ->name('activity-logs.index');
 
-    // TODO: Uncomment when controllers are created
-    /*
     // Admin Dashboard Routes
     Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->group(function () {
-        Route::get('/', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/', [App\Http\Controllers\AdminController::class, 'dashboard'])->name('dashboard');
         
-        // User Management
-        Route::get('/users', [App\Http\Controllers\Admin\UserController::class, 'index'])->name('users.index');
-        Route::get('/users/create', [App\Http\Controllers\Admin\UserController::class, 'create'])->name('users.create');
-        Route::post('/users', [App\Http\Controllers\Admin\UserController::class, 'store'])->name('users.store');
-        Route::get('/users/{id}/edit', [App\Http\Controllers\Admin\UserController::class, 'edit'])->name('users.edit');
-        Route::put('/users/{id}', [App\Http\Controllers\Admin\UserController::class, 'update'])->name('users.update');
-        Route::delete('/users/{id}', [App\Http\Controllers\Admin\UserController::class, 'destroy'])->name('users.destroy');
+        // Settings & User Management (Merged in AdminController@pengaturan)
+        Route::get('/settings', [App\Http\Controllers\AdminController::class, 'pengaturan'])->name('settings.index');
+        Route::put('/settings', [App\Http\Controllers\AdminController::class, 'updateAppSettings'])->name('settings.update');
         
-        // Settings
-        Route::get('/settings', [App\Http\Controllers\Admin\SettingsController::class, 'index'])->name('settings.index');
-        Route::put('/settings', [App\Http\Controllers\Admin\SettingsController::class, 'update'])->name('settings.update');
+        // User CRUD
+        Route::post('/users', [App\Http\Controllers\AdminController::class, 'createUser'])->name('users.store');
+        Route::put('/users/{id}', [App\Http\Controllers\AdminController::class, 'updateUser'])->name('users.update');
+        Route::delete('/users/{id}', [App\Http\Controllers\AdminController::class, 'deleteUser'])->name('users.destroy');
+
+        // Kelas & Asrama Management (AdminController methods)
+        Route::post('/kelas', [App\Http\Controllers\AdminController::class, 'storeKelas'])->name('kelas.store');
+        Route::put('/kelas/{id}', [App\Http\Controllers\AdminController::class, 'updateKelas'])->name('kelas.update');
+        Route::delete('/kelas/{id}', [App\Http\Controllers\AdminController::class, 'deleteKelas'])->name('kelas.destroy');
+        
+        Route::post('/asrama', [App\Http\Controllers\AdminController::class, 'storeAsrama'])->name('asrama.store');
+        Route::put('/asrama/{id}', [App\Http\Controllers\AdminController::class, 'updateAsrama'])->name('asrama.update');
+        Route::delete('/asrama/{id}', [App\Http\Controllers\AdminController::class, 'deleteAsrama'])->name('asrama.destroy');
+        
+        // Kobong (Kamar) Routes
+        Route::post('/asrama/{id}/kobong', [App\Http\Controllers\AdminController::class, 'storeKobong'])->name('kobong.store');
+        Route::delete('/kobong/{id}', [App\Http\Controllers\AdminController::class, 'deleteKobong'])->name('kobong.destroy');
     });
 
     // Pendidikan Dashboard Routes
     Route::prefix('pendidikan')->middleware(['auth', 'role:pendidikan'])->name('pendidikan.')->group(function () {
-        Route::get('/', [App\Http\Controllers\Pendidikan\DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/', [App\Http\Controllers\PendidikanController::class, 'dashboard'])->name('dashboard');
         
-        // Rapor Management
-        Route::get('/rapor', [App\Http\Controllers\Pendidikan\RaporController::class, 'index'])->name('rapor.index');
-        Route::get('/rapor/create', [App\Http\Controllers\Pendidikan\RaporController::class, 'create'])->name('rapor.create');
-        Route::post('/rapor', [App\Http\Controllers\Pendidikan\RaporController::class, 'store'])->name('rapor.store');
-        Route::get('/rapor/{id}', [App\Http\Controllers\Pendidikan\RaporController::class, 'show'])->name('rapor.show');
-        Route::get('/rapor/{id}/edit', [App\Http\Controllers\Pendidikan\RaporController::class, 'edit'])->name('rapor.edit');
-        Route::put('/rapor/{id}', [App\Http\Controllers\Pendidikan\RaporController::class, 'update'])->name('rapor.update');
-        Route::delete('/rapor/{id}', [App\Http\Controllers\Pendidikan\RaporController::class, 'destroy'])->name('rapor.destroy');
-        Route::get('/rapor/{id}/pdf', [App\Http\Controllers\Pendidikan\RaporController::class, 'generatePdf'])->name('rapor.pdf');
+        // Nilai / Rapor Management
+        Route::get('/nilai', [App\Http\Controllers\PendidikanController::class, 'nilai'])->name('nilai.index'); // Replaces rapor.index
+        Route::post('/nilai', [App\Http\Controllers\PendidikanController::class, 'storeNilai'])->name('nilai.store'); // Replaces rapor.store
+        Route::put('/nilai/{id}', [App\Http\Controllers\PendidikanController::class, 'updateNilai'])->name('nilai.update'); // Replaces rapor.update
+        Route::delete('/nilai/{id}', [App\Http\Controllers\PendidikanController::class, 'destroyNilai'])->name('nilai.destroy'); // Replaces rapor.destroy
+        Route::get('/nilai/cetak', [App\Http\Controllers\PendidikanController::class, 'cetakNilai'])->name('nilai.cetak'); // API for PDF print
+        
+        // Mata Pelajaran Management
+        Route::get('/mapel', [App\Http\Controllers\PendidikanController::class, 'mapel'])->name('mapel.index');
+        Route::post('/mapel', [App\Http\Controllers\PendidikanController::class, 'storeMapel'])->name('mapel.store');
+        Route::put('/mapel/{id}', [App\Http\Controllers\PendidikanController::class, 'updateMapel'])->name('mapel.update');
+        Route::delete('/mapel/{id}', [App\Http\Controllers\PendidikanController::class, 'destroyMapel'])->name('mapel.destroy');
         
         // Jadwal Pelajaran
-        Route::get('/jadwal', [App\Http\Controllers\Pendidikan\JadwalController::class, 'index'])->name('jadwal.index');
-        Route::post('/jadwal', [App\Http\Controllers\Pendidikan\JadwalController::class, 'store'])->name('jadwal.store');
-        Route::put('/jadwal/{id}', [App\Http\Controllers\Pendidikan\JadwalController::class, 'update'])->name('jadwal.update');
-        Route::delete('/jadwal/{id}', [App\Http\Controllers\Pendidikan\JadwalController::class, 'destroy'])->name('jadwal.destroy');
+        Route::get('/jadwal', [App\Http\Controllers\PendidikanController::class, 'jadwal'])->name('jadwal.index');
+        Route::post('/jadwal', [App\Http\Controllers\PendidikanController::class, 'storeJadwal'])->name('jadwal.store');
+        Route::put('/jadwal/{id}', [App\Http\Controllers\PendidikanController::class, 'updateJadwal'])->name('jadwal.update');
+        Route::delete('/jadwal/{id}', [App\Http\Controllers\PendidikanController::class, 'destroyJadwal'])->name('jadwal.destroy');
     });
 
     // Sekretaris Dashboard Routes
     Route::prefix('sekretaris')->middleware(['auth', 'role:sekretaris'])->name('sekretaris.')->group(function () {
-        Route::get('/', [App\Http\Controllers\Sekretaris\DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/', [App\Http\Controllers\SekretarisController::class, 'dashboard'])->name('dashboard');
         
         // Santri Management
-        Route::get('/santri', [App\Http\Controllers\Sekretaris\SantriController::class, 'index'])->name('santri.index');
-        Route::get('/santri/create', [App\Http\Controllers\Sekretaris\SantriController::class, 'create'])->name('santri.create');
-        Route::post('/santri', [App\Http\Controllers\Sekretaris\SantriController::class, 'store'])->name('santri.store');
-        Route::get('/santri/{id}', [App\Http\Controllers\Sekretaris\SantriController::class, 'show'])->name('santri.show');
-        Route::get('/santri/{id}/edit', [App\Http\Controllers\Sekretaris\SantriController::class, 'edit'])->name('santri.edit');
-        Route::put('/santri/{id}', [App\Http\Controllers\Sekretaris\SantriController::class, 'update'])->name('santri.update');
-        Route::delete('/santri/{id}', [App\Http\Controllers\Sekretaris\SantriController::class, 'destroy'])->name('santri.destroy');
+        Route::get('/santri', [App\Http\Controllers\SekretarisController::class, 'index'])->name('santri.index');
+        Route::get('/santri/create', [App\Http\Controllers\SekretarisController::class, 'create'])->name('santri.create');
+        Route::post('/santri', [App\Http\Controllers\SekretarisController::class, 'store'])->name('santri.store');
+        Route::get('/santri/{id}', [App\Http\Controllers\SekretarisController::class, 'show'])->name('santri.show');
+        Route::get('/santri/{id}/edit', [App\Http\Controllers\SekretarisController::class, 'edit'])->name('santri.edit');
+        Route::put('/santri/{id}', [App\Http\Controllers\SekretarisController::class, 'update'])->name('santri.update');
+        Route::delete('/santri/{id}', [App\Http\Controllers\SekretarisController::class, 'destroy'])->name('santri.destroy');
         
         // Import/Export
-        Route::post('/santri/import', [App\Http\Controllers\Sekretaris\SantriController::class, 'import'])->name('santri.import');
-        Route::get('/santri/export', [App\Http\Controllers\Sekretaris\SantriController::class, 'export'])->name('santri.export');
+        Route::post('/santri/import', [App\Http\Controllers\SekretarisController::class, 'import'])->name('santri.import');
+        Route::get('/santri/export', [App\Http\Controllers\SekretarisController::class, 'export'])->name('santri.export');
         
-        // Asrama/Kobong Management
-        Route::get('/asrama', [App\Http\Controllers\Sekretaris\AsramaController::class, 'index'])->name('asrama.index');
-        Route::post('/asrama', [App\Http\Controllers\Sekretaris\AsramaController::class, 'store'])->name('asrama.store');
-        Route::put('/asrama/{id}', [App\Http\Controllers\Sekretaris\AsramaController::class, 'update'])->name('asrama.update');
-        Route::delete('/asrama/{id}', [App\Http\Controllers\Sekretaris\AsramaController::class, 'destroy'])->name('asrama.destroy');
+        // Asrama/Kobong Management (Sekretaris view)
+        Route::get('/asrama', [App\Http\Controllers\SekretarisController::class, 'asrama'])->name('asrama.index');
     });
 
     // Bendahara Dashboard Routes
     Route::prefix('bendahara')->middleware(['auth', 'role:bendahara'])->name('bendahara.')->group(function () {
-        Route::get('/', [App\Http\Controllers\Bendahara\DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/', [App\Http\Controllers\BendaharaController::class, 'dashboard'])->name('dashboard');
         
         // Keuangan Management
-        Route::get('/keuangan', [App\Http\Controllers\Bendahara\KeuanganController::class, 'index'])->name('keuangan.index');
-        Route::get('/keuangan/create', [App\Http\Controllers\Bendahara\KeuanganController::class, 'create'])->name('keuangan.create');
-        Route::post('/keuangan', [App\Http\Controllers\Bendahara\KeuanganController::class, 'store'])->name('keuangan.store');
-        Route::get('/keuangan/{id}/edit', [App\Http\Controllers\Bendahara\KeuanganController::class, 'edit'])->name('keuangan.edit');
-        Route::put('/keuangan/{id}', [App\Http\Controllers\Bendahara\KeuanganController::class, 'update'])->name('keuangan.update');
-        Route::delete('/keuangan/{id}', [App\Http\Controllers\Bendahara\KeuanganController::class, 'destroy'])->name('keuangan.destroy');
+        Route::get('/keuangan', [App\Http\Controllers\BendaharaController::class, 'index'])->name('keuangan.index');
+        Route::post('/keuangan', [App\Http\Controllers\BendaharaController::class, 'store'])->name('keuangan.store');
+        Route::put('/keuangan/{id}', [App\Http\Controllers\BendaharaController::class, 'update'])->name('keuangan.update');
+        Route::delete('/keuangan/{id}', [App\Http\Controllers\BendaharaController::class, 'destroy'])->name('keuangan.destroy');
         
         // Syahriah/SPP
-        Route::get('/syahriah', [App\Http\Controllers\Bendahara\SyahriahController::class, 'index'])->name('syahriah.index');
-        Route::post('/syahriah/generate', [App\Http\Controllers\Bendahara\SyahriahController::class, 'generate'])->name('syahriah.generate');
-        Route::post('/syahriah/{id}/pay', [App\Http\Controllers\Bendahara\SyahriahController::class, 'pay'])->name('syahriah.pay');
+        Route::get('/syahriah', [App\Http\Controllers\BendaharaController::class, 'syahriah'])->name('syahriah.index');
+        Route::post('/syahriah/generate', [App\Http\Controllers\BendaharaController::class, 'generateSyahriah'])->name('syahriah.generate');
+        Route::post('/syahriah/{id}/pay', [App\Http\Controllers\BendaharaController::class, 'paySyahriah'])->name('syahriah.pay');
         
         // Laporan
-        Route::get('/laporan', [App\Http\Controllers\Bendahara\LaporanController::class, 'index'])->name('laporan.index');
-        Route::get('/laporan/pdf', [App\Http\Controllers\Bendahara\LaporanController::class, 'generatePdf'])->name('laporan.pdf');
+        Route::get('/laporan', [App\Http\Controllers\BendaharaController::class, 'laporan'])->name('laporan.index');
+        Route::get('/laporan/pdf', [App\Http\Controllers\BendaharaController::class, 'generatePdf'])->name('laporan.pdf');
     });
     */
 
