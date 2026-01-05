@@ -64,6 +64,8 @@ Route::middleware([\App\Http\Middleware\ResolveTenant::class])->group(function (
         ->middleware(['auth', 'role:admin'])
         ->name('activity-logs.index');
 
+    // TODO: Uncomment when controllers are created
+    /*
     // Admin Dashboard Routes
     Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->group(function () {
         Route::get('/', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
@@ -154,6 +156,7 @@ Route::middleware([\App\Http\Middleware\ResolveTenant::class])->group(function (
         Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');
         Route::put('/profile', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
         Route::put('/profile/password', [App\Http\Controllers\ProfileController::class, 'updatePassword'])->name('profile.password');
+        */
         
         // Billing Routes - ADVANCE ONLY
         Route::prefix('bendahara')->middleware(['role:bendahara'])->group(function () {
