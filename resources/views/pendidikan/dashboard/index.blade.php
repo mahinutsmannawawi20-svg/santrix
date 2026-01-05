@@ -509,10 +509,10 @@ const ctxKelas = document.getElementById('chartKelas').getContext('2d');
 new Chart(ctxKelas, {
     type: 'bar',
     data: {
-        labels: {!! json_encode($chartKelasLabels) !!},
+        labels: {{ \Illuminate\Support\Js::from($chartKelasLabels) }},
         datasets: [{
-            label: 'Rata-rata Nilai',
-            data: {!! json_encode($chartKelasData) !!},
+            label: 'Jumlah Santri',
+            data: {{ \Illuminate\Support\Js::from($chartKelasData) }},
             backgroundColor: 'rgba(76, 175, 80, 0.6)',
             borderColor: 'rgba(76, 175, 80, 1)',
             borderWidth: 2
