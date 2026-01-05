@@ -1,101 +1,86 @@
-@extends('owner.layouts.app')
+@extends('layouts.app')
 
-@section('title', 'Overview')
-@section('subtitle', 'Here is what\'s happening with your tenants today.')
+@section('title', 'Dashboard Owner')
+@section('page-title', 'Dashboard Owner')
+
+@section('sidebar-menu')
+    @include('owner.partials.sidebar-menu')
+@endsection
 
 @section('content')
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-    <!-- Revenue -->
-    <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-shadow relative overflow-hidden group">
-        <div class="absolute right-0 top-0 w-24 h-24 bg-blue-500/10 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
-        <div class="flex items-center mb-4">
-            <div class="p-3 rounded-xl bg-blue-50 text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
-                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
+    <!-- Welcome Banner -->
+    <div style="background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%); border-radius: 16px; padding: 32px; margin-bottom: 32px; box-shadow: 0 10px 30px rgba(49, 46, 129, 0.3); position: relative; overflow: hidden;">
+        <div style="position: absolute; top: -30px; right: -30px; width: 150px; height: 150px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+        <div style="position: absolute; bottom: -40px; left: 30%; width: 100px; height: 100px; background: rgba(255,255,255,0.05); border-radius: 50%;"></div>
+        
+        <div class="welcome-banner-content" style="display: flex; align-items: center; gap: 24px; position: relative; z-index: 1; color: white;">
+            <div style="background: rgba(255,255,255,0.2); width: 64px; height: 64px; border-radius: 16px; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.3);">
+                <i data-feather="monitor" style="width: 32px; height: 32px; color: white;"></i>
             </div>
-        </div>
-        <div>
-            <p class="text-slate-500 text-sm font-medium">Monthly Revenue</p>
-            <p class="text-3xl font-bold text-slate-800 mt-1">Rp {{ number_format($revenue ?? 0, 0, ',', '.') }}</p>
-             <div class="flex items-center mt-2 text-xs font-medium text-emerald-600">
-                <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
-                <span>+12% vs last month</span>
+            <div>
+                <h2 style="font-size: 1.875rem; font-weight: 800; margin: 0 0 6px 0; letter-spacing: -0.025em;">Have a good day, Owner!</h2>
+                <p style="opacity: 0.9; font-size: 1.05rem; font-weight: 400; margin: 0;">Pantau performa bisnis dan pertumbuhan tenant Anda hari ini.</p>
             </div>
         </div>
     </div>
 
-    <!-- Total Pesantren -->
-    <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-shadow relative overflow-hidden group">
-        <div class="absolute right-0 top-0 w-24 h-24 bg-indigo-500/10 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
-        <div class="flex items-center mb-4">
-            <div class="p-3 rounded-xl bg-indigo-50 text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
-                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
-                </svg>
+    <!-- Stats Grid -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; margin-bottom: 32px;">
+        
+        <!-- Revenue -->
+        <div class="card" style="background: white; border-radius: 16px; padding: 24px; border: 1px solid #f1f5f9; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+                 <div style="width: 48px; height: 48px; background: #eff6ff; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                    <i data-feather="dollar-sign" style="width: 24px; height: 24px; color: #3b82f6;"></i>
+                </div>
+                <div style="font-size: 0.75rem; font-weight: 600; color: #10b981; background: #ecfdf5; padding: 4px 8px; border-radius: 20px;">
+                    +12% vs last month
+                </div>
             </div>
+            <p style="color: #64748b; font-size: 0.875rem; font-weight: 500; margin-bottom: 4px;">Monthly Revenue</p>
+            <h3 style="font-size: 1.5rem; font-weight: 700; color: #1e2937; margin: 0;">Rp {{ number_format($revenue ?? 0, 0, ',', '.') }}</h3>
         </div>
-        <div>
-            <p class="text-slate-500 text-sm font-medium">Total Pesantren</p>
-            <p class="text-3xl font-bold text-slate-800 mt-1">{{ $total }}</p>
-             <div class="flex items-center mt-2 text-xs font-medium text-slate-400">
-                <span>Registered tenants</span>
+
+        <!-- Total Pesantren -->
+        <div class="card" style="background: white; border-radius: 16px; padding: 24px; border: 1px solid #f1f5f9; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+             <div style="width: 48px; height: 48px; background: #e0e7ff; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+                <i data-feather="grid" style="width: 24px; height: 24px; color: #4338ca;"></i>
             </div>
+            <p style="color: #64748b; font-size: 0.875rem; font-weight: 500; margin-bottom: 4px;">Total Pesantren</p>
+            <h3 style="font-size: 1.5rem; font-weight: 700; color: #1e2937; margin: 0;">{{ $total }}</h3>
         </div>
+
+        <!-- Active Pesantren -->
+        <div class="card" style="background: white; border-radius: 16px; padding: 24px; border: 1px solid #f1f5f9; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+             <div style="width: 48px; height: 48px; background: #dcfce7; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+                <i data-feather="check-circle" style="width: 24px; height: 24px; color: #15803d;"></i>
+            </div>
+            <p style="color: #64748b; font-size: 0.875rem; font-weight: 500; margin-bottom: 4px;">Active Tenants</p>
+            <h3 style="font-size: 1.5rem; font-weight: 700; color: #1e2937; margin: 0;">{{ $active }}</h3>
+        </div>
+
+        <!-- Expiring Soon -->
+         <div class="card" style="background: white; border-radius: 16px; padding: 24px; border: 1px solid #f1f5f9; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+             <div style="width: 48px; height: 48px; background: #fef3c7; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+                <i data-feather="clock" style="width: 24px; height: 24px; color: #b45309;"></i>
+            </div>
+            <p style="color: #64748b; font-size: 0.875rem; font-weight: 500; margin-bottom: 4px;">Expiring Soon</p>
+            <h3 style="font-size: 1.5rem; font-weight: 700; color: #1e2937; margin: 0;">{{ $expiring }}</h3>
+        </div>
+
     </div>
 
-    <!-- Active Pesantren -->
-    <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-shadow relative overflow-hidden group">
-        <div class="absolute right-0 top-0 w-24 h-24 bg-emerald-500/10 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
-        <div class="flex items-center mb-4">
-            <div class="p-3 rounded-xl bg-emerald-50 text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
-               <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
-            </div>
+    <!-- Recent Tenants Section -->
+    <div class="card" style="background: white; border-radius: 16px; border: 1px solid #f1f5f9; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); overflow: hidden;">
+        <div style="padding: 24px; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; justify-content: space-between;">
+            <h3 style="font-size: 1.125rem; font-weight: 700; color: #1e2937; margin: 0;">Recent Tenants</h3>
+            <a href="{{ route('owner.pesantren.index') }}" style="color: #4f46e5; font-size: 0.875rem; font-weight: 600; text-decoration: none;">View All</a>
         </div>
-        <div>
-            <p class="text-slate-500 text-sm font-medium">Active Tenants</p>
-            <p class="text-3xl font-bold text-slate-800 mt-1">{{ $active }}</p>
-             <div class="flex items-center mt-2 text-xs font-medium text-emerald-600">
-                <span>Healthy status</span>
+        <div style="padding: 48px; text-align: center;">
+            <div style="width: 64px; height: 64px; background: #f8fafc; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px auto; color: #cbd5e1;">
+                <i data-feather="inbox" style="width: 32px; height: 32px;"></i>
             </div>
+            <p style="color: #64748b; font-size: 0.95rem;">No recent activity to display.</p>
         </div>
     </div>
-
-    <!-- Expiring Soon -->
-    <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-shadow relative overflow-hidden group">
-        <div class="absolute right-0 top-0 w-24 h-24 bg-amber-500/10 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
-        <div class="flex items-center mb-4">
-            <div class="p-3 rounded-xl bg-amber-50 text-amber-600 group-hover:bg-amber-600 group-hover:text-white transition-colors">
-                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
-            </div>
-        </div>
-        <div>
-            <p class="text-slate-500 text-sm font-medium">Expiring Soon</p>
-            <p class="text-3xl font-bold text-slate-800 mt-1">{{ $expiring }}</p>
-             <div class="flex items-center mt-2 text-xs font-medium text-amber-600">
-                 <span>Recuring payments due</span>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Placeholder for future Charts or Activity List -->
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-    <div class="lg:col-span-3 bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
-        <div class="flex items-center justify-between mb-6">
-            <h3 class="text-lg font-bold text-slate-800">Recent Tenants</h3>
-            <a href="{{ route('owner.pesantren.index') }}" class="text-sm font-medium text-indigo-600 hover:text-indigo-700">View All</a>
-        </div>
-        <div class="py-8 text-center">
-             <div class="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-3 text-slate-300">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
-             </div>
-             <p class="text-slate-500">No recent activity to display.</p>
-        </div>
-    </div>
-</div>
 @endsection

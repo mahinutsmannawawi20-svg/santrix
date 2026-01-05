@@ -1,65 +1,67 @@
-@extends('owner.layouts.app')
+@extends('layouts.app')
 
 @section('title', 'Activity Logs')
-@section('subtitle', 'Audit trail of all owner actions on tenants.')
+@section('page-title', 'Activity Logs')
+
+@section('sidebar-menu')
+    @include('owner.partials.sidebar-menu')
+@endsection
 
 @section('content')
-<div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-    <div class="overflow-x-auto">
-        <table class="w-full text-left border-collapse">
+<div style="background: white; border-radius: 16px; border: 1px solid #f1f5f9; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); overflow: hidden;">
+    <!-- Table -->
+    <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; text-align: left;">
             <thead>
-                <tr class="bg-slate-50/50 border-b border-slate-100 text-xs uppercase tracking-wider text-slate-500 font-semibold">
-                    <th class="px-6 py-4">Timestamp</th>
-                    <th class="px-6 py-4">User</th>
-                    <th class="px-6 py-4">Action</th>
-                    <th class="px-6 py-4">Subject</th>
-                    <th class="px-6 py-4">Details</th>
+                <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #64748b; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                    <th style="padding: 16px 24px; font-weight: 600;">Timestamp</th>
+                    <th style="padding: 16px 24px; font-weight: 600;">User</th>
+                    <th style="padding: 16px 24px; font-weight: 600;">Action</th>
+                    <th style="padding: 16px 24px; font-weight: 600;">Subject</th>
+                    <th style="padding: 16px 24px; font-weight: 600;">Details</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-slate-100">
+            <tbody style="font-size: 0.875rem; color: #1e2937;">
                 @forelse($logs as $log)
-                <tr class="hover:bg-slate-50/80 transition-colors">
-                    <td class="px-6 py-4 text-sm text-slate-600">
+                <tr style="border-bottom: 1px solid #f1f5f9; transition: background 0.2s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='white'">
+                    <td style="padding: 16px 24px; color: #64748b;">
                         {{ $log->created_at->format('d M Y H:i') }}
                     </td>
-                    <td class="px-6 py-4">
+                    <td style="padding: 16px 24px;">
                         @if($log->causer)
-                            <div class="text-sm font-medium text-slate-800">{{ $log->causer->name }}</div>
-                            <div class="text-xs text-slate-400">{{ $log->causer->email }}</div>
+                            <div style="font-weight: 500;">{{ $log->causer->name }}</div>
+                            <div style="font-size: 0.75rem; color: #9ca3af;">{{ $log->causer->email }}</div>
                         @else
-                            <span class="text-xs text-slate-400 italic">System</span>
+                            <span style="font-size: 0.75rem; font-style: italic; color: #9ca3af;">System</span>
                         @endif
                     </td>
-                    <td class="px-6 py-4 text-sm text-slate-700">
+                    <td style="padding: 16px 24px; color: #334155;">
                         {{ $log->description }}
                     </td>
-                    <td class="px-6 py-4 text-sm text-slate-600">
+                    <td style="padding: 16px 24px;">
                         @if($log->subject)
-                            <a href="{{ route('owner.pesantren.show', $log->subject_id) }}" class="text-indigo-600 hover:underline">
+                            <span style="color: #4f46e5;">
                                 {{ $log->subject->nama ?? 'Pesantren #'.$log->subject_id }}
-                            </a>
+                            </span>
                         @else
-                            <span class="text-slate-400">Deleted</span>
+                            <span style="color: #9ca3af;">Deleted</span>
                         @endif
                     </td>
-                    <td class="px-6 py-4">
+                    <td style="padding: 16px 24px;">
                         @if(!empty($log->properties))
-                            <button type="button" onclick="alert(JSON.stringify({{ json_encode($log->properties) }}, null, 2))" class="text-xs text-indigo-600 hover:underline">
+                            <button type="button" onclick="alert(JSON.stringify({{ json_encode($log->properties) }}, null, 2))" style="background: none; border: none; padding: 0; color: #4f46e5; font-size: 0.75rem; cursor: pointer; text-decoration: underline;">
                                 View JSON
                             </button>
                         @else
-                            <span class="text-xs text-slate-400">-</span>
+                            <span style="color: #9ca3af;">-</span>
                         @endif
                     </td>
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="5" class="px-6 py-12 text-center">
-                        <div class="mx-auto w-12 h-12 bg-slate-50 rounded-full flex items-center justify-center mb-3">
-                            <svg class="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                        </div>
-                        <h3 class="text-slate-900 font-medium">No activity logs yet</h3>
-                        <p class="text-slate-500 text-sm mt-1">Actions on tenants will appear here.</p>
+                    <td colspan="5" style="padding: 48px; text-align: center;">
+                        <i data-feather="activity" style="width: 48px; height: 48px; color: #cbd5e1; margin-bottom: 12px;"></i>
+                        <p style="margin: 0; color: #9ca3af; font-size: 0.875rem;">No activity logs yet.</p>
                     </td>
                 </tr>
                 @endforelse
@@ -69,7 +71,7 @@
     
     <!-- Pagination -->
     @if($logs->hasPages())
-    <div class="px-6 py-4 border-t border-slate-100 bg-slate-50">
+    <div style="padding: 16px 24px; border-top: 1px solid #f1f5f9; background: #f8fafc;">
         {{ $logs->links() }}
     </div>
     @endif

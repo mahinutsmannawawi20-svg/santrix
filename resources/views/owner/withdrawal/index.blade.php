@@ -1,125 +1,127 @@
-@extends('owner.layouts.app')
+@extends('layouts.app')
 
 @section('title', 'Investigasi Pencairan')
-@section('subtitle', 'Setujui atau tolak permintaan pencairan dana dari Pesantren')
+@section('page-title', 'Investigasi Pencairan')
+
+@section('sidebar-menu')
+    @include('owner.partials.sidebar-menu')
+@endsection
 
 @section('content')
-<div class="space-y-6">
-
-    <!-- Actions & History -->
-    <div class="bg-white rounded-2xl shadow-sm border border-slate-200">
-        <div class="p-6 border-b border-slate-100 flex justify-between items-center">
-            <h3 class="font-bold text-slate-800">Daftar Permintaan</h3>
-        </div>
-        
-        <div class="overflow-x-auto">
-            <table class="w-full">
-                <thead class="bg-slate-50">
-                    <tr class="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                        <th class="px-6 py-4">Pesantren</th>
-                        <th class="px-6 py-4">Tanggal</th>
-                        <th class="px-6 py-4">Jumlah</th>
-                        <th class="px-6 py-4">Rekening Tujuan</th>
-                        <th class="px-6 py-4">Status / Aksi</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-slate-100">
-                    @forelse($withdrawals as $item)
-                    <tr class="hover:bg-slate-50 transition-colors">
-                        <td class="px-6 py-4">
-                            <div class="flex items-center">
-                                <div class="h-8 w-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-xs mr-3">
-                                    {{ substr($item->pesantren->nama ?? '?', 0, 1) }}
-                                </div>
-                                <div>
-                                    <div class="text-sm font-medium text-slate-900">{{ $item->pesantren->nama ?? 'Unknown' }}</div>
-                                    <div class="text-xs text-slate-500">{{ $item->pesantren->nspp ?? '-' }}</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
-                            {{ $item->created_at->format('d M Y H:i') }}
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap font-medium text-slate-800">
-                            Rp {{ number_format($item->amount, 0, ',', '.') }}
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
-                            <div class="font-medium">{{ $item->bank_name }}</div>
-                            <div class="text-xs">{{ $item->account_number }} ({{ $item->account_name }})</div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            @if($item->status == 'pending')
-                                <div class="flex items-center gap-2">
-                                    <!-- Approve Form -->
-                                    <form action="{{ route('owner.withdrawal.update', $item->id) }}" method="POST" onsubmit="return confirm('Setujui pencairan ini?');">
-                                        @csrf
-                                        @method('PUT')
-                                        <input type="hidden" name="status" value="approved">
-                                        <button type="submit" class="px-3 py-1.5 bg-emerald-600 text-white text-xs font-medium rounded-lg hover:bg-emerald-700 transition-colors">
-                                            Setujui
-                                        </button>
-                                    </form>
-
-                                    <!-- Reject Button (Trigger Modal) -->
-                                    <button onclick="openRejectModal('{{ $item->id }}', '{{ $item->pesantren->nama }}', '{{ number_format($item->amount) }}')" 
-                                        class="px-3 py-1.5 bg-red-600 text-white text-xs font-medium rounded-lg hover:bg-red-700 transition-colors">
-                                        Tolak
-                                    </button>
-                                </div>
-                            @elseif($item->status == 'approved')
-                                <div class="flex flex-col">
-                                    <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700 w-fit">
-                                        Berhasil
-                                    </span>
-                                    <span class="text-[10px] text-slate-400 mt-1">{{ $item->updated_at->format('d/m/Y') }}</span>
-                                </div>
-                            @else
-                                <div class="flex flex-col">
-                                    <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-700 w-fit">
-                                        Ditolak
-                                    </span>
-                                    <span class="text-[10px] text-slate-400 mt-1">Note: {{ $item->admin_note }}</span>
-                                </div>
-                            @endif
-                        </td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="5" class="px-6 py-12 text-center text-slate-400">
-                            <i data-feather="inbox" class="w-12 h-12 mx-auto mb-3 opacity-50"></i>
-                            <p>Belum ada permintaan pencairan.</p>
-                        </td>
-                    </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
-        
-        <div class="p-6 border-t border-slate-100">
-            {{ $withdrawals->links() }}
-        </div>
+<div style="background: white; border-radius: 16px; border: 1px solid #f1f5f9; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); overflow: hidden;">
+    <div style="padding: 24px; border-bottom: 1px solid #f1f5f9; background: #f8fafc;">
+        <h3 style="margin: 0; font-size: 1.125rem; font-weight: 700; color: #1e2937;">Daftar Permintaan</h3>
     </div>
+        
+    <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; text-align: left;">
+            <thead>
+                <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #64748b; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                    <th style="padding: 16px 24px; font-weight: 600;">Pesantren</th>
+                    <th style="padding: 16px 24px; font-weight: 600;">Tanggal</th>
+                    <th style="padding: 16px 24px; font-weight: 600;">Jumlah</th>
+                    <th style="padding: 16px 24px; font-weight: 600;">Rekening Tujuan</th>
+                    <th style="padding: 16px 24px; font-weight: 600;">Status / Aksi</th>
+                </tr>
+            </thead>
+            <tbody style="font-size: 0.875rem; color: #1e2937;">
+                @forelse($withdrawals as $item)
+                <tr style="border-bottom: 1px solid #f1f5f9; transition: background 0.2s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='white'">
+                    <td style="padding: 16px 24px;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div style="width: 32px; height: 32px; border-radius: 50%; background: #e0e7ff; color: #4338ca; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem;">
+                                {{ substr($item->pesantren->nama ?? '?', 0, 1) }}
+                            </div>
+                            <div>
+                                <div style="font-weight: 500;">{{ $item->pesantren->nama ?? 'Unknown' }}</div>
+                                <div style="font-size: 0.75rem; color: #9ca3af;">{{ $item->pesantren->nspp ?? '-' }}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td style="padding: 16px 24px; color: #64748b;">
+                        {{ $item->created_at->format('d M Y H:i') }}
+                    </td>
+                    <td style="padding: 16px 24px; font-weight: 600; color: #1e2937;">
+                        Rp {{ number_format($item->amount, 0, ',', '.') }}
+                    </td>
+                    <td style="padding: 16px 24px; color: #64748b;">
+                        <div style="font-weight: 500; color: #1e2937;">{{ $item->bank_name }}</div>
+                        <div style="font-size: 0.75rem;">{{ $item->account_number }} ({{ $item->account_name }})</div>
+                    </td>
+                    <td style="padding: 16px 24px;">
+                        @if($item->status == 'pending')
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <!-- Approve Form -->
+                                <form action="{{ route('owner.withdrawal.update', $item->id) }}" method="POST" onsubmit="return confirm('Setujui pencairan ini?');">
+                                    @csrf
+                                    @method('PUT')
+                                    <input type="hidden" name="status" value="approved">
+                                    <button type="submit" style="padding: 6px 12px; background: #059669; color: white; border: none; border-radius: 6px; font-size: 0.75rem; font-weight: 600; cursor: pointer;">
+                                        Setujui
+                                    </button>
+                                </form>
+
+                                <!-- Reject Button -->
+                                <button onclick="openRejectModal('{{ $item->id }}', '{{ $item->pesantren->nama }}', '{{ number_format($item->amount) }}')" 
+                                    style="padding: 6px 12px; background: #dc2626; color: white; border: none; border-radius: 6px; font-size: 0.75rem; font-weight: 600; cursor: pointer;">
+                                    Tolak
+                                </button>
+                            </div>
+                        @elseif($item->status == 'approved')
+                            <div>
+                                <span style="padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; background: #dcfce7; color: #15803d;">
+                                    Berhasil
+                                </span>
+                                <div style="font-size: 0.65rem; color: #9ca3af; margin-top: 4px;">{{ $item->updated_at->format('d/m/Y') }}</div>
+                            </div>
+                        @else
+                            <div>
+                                <span style="padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; background: #fee2e2; color: #b91c1c;">
+                                    Ditolak
+                                </span>
+                                <div style="font-size: 0.65rem; color: #9ca3af; margin-top: 4px;">Note: {{ $item->admin_note }}</div>
+                            </div>
+                        @endif
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="5" style="padding: 48px; text-align: center;">
+                        <i data-feather="inbox" style="width: 48px; height: 48px; color: #cbd5e1; margin-bottom: 12px;"></i>
+                        <p style="margin: 0; color: #9ca3af; font-size: 0.875rem;">Belum ada permintaan pencairan.</p>
+                    </td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+    
+    @if($withdrawals->hasPages())
+    <div style="padding: 16px 24px; border-top: 1px solid #f1f5f9; background: #f8fafc;">
+        {{ $withdrawals->links() }}
+    </div>
+    @endif
 </div>
 
 <!-- Reject Modal -->
-<dialog id="rejectModal" class="modal rounded-2xl shadow-2xl p-0 backdrop:bg-slate-900/50 w-full max-w-md open:animate-fade-in">
-    <div class="bg-white p-6">
-        <h3 class="text-lg font-bold text-slate-800 mb-4">Tolak Permintaan</h3>
-        <p class="text-sm text-slate-600 mb-4">Saldo akan dikembalikan ke Pesantren <span id="rejectPesantrenName" class="font-bold"></span>.</p>
+<dialog id="rejectModal" style="border: none; border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); padding: 0; max-width: 450px; width: 90%;">
+    <div style="background: white; padding: 24px;">
+        <h3 style="margin: 0 0 16px 0; font-size: 1.125rem; font-weight: 700; color: #1e2937;">Tolak Permintaan</h3>
+        <p style="margin-bottom: 16px; font-size: 0.875rem; color: #475569;">Saldo akan dikembalikan ke Pesantren <span id="rejectPesantrenName" style="font-weight: 700;"></span>.</p>
         
         <form id="rejectForm" method="POST">
             @csrf
             @method('PUT')
             <input type="hidden" name="status" value="rejected">
             
-            <div class="mb-4">
-                <label class="block text-sm font-medium text-slate-700 mb-1">Alasan Penolakan</label>
-                <textarea name="admin_note" rows="3" required class="w-full px-3 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-red-500 outline-none placeholder:text-slate-400" placeholder="Contoh: Nama rekening tidak sesuai..."></textarea>
+            <div style="margin-bottom: 24px;">
+                <label style="display: block; font-size: 0.875rem; font-weight: 500; color: #374151; margin-bottom: 4px;">Alasan Penolakan</label>
+                <textarea name="admin_note" rows="3" required style="width: 100%; padding: 8px 12px; border: 1px solid #e2e8f0; border-radius: 8px; outline: none; font-size: 0.875rem;" placeholder="Contoh: Nama rekening tidak sesuai..."></textarea>
             </div>
 
-            <div class="flex justify-end gap-3">
-                <button type="button" onclick="document.getElementById('rejectModal').close()" class="px-4 py-2 text-slate-600 hover:bg-slate-50 rounded-lg font-medium">Batal</button>
-                <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium">Tolak Permintaan</button>
+            <div style="display: flex; justify-content: flex-end; gap: 12px;">
+                <button type="button" onclick="document.getElementById('rejectModal').close()" style="padding: 8px 16px; background: white; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 0.875rem; font-weight: 500; color: #475569; cursor: pointer;">Batal</button>
+                <button type="submit" style="padding: 8px 16px; background: #dc2626; border: none; border-radius: 8px; font-size: 0.875rem; font-weight: 500; color: white; cursor: pointer;">Tolak Permintaan</button>
             </div>
         </form>
     </div>
@@ -128,8 +130,6 @@
 <script>
     function openRejectModal(id, pesantrenName, amount) {
         document.getElementById('rejectPesantrenName').innerText = pesantrenName;
-        // Construct Route manually since JS can't use blade route param easily without placeholder
-        // Assuming route is owner/withdrawal/{id}
         const form = document.getElementById('rejectForm');
         form.action = "/owner/withdrawal/" + id; 
         

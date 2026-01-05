@@ -554,6 +554,12 @@
             if (str_contains($currentRoute, 'syahriah')) $active = 'syahriah';
             elseif (str_contains($currentRoute, 'pemasukan')) $active = 'pemasukan';
             else $active = 'dashboard';
+        } elseif (str_starts_with($currentRoute, 'owner')) {
+            $context = 'owner';
+            if (str_contains($currentRoute, 'pesantren')) $active = 'pesantren';
+            elseif (str_contains($currentRoute, 'packages')) $active = 'packages';
+            elseif (str_contains($currentRoute, 'withdrawal')) $active = 'withdrawal';
+            else $active = 'dashboard';
         }
     @endphp
     

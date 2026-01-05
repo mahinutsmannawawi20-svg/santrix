@@ -1,31 +1,31 @@
-@extends('owner.layouts.app')
+@extends('layouts.app')
 
 @section('title', 'Data Pesantren')
-@section('subtitle', 'Manage all registered tenants and their subscriptions.')
+@section('page-title', 'Data Pesantren')
+
+@section('sidebar-menu')
+    @include('owner.partials.sidebar-menu')
+@endsection
 
 @section('content')
-<div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+<div style="background: white; border-radius: 16px; border: 1px solid #f1f5f9; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); overflow: hidden;">
     <!-- Filters & Search -->
-    <div class="p-6 border-b border-slate-100 bg-white flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <form action="{{ route('owner.pesantren.index') }}" method="GET" class="flex flex-col md:flex-row gap-4 w-full md:w-auto">
-            <div class="relative">
-                <input type="text" name="search" value="{{ request('search') }}" placeholder="Search tenant..." class="pl-10 pr-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 w-full md:w-64 placeholder-slate-400">
-                <div class="absolute left-3 top-2.5 text-slate-400">
-                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                    </svg>
-                </div>
+    <div style="padding: 24px; border-bottom: 1px solid #f1f5f9; display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: center;">
+        <form action="{{ route('owner.pesantren.index') }}" method="GET" style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center; width: 100%; max-width: 800px;">
+            <div style="position: relative; flex: 1; min-width: 200px;">
+                <i data-feather="search" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; color: #9ca3af;"></i>
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Search tenant..." style="padding: 10px 10px 10px 36px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 0.875rem; width: 100%; outline: none;">
             </div>
             
-            <div class="flex gap-2">
-                <select name="status" onchange="this.form.submit()" class="pl-3 pr-8 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-slate-600 bg-white">
+            <div style="display: flex; gap: 8px;">
+                <select name="status" onchange="this.form.submit()" style="padding: 10px 16px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 0.875rem; background: white; color: #475569; cursor: pointer; outline: none;">
                     <option value="">All Status</option>
                     <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Active</option>
                     <option value="expired" {{ request('status') == 'expired' ? 'selected' : '' }}>Expired</option>
                     <option value="suspended" {{ request('status') == 'suspended' ? 'selected' : '' }}>Suspended</option>
                 </select>
 
-                <select name="package" onchange="this.form.submit()" class="pl-3 pr-8 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-slate-600 bg-white">
+                <select name="package" onchange="this.form.submit()" style="padding: 10px 16px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 0.875rem; background: white; color: #475569; cursor: pointer; outline: none;">
                     <option value="">All Packages</option>
                     @foreach($packages as $pkg)
                         <option value="{{ $pkg->slug }}" {{ request('package') == $pkg->slug ? 'selected' : '' }}>{{ $pkg->name }}</option>
@@ -34,95 +34,80 @@
             </div>
         </form>
         
-        <div class="flex items-center gap-2">
-            <button class="px-4 py-2 bg-white border border-slate-200 text-slate-600 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors">
-                Export Data
-            </button>
-        </div>
+        <!-- Export Button -->
+        <button style="padding: 10px 20px; background: white; border: 1px solid #e2e8f0; border-radius: 8px; color: #475569; font-size: 0.875rem; font-weight: 500; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='white'">
+            Export Data
+        </button>
     </div>
 
     <!-- Table -->
-    <div class="overflow-x-auto">
-        <table class="w-full text-left border-collapse">
+    <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; text-align: left;">
             <thead>
-                <tr class="bg-slate-50/50 border-b border-slate-100 text-xs uppercase tracking-wider text-slate-500 font-semibold">
-                    <th class="px-6 py-4">Pesantren</th>
-                    <th class="px-6 py-4">Subdomain</th>
-                    <th class="px-6 py-4">Admin</th>
-                    <th class="px-6 py-4">Package</th>
-                    <th class="px-6 py-4">Status</th>
-                    <th class="px-6 py-4">Expired At</th>
-                    <th class="px-6 py-4">Created</th>
-                    <th class="px-6 py-4 text-right">Action</th>
+                <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #64748b; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                    <th style="padding: 16px 24px; font-weight: 600;">Pesantren</th>
+                    <th style="padding: 16px 24px; font-weight: 600;">Subdomain</th>
+                    <th style="padding: 16px 24px; font-weight: 600;">Admin</th>
+                    <th style="padding: 16px 24px; font-weight: 600;">Package</th>
+                    <th style="padding: 16px 24px; font-weight: 600;">Status</th>
+                    <th style="padding: 16px 24px; font-weight: 600;">Expired On</th>
+                    <th style="padding: 16px 24px; font-weight: 600; text-align: right;">Action</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-slate-100">
+            <tbody style="font-size: 0.875rem; color: #1e2937;">
                 @forelse($pesantrens as $p)
-                <tr class="hover:bg-slate-50/80 transition-colors">
-                    <td class="px-6 py-4">
-                        <div class="font-medium text-slate-800">{{ $p->nama }}</div>
-                        <div class="text-xs text-slate-500">ID: #{{ $p->id }}</div>
+                <tr style="border-bottom: 1px solid #f1f5f9; transition: background 0.2s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='white'">
+                    <td style="padding: 16px 24px;">
+                        <div style="font-weight: 500;">{{ $p->nama }}</div>
+                        <div style="font-size: 0.75rem; color: #9ca3af;">#{{ $p->id }}</div>
                     </td>
-                    <td class="px-6 py-4">
-                        @php
-                            $mainDomain = str_replace(['owner.', 'www.'], '', request()->getHost());
-                        @endphp
-                        <a href="{{ request()->getScheme() }}://{{ $p->subdomain }}.{{ $mainDomain }}" target="_blank" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium flex items-center">
+                    <td style="padding: 16px 24px;">
+                        @php $mainDomain = str_replace(['owner.', 'www.'], '', request()->getHost()); @endphp
+                        <a href="{{ request()->getScheme() }}://{{ $p->subdomain }}.{{ $mainDomain }}" target="_blank" style="color: #4f46e5; text-decoration: none; font-weight: 500; display: inline-flex; align-items: center;">
                             {{ $p->subdomain }}
-                            <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            <i data-feather="external-link" style="width: 12px; height: 12px; margin-left: 4px;"></i>
                         </a>
                     </td>
-                    <td class="px-6 py-4">
+                    <td style="padding: 16px 24px;">
                         @if($p->admin)
-                            <div class="text-sm text-slate-700">{{ $p->admin->name }}</div>
-                            <div class="text-xs text-slate-400">{{ $p->admin->email }}</div>
+                            <div>{{ $p->admin->name }}</div>
+                            <div style="font-size: 0.75rem; color: #9ca3af;">{{ $p->admin->email }}</div>
                         @else
-                            <span class="text-xs text-slate-400 italic">No admin</span>
+                            <span style="font-style: italic; color: #9ca3af;">No admin</span>
                         @endif
                     </td>
-                    <td class="px-6 py-4">
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $p->package == 'enterprise' ? 'bg-purple-100 text-purple-800' : ($p->package == 'advance' ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800') }} capitalize">
+                    <td style="padding: 16px 24px;">
+                        <span style="padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; text-transform: capitalize; background: #f3f4f6; color: #374151;">
                             {{ $p->package }}
                         </span>
                     </td>
-                    <td class="px-6 py-4">
+                    <td style="padding: 16px 24px;">
                         @php
                             $isExpired = $p->expired_at && $p->expired_at < now();
-                            $isExpiringSoon = $p->expired_at && $p->expired_at >= now() && $p->expired_at <= now()->addDays(14);
+                            $bg = '#dcfce7'; $color = '#15803d'; $label = 'Active'; // default
                             
                             if($p->status == 'suspended') {
-                                $statusClass = 'bg-red-100 text-red-800';
-                                $statusLabel = 'Suspended';
+                                $bg = '#fee2e2'; $color = '#b91c1c'; $label = 'Suspended';
                             } elseif($isExpired) {
-                                $statusClass = 'bg-amber-100 text-amber-800';
-                                $statusLabel = 'Expired';
-                            } elseif($isExpiringSoon) {
-                                $statusClass = 'bg-yellow-100 text-yellow-800';
-                                $statusLabel = 'Expiring Soon';
-                            } else {
-                                $statusClass = 'bg-emerald-100 text-emerald-800';
-                                $statusLabel = 'Active';
+                                $bg = '#fef3c7'; $color = '#b45309'; $label = 'Expired';
                             }
                         @endphp
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $statusClass }}">
-                            {{ $statusLabel }}
+                        <span style="padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; background: {{ $bg }}; color: {{ $color }};">
+                            {{ $label }}
                         </span>
                     </td>
-                    <td class="px-6 py-4 text-sm text-slate-600">
+                    <td style="padding: 16px 24px; color: #64748b;">
                         {{ $p->expired_at ? $p->expired_at->format('d M Y') : '-' }}
                     </td>
-                    <td class="px-6 py-4 text-sm text-slate-500">
-                        {{ $p->created_at->format('d M Y') }}
-                    </td>
-                    <td class="px-6 py-4 text-right">
-                        <div class="flex items-center justify-end gap-2">
-                            <a href="{{ route('owner.pesantren.show', $p->id) }}" class="inline-flex items-center px-3 py-1.5 border border-slate-200 shadow-sm text-xs font-medium rounded-lg text-slate-700 bg-white hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
+                    <td style="padding: 16px 24px; text-align: right;">
+                        <div style="display: flex; justify-content: flex-end; gap: 8px;">
+                            <a href="{{ route('owner.pesantren.show', $p->id) }}" style="padding: 6px 12px; background: white; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 0.75rem; font-weight: 600; color: #475569; text-decoration: none; display: inline-block;">
                                 Detail
                             </a>
-                            <form action="{{ route('owner.pesantren.destroy', $p->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data pesantren ini secara permanen?');" class="inline">
+                            <form action="{{ route('owner.pesantren.destroy', $p->id) }}" method="POST" onsubmit="return confirm('Hapus permanen pesantren ini?');" style="display: inline;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="inline-flex items-center px-3 py-1.5 border border-red-200 shadow-sm text-xs font-medium rounded-lg text-red-700 bg-red-50 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors">
+                                <button type="submit" style="padding: 6px 12px; background: #fef2f2; border: 1px solid #fecaca; border-radius: 6px; font-size: 0.75rem; font-weight: 600; color: #b91c1c; cursor: pointer;">
                                     Hapus
                                 </button>
                             </form>
@@ -131,22 +116,20 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="8" class="px-6 py-12 text-center">
-                        <div class="mx-auto w-12 h-12 bg-slate-50 rounded-full flex items-center justify-center mb-3">
-                            <svg class="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg>
-                        </div>
-                        <h3 class="text-slate-900 font-medium">No tenants found</h3>
-                        <p class="text-slate-500 text-sm mt-1">Try adjusting your search or filters.</p>
+                    <td colspan="7" style="padding: 48px; text-align: center;">
+                        <i data-feather="inbox" style="width: 48px; height: 48px; color: #cbd5e1; margin-bottom: 12px;"></i>
+                        <h3 style="margin: 0; color: #1e2937; font-size: 1rem; font-weight: 600;">No tenants found</h3>
+                        <p style="margin: 4px 0 0; color: #9ca3af; font-size: 0.875rem;">Try adjusting search or filters.</p>
                     </td>
                 </tr>
                 @endforelse
             </tbody>
         </table>
     </div>
-    
+
     <!-- Pagination -->
     @if($pesantrens->hasPages())
-    <div class="px-6 py-4 border-t border-slate-100 bg-slate-50">
+    <div style="padding: 16px 24px; border-top: 1px solid #f1f5f9; background: #f8fafc;">
         {{ $pesantrens->appends(request()->query())->links() }}
     </div>
     @endif

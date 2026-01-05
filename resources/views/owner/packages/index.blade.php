@@ -1,77 +1,82 @@
-@extends('owner.layouts.app')
+@extends('layouts.app')
 
 @section('title', 'Manajemen Paket')
-@section('subtitle', 'Kelola paket berlangganan dan harga layanan.')
+@section('page-title', 'Manajemen Paket')
+
+@section('sidebar-menu')
+    @include('owner.partials.sidebar-menu')
+@endsection
 
 @section('content')
-<div class="space-y-6">
+<div style="background: white; border-radius: 16px; border: 1px solid #f1f5f9; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); overflow: hidden;">
     <!-- Header Actions -->
-    <div class="flex justify-end">
-        <a href="{{ route('owner.packages.create') }}" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            <svg class="-ml-1 mr-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+    <div style="padding: 24px; border-bottom: 1px solid #f1f5f9; display: flex; justify-content: flex-end;">
+        <a href="{{ route('owner.packages.create') }}" style="display: inline-flex; align-items: center; padding: 10px 20px; background: #4f46e5; color: white; border-radius: 8px; font-weight: 500; font-size: 0.875rem; text-decoration: none; transition: background 0.2s;" onmouseover="this.style.background='#4338ca'" onmouseout="this.style.background='#4f46e5'">
+            <i data-feather="plus" style="width: 16px; height: 16px; margin-right: 8px;"></i>
             Tambah Paket Baru
         </a>
     </div>
 
-    <!-- Packages List -->
-    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-        <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-slate-200">
-                <thead class="bg-slate-50">
-                    <tr>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Nama Paket</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Harga</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Durasi</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Status</th>
-                        <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-slate-500 uppercase tracking-wider">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-slate-200">
-                    @forelse($packages as $package)
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="flex items-center">
-                                <div class="ml-0">
-                                    <div class="text-sm font-medium text-slate-900">{{ $package->name }}</div>
-                                    <div class="text-xs text-slate-500">{{ $package->slug }}</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm font-bold text-slate-900">{{ $package->formatted_price }}</div>
-                            @if($package->discount_price)
-                                <div class="text-xs text-red-500 line-through">{{ $package->formatted_discount_price }}</div>
-                            @endif
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-slate-900">{{ $package->duration_months }} Bulan</div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            @if($package->is_featured)
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-indigo-100 text-indigo-800">Featured</span>
-                            @else
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-slate-100 text-slate-800">Standard</span>
-                            @endif
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a href="{{ route('owner.packages.edit', $package->id) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</a>
-                            <form action="{{ route('owner.packages.destroy', $package->id) }}" method="POST" class="inline" onsubmit="return confirm('Yakin ingin menghapus paket ini?');">
+    <!-- Table -->
+    <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; text-align: left;">
+            <thead>
+                <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #64748b; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                    <th style="padding: 16px 24px; font-weight: 600;">Nama Paket</th>
+                    <th style="padding: 16px 24px; font-weight: 600;">Harga (Net)</th>
+                    <th style="padding: 16px 24px; font-weight: 600;">Durasi</th>
+                    <th style="padding: 16px 24px; font-weight: 600;">Status</th>
+                    <th style="padding: 16px 24px; font-weight: 600; text-align: right;">Aksi</th>
+                </tr>
+            </thead>
+            <tbody style="font-size: 0.875rem; color: #1e2937;">
+                @forelse($packages as $package)
+                <tr style="border-bottom: 1px solid #f1f5f9; transition: background 0.2s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='white'">
+                    <td style="padding: 16px 24px;">
+                        <div style="font-weight: 500;">{{ $package->name }}</div>
+                        <div style="font-size: 0.75rem; color: #9ca3af;">{{ $package->slug }}</div>
+                    </td>
+                    <td style="padding: 16px 24px;">
+                        <div style="font-weight: 700; color: #1e2937;">{{ $package->formatted_price }}</div>
+                        @if($package->discount_price)
+                            <div style="font-size: 0.75rem; color: #ef4444; text-decoration: line-through;">{{ $package->formatted_discount_price }}</div>
+                        @endif
+                    </td>
+                    <td style="padding: 16px 24px; color: #64748b;">
+                        {{ $package->duration_months }} Bulan
+                    </td>
+                    <td style="padding: 16px 24px;">
+                        @if($package->is_featured)
+                            <span style="padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; background: #e0e7ff; color: #4338ca;">Featured</span>
+                        @else
+                            <span style="padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; background: #f1f5f9; color: #64748b;">Standard</span>
+                        @endif
+                    </td>
+                    <td style="padding: 16px 24px; text-align: right;">
+                        <div style="display: flex; justify-content: flex-end; gap: 8px;">
+                            <a href="{{ route('owner.packages.edit', $package->id) }}" style="padding: 6px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 0.75rem; font-weight: 600; color: #4f46e5; text-decoration: none; display: inline-block;">
+                                Edit
+                            </a>
+                            <form action="{{ route('owner.packages.destroy', $package->id) }}" method="POST" onsubmit="return confirm('Hapus paket ini?');" style="display: inline;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="text-red-600 hover:text-red-900">Hapus</button>
+                                <button type="submit" style="padding: 6px 12px; background: white; border: 1px solid #fecaca; border-radius: 6px; font-size: 0.75rem; font-weight: 600; color: #b91c1c; cursor: pointer;" onmouseover="this.style.background='#fef2f2'" onmouseout="this.style.background='white'">
+                                    Hapus
+                                </button>
                             </form>
-                        </td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="5" class="px-6 py-12 text-center text-slate-500">
-                            Belum ada paket tersedia. Silakan tambahkan paket baru.
-                        </td>
-                    </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
+                        </div>
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="5" style="padding: 48px; text-align: center;">
+                        <i data-feather="package" style="width: 48px; height: 48px; color: #cbd5e1; margin-bottom: 12px;"></i>
+                        <p style="margin: 0; color: #9ca3af; font-size: 0.875rem;">Belum ada paket tersedia.</p>
+                    </td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
     </div>
 </div>
 @endsection

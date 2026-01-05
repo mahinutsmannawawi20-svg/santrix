@@ -1,209 +1,215 @@
-@extends('owner.layouts.app')
+@extends('layouts.app')
 
 @section('title', 'Tenant Details')
-@section('subtitle', 'Manage subscription and settings for ' . $pesantren->nama)
+@section('page-title', 'Tenant Details')
+
+@section('sidebar-menu')
+    @include('owner.partials.sidebar-menu')
+@endsection
 
 @section('content')
-<div class="space-y-6">
+<div style="max-width: 1200px; margin: 0 auto; display: grid; gap: 24px;">
+
     <!-- Back Link -->
-    <a href="{{ route('owner.pesantren.index') }}" class="inline-flex items-center text-sm text-slate-500 hover:text-indigo-600 transition-colors">
-        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-        Back to List
-    </a>
+    <div>
+        <a href="{{ route('owner.pesantren.index') }}" style="text-decoration: none; color: #64748b; font-size: 0.875rem; display: flex; align-items: center; gap: 8px;">
+            <i data-feather="arrow-left" style="width: 16px; height: 16px;"></i>
+            Back to List
+        </a>
+    </div>
 
     <!-- Header Card -->
-    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-8 relative overflow-hidden">
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-center relative z-10">
-            <div class="flex items-center">
-                <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white text-2xl font-bold shadow-lg shadow-indigo-500/30">
+    <div style="background: white; border-radius: 16px; border: 1px solid #f1f5f9; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); padding: 32px; overflow: hidden; position: relative;">
+        <!-- Background Pattern -->
+        <div style="position: absolute; right: 0; top: 0; width: 30%; height: 100%; background: linear-gradient(to left, #eff6ff, transparent); pointer-events: none;"></div>
+
+        <div style="position: relative; z-index: 10; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 24px;">
+            <div style="display: flex; align-items: center; gap: 24px;">
+                <div style="width: 64px; height: 64px; background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); border-radius: 16px; color: white; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 700;">
                     {{ substr($pesantren->nama, 0, 1) }}
                 </div>
-                <div class="ml-6">
-                    <h1 class="text-2xl font-bold text-slate-800">{{ $pesantren->nama }}</h1>
-                    <div class="flex items-center mt-2 text-sm text-slate-500">
-                        @php
+                <div>
+                    <h1 style="margin: 0; font-size: 1.5rem; font-weight: 800; color: #1e2937;">{{ $pesantren->nama }}</h1>
+                    <div style="margin-top: 8px; font-size: 0.875rem; color: #64748b; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                         @php
                             $mainDomain = str_replace(['owner.', 'www.'], '', request()->getHost());
                             $tenantUrl = request()->getScheme() . '://' . $pesantren->subdomain . '.' . $mainDomain;
                         @endphp
-                        <a href="{{ $tenantUrl }}" target="_blank" class="font-mono bg-slate-100 px-2 py-1 rounded text-indigo-600 hover:text-indigo-800 transition-colors select-all flex items-center">
+                        <a href="{{ $tenantUrl }}" target="_blank" style="background: #f1f5f9; padding: 4px 8px; border-radius: 6px; color: #4f46e5; text-decoration: none; font-family: monospace; display: flex; align-items: center; gap: 4px;">
                             {{ $pesantren->subdomain }}
-                            <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            <i data-feather="external-link" style="width: 12px; height: 12px;"></i>
                         </a>
-                        <span class="mx-2">•</span>
+                        <span>•</span>
                         <span>Joined {{ $pesantren->created_at->format('F Y') }}</span>
                     </div>
                 </div>
             </div>
-            <div class="mt-6 md:mt-0 flex gap-3">
-                <a href="{{ route('owner.pesantren.edit', $pesantren->id) }}" class="px-4 py-2 bg-white border border-slate-200 text-slate-700 font-medium rounded-lg hover:bg-slate-50 transition-colors shadow-sm">
+
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                <a href="{{ route('owner.pesantren.edit', $pesantren->id) }}" style="padding: 8px 16px; background: white; border: 1px solid #e2e8f0; border-radius: 8px; color: #475569; font-weight: 600; font-size: 0.875rem; text-decoration: none;">
                     Edit Subscription
                 </a>
                 
-                <form action="{{ route('owner.pesantren.suspend', $pesantren->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to change the status of this tenant?');">
+                <form action="{{ route('owner.pesantren.suspend', $pesantren->id) }}" method="POST" onsubmit="return confirm('Change status?');">
                     @csrf
                     @if($pesantren->status === 'suspended')
-                        <button type="submit" class="px-4 py-2 bg-emerald-600 text-white font-medium rounded-lg hover:bg-emerald-700 transition-colors shadow-lg shadow-emerald-500/30">
+                        <button type="submit" style="padding: 8px 16px; background: #059669; color: white; border: none; border-radius: 8px; font-weight: 600; font-size: 0.875rem; cursor: pointer;">
                             Reactivate Tenant
                         </button>
                     @else
-                        <button type="submit" class="px-4 py-2 bg-red-50 border border-red-100 text-red-600 font-medium rounded-lg hover:bg-red-100 transition-colors">
+                        <button type="submit" style="padding: 8px 16px; background: #fef2f2; border: 1px solid #fca5a5; color: #dc2626; border-radius: 8px; font-weight: 600; font-size: 0.875rem; cursor: pointer;">
                             Suspend Access
                         </button>
                     @endif
                 </form>
 
-                <form action="{{ route('owner.pesantren.destroy', $pesantren->id) }}" method="POST" onsubmit="return confirm('PERINGATAN: Tindakan ini tidak dapat dibatalkan.\n\nApakah Anda yakin ingin MENGHAPUS PERMANEN data pesantren ini beserta seluruh datanya?');">
+                <form action="{{ route('owner.pesantren.destroy', $pesantren->id) }}" method="POST" onsubmit="return confirm('PERINGATAN: Tindakan ini tidak dapat dibatalkan.\n\nApakah Anda yakin ingin MENGHAPUS PERMANEN data pesantren ini?');">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="px-4 py-2 bg-red-50 border border-red-200 text-red-700 font-medium rounded-lg hover:bg-red-100 transition-colors">
-                        Hapus Pesantren
+                    <button type="submit" style="padding: 8px 16px; background: white; border: 1px solid #fecaca; color: #b91c1c; border-radius: 8px; font-weight: 600; font-size: 0.875rem; cursor: pointer;" onmouseover="this.style.background='#fef2f2'" onmouseout="this.style.background='white'">
+                        Delete
                     </button>
                 </form>
             </div>
         </div>
-        <!-- Background Pattern -->
-        <div class="absolute right-0 top-0 w-64 h-full bg-gradient-to-l from-indigo-50 to-transparent pointer-events-none"></div>
     </div>
 
     <!-- Stats Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
-            <p class="text-sm font-medium text-slate-500 mb-1">Current Package</p>
-            <div class="flex justify-between items-center">
-                <span class="text-xl font-bold text-slate-800 capitalize">{{ $pesantren->package }}</span>
-                <span class="px-2.5 py-1 rounded-full text-xs font-semibold {{ $pesantren->package == 'enterprise' ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700' }}">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px;">
+        <div style="background: white; padding: 24px; border-radius: 16px; border: 1px solid #f1f5f9; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+            <p style="margin: 0 0 8px 0; font-size: 0.875rem; font-weight: 500; color: #64748b;">Current Package</p>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 1.25rem; font-weight: 700; color: #1e2937; text-transform: capitalize;">{{ $pesantren->package }}</span>
+                <span style="padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; {{ $pesantren->package == 'enterprise' ? 'background: #f3e8ff; color: #7e22ce;' : 'background: #dbeafe; color: #1d4ed8;' }}">
                     Active
                 </span>
             </div>
         </div>
-        <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
-            <p class="text-sm font-medium text-slate-500 mb-1">Expires On</p>
-            <span class="text-xl font-bold text-slate-800">{{ $pesantren->expired_at ? $pesantren->expired_at->format('d M Y') : '-' }}</span>
+        <div style="background: white; padding: 24px; border-radius: 16px; border: 1px solid #f1f5f9; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+            <p style="margin: 0 0 8px 0; font-size: 0.875rem; font-weight: 500; color: #64748b;">Expires On</p>
+            <span style="font-size: 1.25rem; font-weight: 700; color: #1e2937;">{{ $pesantren->expired_at ? $pesantren->expired_at->format('d M Y') : '-' }}</span>
         </div>
-        <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
-            <p class="text-sm font-medium text-slate-500 mb-1">Total Santri</p>
-            <span class="text-xl font-bold text-slate-800">{{ $pesantren->santri_count }}</span>
+        <div style="background: white; padding: 24px; border-radius: 16px; border: 1px solid #f1f5f9; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+            <p style="margin: 0 0 8px 0; font-size: 0.875rem; font-weight: 500; color: #64748b;">Total Santri</p>
+            <span style="font-size: 1.25rem; font-weight: 700; color: #1e2937;">{{ $pesantren->santri_count }}</span>
         </div>
-        <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
-            <p class="text-sm font-medium text-slate-500 mb-1">Total Billing</p>
-            <span class="text-xl font-bold text-slate-800">Rp {{ number_format($pesantren->invoices->where('status', 'paid')->sum('amount'), 0, ',', '.') }}</span>
+        <div style="background: white; padding: 24px; border-radius: 16px; border: 1px solid #f1f5f9; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+            <p style="margin: 0 0 8px 0; font-size: 0.875rem; font-weight: 500; color: #64748b;">Total Billing Paid</p>
+            <span style="font-size: 1.25rem; font-weight: 700; color: #1e2937;">Rp {{ number_format($pesantren->invoices->where('status', 'paid')->sum('amount'), 0, ',', '.') }}</span>
         </div>
     </div>
 
-    <!-- Admin Info -->
-    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
-        <h3 class="text-lg font-bold text-slate-800 mb-4">Tenant Administrator</h3>
-        @if($pesantren->admin)
-            <div class="flex items-center">
-                <div class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 font-bold">
-                    {{ substr($pesantren->admin->name, 0, 2) }}
+    <!-- Admin & Details Split -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
+        
+        <!-- Admin Info -->
+        <div style="background: white; border-radius: 16px; border: 1px solid #f1f5f9; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); padding: 24px; height: fit-content;">
+            <h3 style="margin: 0 0 16px 0; font-size: 1.125rem; font-weight: 700; color: #1e2937;">Tenant Administrator</h3>
+            @if($pesantren->admin)
+                <div style="display: flex; align-items: center; gap: 16px;">
+                     <div style="width: 48px; height: 48px; border-radius: 50%; background: #f1f5f9; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #64748b;">
+                        {{ substr($pesantren->admin->name, 0, 2) }}
+                    </div>
+                    <div>
+                        <p style="margin: 0; font-weight: 600; color: #1e2937;">{{ $pesantren->admin->name }}</p>
+                        <p style="margin: 4px 0 0; font-size: 0.875rem; color: #64748b;">{{ $pesantren->admin->email }}</p>
+                    </div>
                 </div>
-                <div class="ml-4">
-                    <p class="font-medium text-slate-800">{{ $pesantren->admin->name }}</p>
-                    <p class="text-sm text-slate-500">{{ $pesantren->admin->email }}</p>
-                </div>
-            </div>
-        @else
-            <p class="text-slate-400 italic">No admin user assigned to this tenant.</p>
-        @endif
-    </div>
+            @else
+                <p style="color: #9ca3af; font-style: italic;">No admin user assigned.</p>
+            @endif
+        </div>
 
-    <!-- Content Tabs -->
-    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-        <div class="border-b border-slate-100">
-            <nav class="flex px-6" aria-label="Tabs">
-                <button onclick="showTab('subscriptions')" id="tab-subscriptions" class="tab-btn border-b-2 border-indigo-500 py-4 px-6 text-sm font-medium text-indigo-600">
+        <!-- Content Tabs -->
+        <div style="background: white; border-radius: 16px; border: 1px solid #f1f5f9; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); overflow: hidden;">
+            <div style="border-bottom: 1px solid #f1f5f9; display: flex;">
+                 <button onclick="showTab('subscriptions')" id="tab-subscriptions" style="flex: 1; padding: 16px; background: white; border: none; border-bottom: 2px solid #4f46e5; color: #4f46e5; font-weight: 600; cursor: pointer; transition: all 0.2s;">
                     Subscription History
                 </button>
-                <button onclick="showTab('invoices')" id="tab-invoices" class="tab-btn border-b-2 border-transparent py-4 px-6 text-sm font-medium text-slate-500 hover:text-slate-700 hover:border-slate-300">
+                <button onclick="showTab('invoices')" id="tab-invoices" style="flex: 1; padding: 16px; background: white; border: none; border-bottom: 2px solid transparent; color: #64748b; font-weight: 600; cursor: pointer; transition: all 0.2s;">
                     Invoices
                 </button>
-            </nav>
-        </div>
+            </div>
 
-        <div class="p-6">
-            <!-- Subscription Table -->
-            <div id="content-subscriptions" class="tab-content">
-                <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wide mb-4">Package History</h3>
-                <div class="overflow-hidden rounded-xl border border-slate-100">
-                    <table class="min-w-full divide-y divide-slate-100">
-                        <thead class="bg-slate-50">
-                            <tr>
-                                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">Package</th>
-                                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">Period</th>
-                                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">Status</th>
+            <div style="padding: 24px;">
+                 <!-- Subscriptions -->
+                <div id="content-subscriptions">
+                    <table style="width: 100%; text-align: left; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #64748b; font-size: 0.75rem; text-transform: uppercase;">
+                                <th style="padding: 12px; font-weight: 600;">Package</th>
+                                <th style="padding: 12px; font-weight: 600;">Period</th>
+                                <th style="padding: 12px; font-weight: 600;">Status</th>
                             </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-slate-100">
-                            @forelse($pesantren->subscriptions as $sub)
-                            <tr>
-                                <td class="px-4 py-3 text-sm font-medium text-slate-800 capitalize">{{ $sub->package_name }}</td>
-                                <td class="px-4 py-3 text-xs text-slate-500">
-                                    {{ $sub->start_date?->format('d M y') ?? '-' }} - {{ $sub->end_date?->format('d M y') ?? '-' }}
+                        <tbody>
+                             @forelse($pesantren->subscriptions as $sub)
+                            <tr style="border-bottom: 1px solid #f1f5f9;">
+                                <td style="padding: 12px; font-weight: 500; font-size: 0.875rem;">{{ $sub->package_name }}</td>
+                                <td style="padding: 12px; font-size: 0.875rem; color: #64748b;">
+                                     {{ $sub->start_date?->format('d M y') ?? '-' }} - {{ $sub->end_date?->format('d M y') ?? '-' }}
                                 </td>
-                                <td class="px-4 py-3">
-                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium {{ $sub->status == 'active' ? 'bg-emerald-50 text-emerald-700' : 'bg-slate-50 text-slate-600' }}">
+                                <td style="padding: 12px;">
+                                    <span style="font-size: 0.75rem; padding: 2px 8px; border-radius: 4px; {{ $sub->status == 'active' ? 'background: #dcfce7; color: #15803d;' : 'background: #f1f5f9; color: #64748b;' }}">
                                         {{ $sub->status }}
                                     </span>
                                 </td>
                             </tr>
                             @empty
-                            <tr><td colspan="3" class="px-4 py-4 text-center text-sm text-slate-400">No history available</td></tr>
+                            <tr><td colspan="3" style="padding: 24px; text-align: center; color: #9ca3af; font-size: 0.875rem;">No history available</td></tr>
                             @endforelse
                         </tbody>
                     </table>
                 </div>
-            </div>
 
-            <!-- Invoices Table -->
-            <div id="content-invoices" class="tab-content hidden">
-                 <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wide mb-4">Recent Invoices</h3>
-                 <div class="overflow-hidden rounded-xl border border-slate-100">
-                    <table class="min-w-full divide-y divide-slate-100">
-                        <thead class="bg-slate-50">
-                            <tr>
-                                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">Invoice #</th>
-                                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">Amount</th>
-                                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">Status</th>
+                <!-- Invoices -->
+                <div id="content-invoices" style="display: none;">
+                    <table style="width: 100%; text-align: left; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #64748b; font-size: 0.75rem; text-transform: uppercase;">
+                                <th style="padding: 12px; font-weight: 600;">Invoice #</th>
+                                <th style="padding: 12px; font-weight: 600;">Amount</th>
+                                <th style="padding: 12px; font-weight: 600;">Status</th>
                             </tr>
                         </thead>
-                         <tbody class="bg-white divide-y divide-slate-100">
-                            @forelse($pesantren->invoices as $inv)
-                            <tr>
-                                <td class="px-4 py-3 text-xs font-mono text-slate-600">{{ $inv->invoice_number }}</td>
-                                <td class="px-4 py-3 text-sm font-medium text-slate-800">Rp {{ number_format($inv->amount, 0, ',', '.') }}</td>
-                                <td class="px-4 py-3">
-                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium {{ $inv->status == 'paid' ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700' }}">
+                        <tbody>
+                             @forelse($pesantren->invoices as $inv)
+                            <tr style="border-bottom: 1px solid #f1f5f9;">
+                                <td style="padding: 12px; font-family: monospace; font-size: 0.875rem;">{{ $inv->invoice_number }}</td>
+                                <td style="padding: 12px; font-size: 0.875rem; font-weight: 500;">Rp {{ number_format($inv->amount, 0, ',', '.') }}</td>
+                                <td style="padding: 12px;">
+                                    <span style="font-size: 0.75rem; padding: 2px 8px; border-radius: 4px; {{ $inv->status == 'paid' ? 'background: #dcfce7; color: #15803d;' : 'background: #fef3c7; color: #b45309;' }}">
                                         {{ $inv->status }}
                                     </span>
                                 </td>
                             </tr>
                             @empty
-                            <tr><td colspan="3" class="px-4 py-4 text-center text-sm text-slate-400">No invoices generated</td></tr>
+                            <tr><td colspan="3" style="padding: 24px; text-align: center; color: #9ca3af; font-size: 0.875rem;">No invoices generated</td></tr>
                             @endforelse
                         </tbody>
                     </table>
-                 </div>
+                </div>
             </div>
         </div>
+
     </div>
 </div>
 
 <script>
 function showTab(tabName) {
-    // Hide all contents
-    document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-    // Show selected content
-    document.getElementById('content-' + tabName).classList.remove('hidden');
-    
-    // Reset all tabs
-    document.querySelectorAll('.tab-btn').forEach(el => {
-        el.classList.remove('border-indigo-500', 'text-indigo-600');
-        el.classList.add('border-transparent', 'text-slate-500');
+    const tabs = ['subscriptions', 'invoices'];
+    tabs.forEach(t => {
+        document.getElementById('content-' + t).style.display = (t === tabName) ? 'block' : 'none';
+        
+        const btn = document.getElementById('tab-' + t);
+        if (t === tabName) {
+            btn.style.color = '#4f46e5';
+            btn.style.borderBottomColor = '#4f46e5';
+        } else {
+            btn.style.color = '#64748b';
+            btn.style.borderBottomColor = 'transparent';
+        }
     });
-    // Highlight selected tab
-    document.getElementById('tab-' + tabName).classList.remove('border-transparent', 'text-slate-500');
-    document.getElementById('tab-' + tabName).classList.add('border-indigo-500', 'text-indigo-600');
 }
 </script>
 @endsection
