@@ -97,18 +97,18 @@
     <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
         <div class="border-b border-slate-100">
             <nav class="flex px-6" aria-label="Tabs">
-                <button class="border-b-2 border-indigo-500 py-4 px-6 text-sm font-medium text-indigo-600">
+                <button onclick="showTab('subscriptions')" id="tab-subscriptions" class="tab-btn border-b-2 border-indigo-500 py-4 px-6 text-sm font-medium text-indigo-600">
                     Subscription History
                 </button>
-                <button class="border-b-2 border-transparent py-4 px-6 text-sm font-medium text-slate-500 hover:text-slate-700 hover:border-slate-300">
+                <button onclick="showTab('invoices')" id="tab-invoices" class="tab-btn border-b-2 border-transparent py-4 px-6 text-sm font-medium text-slate-500 hover:text-slate-700 hover:border-slate-300">
                     Invoices
                 </button>
             </nav>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-slate-100">
+        <div class="p-6">
             <!-- Subscription Table -->
-            <div class="p-6">
+            <div id="content-subscriptions" class="tab-content">
                 <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wide mb-4">Package History</h3>
                 <div class="overflow-hidden rounded-xl border border-slate-100">
                     <table class="min-w-full divide-y divide-slate-100">
@@ -141,7 +141,7 @@
             </div>
 
             <!-- Invoices Table -->
-            <div class="p-6">
+            <div id="content-invoices" class="tab-content hidden">
                  <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wide mb-4">Recent Invoices</h3>
                  <div class="overflow-hidden rounded-xl border border-slate-100">
                     <table class="min-w-full divide-y divide-slate-100">
@@ -173,4 +173,22 @@
         </div>
     </div>
 </div>
+
+<script>
+function showTab(tabName) {
+    // Hide all contents
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+    // Show selected content
+    document.getElementById('content-' + tabName).classList.remove('hidden');
+    
+    // Reset all tabs
+    document.querySelectorAll('.tab-btn').forEach(el => {
+        el.classList.remove('border-indigo-500', 'text-indigo-600');
+        el.classList.add('border-transparent', 'text-slate-500');
+    });
+    // Highlight selected tab
+    document.getElementById('tab-' + tabName).classList.remove('border-transparent', 'text-slate-500');
+    document.getElementById('tab-' + tabName).classList.add('border-indigo-500', 'text-indigo-600');
+}
+</script>
 @endsection
