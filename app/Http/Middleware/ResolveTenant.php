@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class ResolveTenant
@@ -68,7 +69,7 @@ class ResolveTenant
         }
 
         // Security: Prevent Owner from accessing tenant dashboard
-        if (auth()->check() && auth()->user()->role === 'owner') {
+        if (Auth::check() && Auth::user()->role === 'owner') {
              abort(403, 'Akses Ditolak: Akun Owner tidak diperbolehkan mengakses dashboard tenant secara langsung. Silakan gunakan Dashboard Owner.');
         }
 

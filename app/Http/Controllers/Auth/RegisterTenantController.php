@@ -19,7 +19,7 @@ class RegisterTenantController extends Controller
     protected $invoiceService;
     protected $telegramService;
 
-    public function __construct(\App\Services\Billing\InvoiceService $invoiceService, \App\Services\TelegramService $telegramService)
+    public function __construct(InvoiceService $invoiceService, \App\Services\TelegramService $telegramService)
     {
         $this->invoiceService = $invoiceService;
         $this->telegramService = $telegramService;
