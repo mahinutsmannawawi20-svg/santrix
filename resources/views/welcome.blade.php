@@ -139,12 +139,13 @@
             </div>
             
             <div class="flex flex-col sm:flex-row gap-4 justify-center items-center" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">
-                <a href="{{ route('register.tenant') }}" class="w-full sm:w-auto px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white text-lg font-bold rounded-full shadow-xl hover:shadow-indigo-500/40 transition-all transform hover:-translate-y-1">
-                    Mulai Gratis Sekarang
+                <a href="https://wa.me/6281234567890?text=Halo%20Admin%20Santrix,%20saya%20ingin%20konsultasi%20tentang%20aplikasi%20pesantren." target="_blank" class="w-full sm:w-auto px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white text-lg font-bold rounded-full shadow-xl hover:shadow-indigo-500/40 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2">
+                    <i data-feather="message-circle" class="w-5 h-5"></i>
+                    Mulai Konsultasi
                 </a>
-                <a href="#" class="w-full sm:w-auto px-8 py-4 bg-white hover:bg-slate-50 text-slate-700 text-lg font-bold rounded-full border border-slate-200 shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-2 group">
-                    <i data-feather="play-circle" class="w-5 h-5 text-indigo-600 group-hover:scale-110 transition-transform"></i>
-                    Lihat Demo
+                <a href="#features" class="w-full sm:w-auto px-8 py-4 bg-white hover:bg-slate-50 text-slate-700 text-lg font-bold rounded-full border border-slate-200 shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-2 group">
+                    <i data-feather="info" class="w-5 h-5 text-indigo-600 group-hover:scale-110 transition-transform"></i>
+                    Pelajari Dulu
                 </a>
             </div>
 
