@@ -5,7 +5,7 @@ if (!function_exists('tenant')) {
      * Get the current tenant (pesantren) instance
      */
     function tenant() {
-        return app('tenant');
+        return app()->has('tenant') ? app('tenant') : null;
     }
 }
 
