@@ -76,6 +76,7 @@ Route::domain($mainDomain)->group(function () use ($mainDomain) {
     Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout.redirect');
 });
 
+
 /*
 |--------------------------------------------------------------------------
 | TENANT DOMAIN ROUTES
@@ -84,7 +85,11 @@ Route::domain($mainDomain)->group(function () use ($mainDomain) {
 |
 */
 
-Route::middleware([\App\Http\Middleware\ResolveTenant::class])->group(function () {
+// Match any subdomain EXCEPT the central domains (santrix.my.id, owner.santrix.my.id)
+Route::domain('{subdomain}.' . $mainDomain)
+    ->where('subdomain', '^(?!owner$).*') // Exclude 'owner' subdomain
+    ->middleware([\App\Http\Middleware\ResolveTenant::class])
+    ->group(function () {
 
     // Auth Routes (Tenant)
     Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('tenant.login');
