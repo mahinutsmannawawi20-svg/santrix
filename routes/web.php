@@ -149,10 +149,12 @@ Route::middleware([\App\Http\Middleware\ResolveTenant::class])->group(function (
         Route::get('/laporan', [App\Http\Controllers\Bendahara\LaporanController::class, 'index'])->name('laporan.index');
         Route::get('/laporan/pdf', [App\Http\Controllers\Bendahara\LaporanController::class, 'generatePdf'])->name('laporan.pdf');
     });
+    */
 
     // Shared Routes for All Authenticated Tenant Users
     Route::middleware(['auth'])->group(function () {
-        // Profile
+        // Profile - TODO: Uncomment when controller is created
+        /*
         Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'edit'])->name('profile.edit');
         Route::put('/profile', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
         Route::put('/profile/password', [App\Http\Controllers\ProfileController::class, 'updatePassword'])->name('profile.password');
