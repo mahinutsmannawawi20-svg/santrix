@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('token');
             $table->string('ip_address')->nullable();
             $table->text('user_agent')->nullable();
-            $table->timestamp('expires_at');
+            $table->timestamp('expires_at')->nullable();
             $table->timestamp('verified_at')->nullable();
             $table->timestamps();
         });
@@ -27,7 +27,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('device_hash')->index();
             $table->timestamp('last_used_at')->nullable();
-            $table->timestamp('expires_at');
+            $table->timestamp('expires_at')->nullable();
             $table->timestamps();
         });
     }
