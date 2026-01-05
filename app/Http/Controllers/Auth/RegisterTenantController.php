@@ -131,13 +131,15 @@ class RegisterTenantController extends Controller
             $pesantren = Pesantren::create($pesantrenData);
 
             // 2. Create Admin User (Tenant Admin, NOT Platform Owner)
-            $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'role' => 'admin', // SECURITY: Tenant admin, not platform owner
-                'pesantren_id' => $pesantren->id,
-            ]);
+            // 2. Create Admin User (Tenant Admin, NOT Platform Owner)
+            // Use explicit instantiation to bypass guarded 'role' and 'pesantren_id'
+            $user = new User();
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = Hash::make($request->password);
+            $user->role = 'admin'; // SECURITY: Tenant admin, not platform owner
+            $user->pesantren_id = $pesantren->id;
+            $user->save();
 
             // 3. Create Trial Subscription Record (7 days)
             $packageName = $packageConfig['name'] . ' ' . $packageConfig['duration_months'] . ' Bulan';
