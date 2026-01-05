@@ -168,12 +168,141 @@
             <!-- Dashboard Preview -->
             <div class="mt-20 relative max-w-5xl mx-auto" data-aos="zoom-in-up" data-aos-duration="1000" data-aos-delay="300">
                 <div class="absolute inset-0 bg-indigo-600 blur-3xl opacity-20 -z-10 rounded-full"></div>
-                <div class="rounded-3xl border-8 border-slate-900/5 shadow-2xl overflow-hidden bg-white">
-                    <div class="aspect-w-16 aspect-h-9 bg-slate-100">
-                        <img src="{{ asset('images/dashboard-preview.png') }}" alt="Dashboard App" class="w-full h-full object-cover">
+            <!-- Dashboard Carousel -->
+            <div class="mt-20 relative max-w-6xl mx-auto" data-aos="zoom-in-up" data-aos-duration="1000" data-aos-delay="300">
+                <div class="absolute inset-0 bg-indigo-600 blur-3xl opacity-20 -z-10 rounded-full"></div>
+                
+                <!-- Main Slider Container -->
+                <div class="rounded-3xl border-8 border-slate-900/5 shadow-2xl overflow-hidden bg-white relative group">
+                    
+                    <!-- Carousel Wrapper -->
+                    <div id="dashboardCarousel" class="relative">
+                        <!-- Slides -->
+                        <div class="overflow-hidden relative h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px]">
+                            
+                            <!-- Slide 1: Admin -->
+                            <div class="carousel-item absolute inset-0 transition-opacity duration-700 opacity-100 z-10" data-index="0">
+                                <img src="{{ asset('images/preview-admin.png') }}" class="w-full h-full object-cover object-top" alt="Dashboard Admin">
+                                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-900/90 via-slate-900/60 to-transparent p-8 md:p-12 text-white">
+                                    <h3 class="text-2xl md:text-3xl font-bold mb-2">Dashboard Admin & Yayasan</h3>
+                                    <p class="text-slate-300 text-sm md:text-lg max-w-2xl">Kontrol penuh sistem dengan manajemen user, backup data otomatis, dan monitoring aktivitas real-time.</p>
+                                </div>
+                            </div>
+
+                            <!-- Slide 2: Bendahara -->
+                            <div class="carousel-item absolute inset-0 transition-opacity duration-700 opacity-0 z-0" data-index="1">
+                                <img src="{{ asset('images/preview-bendahara.png') }}" class="w-full h-full object-cover object-top" alt="Dashboard Bendahara">
+                                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-900/90 via-slate-900/60 to-transparent p-8 md:p-12 text-white">
+                                    <h3 class="text-2xl md:text-3xl font-bold mb-2">Keuangan & SPP</h3>
+                                    <p class="text-slate-300 text-sm md:text-lg max-w-2xl">Transparansi arus kas, pemasukan SPP Syahriah, dan monitoring tagihan santri yang akurat.</p>
+                                </div>
+                            </div>
+
+                            <!-- Slide 3: Sekretaris -->
+                            <div class="carousel-item absolute inset-0 transition-opacity duration-700 opacity-0 z-0" data-index="2">
+                                <img src="{{ asset('images/preview-sekretaris.png') }}" class="w-full h-full object-cover object-top" alt="Dashboard Sekretaris">
+                                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-900/90 via-slate-900/60 to-transparent p-8 md:p-12 text-white">
+                                    <h3 class="text-2xl md:text-3xl font-bold mb-2">Database Santri Terpadu</h3>
+                                    <p class="text-slate-300 text-sm md:text-lg max-w-2xl">Kelola data diri, asrama, mutasi, dan administrasi kessantrian dalam satu pintu.</p>
+                                </div>
+                            </div>
+
+                            <!-- Slide 4: Akademik -->
+                            <div class="carousel-item absolute inset-0 transition-opacity duration-700 opacity-0 z-0" data-index="3">
+                                <img src="{{ asset('images/preview-akademik.png') }}" class="w-full h-full object-cover object-top" alt="Rekap Nilai">
+                                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-900/90 via-slate-900/60 to-transparent p-8 md:p-12 text-white">
+                                    <h3 class="text-2xl md:text-3xl font-bold mb-2">Akademik & E-Rapor Digital</h3>
+                                    <p class="text-slate-300 text-sm md:text-lg max-w-2xl">Input nilai ujian, hitung rata-rata otomatis, dan cetak rapor santri dengan mudah.</p>
+                                </div>
+                            </div>
+
+                             <!-- Slide 5: Login -->
+                             <div class="carousel-item absolute inset-0 transition-opacity duration-700 opacity-0 z-0" data-index="4">
+                                <img src="{{ asset('images/preview-login.png') }}" class="w-full h-full object-cover object-top" alt="Login Page">
+                                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-900/90 via-slate-900/60 to-transparent p-8 md:p-12 text-white">
+                                    <h3 class="text-2xl md:text-3xl font-bold mb-2">Sistem Akses Multi-Role</h3>
+                                    <p class="text-slate-300 text-sm md:text-lg max-w-2xl">Keamanan terjamin dengan pemisahan hak akses spesifik untuk setiap jabatan.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Controls -->
+                        <button onclick="moveSlide(-1)" class="absolute top-1/2 left-4 transform -translate-y-1/2 w-12 h-12 bg-white/20 hover:bg-white/40 backdrop-blur-md rounded-full flex items-center justify-center text-white transition-all z-20">
+                            <i data-feather="chevron-left" class="w-6 h-6"></i>
+                        </button>
+                        <button onclick="moveSlide(1)" class="absolute top-1/2 right-4 transform -translate-y-1/2 w-12 h-12 bg-white/20 hover:bg-white/40 backdrop-blur-md rounded-full flex items-center justify-center text-white transition-all z-20">
+                            <i data-feather="chevron-right" class="w-6 h-6"></i>
+                        </button>
+
+                        <!-- Indicators -->
+                        <div class="absolute bottom-6 right-8 z-20 flex gap-2">
+                            <button onclick="goToSlide(0)" class="indicator w-2.5 h-2.5 rounded-full bg-white transition-all w-8"></button>
+                            <button onclick="goToSlide(1)" class="indicator w-2.5 h-2.5 rounded-full bg-white/50 hover:bg-white transition-all"></button>
+                            <button onclick="goToSlide(2)" class="indicator w-2.5 h-2.5 rounded-full bg-white/50 hover:bg-white transition-all"></button>
+                            <button onclick="goToSlide(3)" class="indicator w-2.5 h-2.5 rounded-full bg-white/50 hover:bg-white transition-all"></button>
+                            <button onclick="goToSlide(4)" class="indicator w-2.5 h-2.5 rounded-full bg-white/50 hover:bg-white transition-all"></button>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <script>
+                let currentSlide = 0;
+                const slides = document.querySelectorAll('.carousel-item');
+                const indicators = document.querySelectorAll('.indicator');
+                const totalSlides = slides.length;
+                let slideInterval;
+
+                function updateSlides() {
+                    slides.forEach((slide, index) => {
+                        if (index === currentSlide) {
+                            slide.classList.remove('opacity-0', 'z-0');
+                            slide.classList.add('opacity-100', 'z-10');
+                        } else {
+                            slide.classList.remove('opacity-100', 'z-10');
+                            slide.classList.add('opacity-0', 'z-0');
+                        }
+                    });
+
+                    indicators.forEach((dot, index) => {
+                        if (index === currentSlide) {
+                             dot.classList.add('w-8', 'bg-white');
+                             dot.classList.remove('bg-white/50');
+                        } else {
+                             dot.classList.remove('w-8', 'bg-white');
+                             dot.classList.add('bg-white/50');
+                        }
+                    });
+                }
+
+                function moveSlide(direction) {
+                    currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
+                    updateSlides();
+                    resetTimer();
+                }
+
+                function goToSlide(index) {
+                    currentSlide = index;
+                    updateSlides();
+                    resetTimer();
+                }
+
+                function startTimer() {
+                    slideInterval = setInterval(() => {
+                        moveSlide(1);
+                    }, 5000); // 5 seconds per slide
+                }
+
+                function resetTimer() {
+                    clearInterval(slideInterval);
+                    startTimer();
+                }
+
+                // Initialize
+                document.addEventListener('DOMContentLoaded', () => {
+                    startTimer();
+                });
+            </script>
         </div>
     </section>
 
