@@ -53,10 +53,13 @@ class VerificationController extends Controller
         // Set session variable untuk bypass middleware
         $request->session()->put('auth.verified', true);
 
-        if (app()->has('CurrentTenant')) {
+        // Redirect based on user's pesantren_id
+        if ($user->pesantren_id) {
+            // Tenant user - redirect to tenant home
             return redirect()->route('tenant.home');
         }
 
-        return redirect()->intended('/owner'); // Default to owner dashboard
+        // Central/Owner user - redirect to owner dashboard
+        return redirect()->intended('/owner');
     }
 }
