@@ -4,12 +4,14 @@
         <span>Dashboard</span>
     </a>
 </li>
+{{-- TODO: Implement activity log feature
 <li class="sidebar-menu-item">
     <a href="{{ route('admin.activity-log') }}" class="sidebar-menu-link {{ request()->routeIs('admin.activity-log') ? 'active' : '' }}">
         <i data-feather="activity" class="sidebar-menu-icon"></i>
         <span>Riwayat Aktivitas</span>
     </a>
 </li>
+--}}
 <li class="sidebar-menu-item">
     <a href="{{ route('admin.pengaturan') }}" class="sidebar-menu-link {{ request()->routeIs('admin.pengaturan*') ? 'active' : '' }}">
         <i data-feather="settings" class="sidebar-menu-icon"></i>
