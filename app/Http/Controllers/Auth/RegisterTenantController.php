@@ -176,12 +176,13 @@ class RegisterTenantController extends Controller
                 \Illuminate\Support\Facades\Log::error('Telegram notification failed: ' . $e->getMessage());
             }
 
-            // 5. Auto Login
-            Auth::login($user);
-
-            // 6. Redirect to Dashboard with trial info
-            $trialMessage = "Selamat datang! Masa trial {$trialDays} hari Anda dimulai sekarang. Jangan lupa upgrade sebelum trial berakhir!";
-            return redirect()->route('owner.dashboard')->with('success', $trialMessage);
+            // 5. Return Success Page (avoid cross-domain redirect issues)
+            return view('auth.register-success', [
+                'subdomain' => $pesantren->subdomain,
+                'email' => $user->email,
+                'trialDays' => $trialDays,
+                'trialEndsAt' => $trialEndsAt->format('d M Y'),
+            ]);
 
         } catch (\Exception $e) {
             DB::rollBack();
