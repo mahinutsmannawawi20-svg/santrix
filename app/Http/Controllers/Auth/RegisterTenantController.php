@@ -17,10 +17,12 @@ use Illuminate\Validation\Rule;
 class RegisterTenantController extends Controller
 {
     protected $invoiceService;
+    protected $telegramService;
 
-    public function __construct(InvoiceService $invoiceService)
+    public function __construct(\App\Services\Billing\InvoiceService $invoiceService, \App\Services\TelegramService $telegramService)
     {
         $this->invoiceService = $invoiceService;
+        $this->telegramService = $telegramService;
     }
 
     public function showRegistrationForm(Request $request)
@@ -165,6 +167,14 @@ class RegisterTenantController extends Controller
             );
 
             DB::commit();
+
+            // 5. Send Notifications
+            try {
+                $this->telegramService->notifyNewTenantRegistration($pesantren, $user);
+            } catch (\Exception $e) {
+                // Ignore telegram errors to not block registration
+                \Illuminate\Support\Facades\Log::error('Telegram notification failed: ' . $e->getMessage());
+            }
 
             // 5. Auto Login
             Auth::login($user);

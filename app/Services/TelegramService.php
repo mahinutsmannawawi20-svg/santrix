@@ -153,4 +153,20 @@ class TelegramService
         $message = "{$icon} <b>{$title}</b>\n\n{$body}";
         return $this->sendMessage($message);
     }
+    /**
+     * Send notification for new tenant (pesantren) registration
+     */
+    public function notifyNewTenantRegistration(object $pesantren, object $user): bool
+    {
+        $message = "🚀 <b>PESANTREN BARU TERDAFTAR</b>\n\n";
+        $message .= "🏫 Pesantren: <b>{$pesantren->nama}</b>\n";
+        $message .= "🌐 Subdomain: {$pesantren->subdomain}\n";
+        $message .= "📦 Paket: {$pesantren->package}\n";
+        $message .= "👤 Admin: {$user->name}\n";
+        $message .= "📧 Email: {$user->email}\n";
+        $message .= "📞 HP: {$pesantren->telepon}\n";
+        $message .= "📅 Waktu: " . now()->format('d M Y H:i');
+
+        return $this->sendMessage($message);
+    }
 }
