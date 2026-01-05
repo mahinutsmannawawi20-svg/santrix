@@ -69,8 +69,15 @@ class ResolveTenant
         }
 
         // Security: Prevent Owner from accessing tenant dashboard
-        if (Auth::check() && Auth::user()->role === 'owner') {
-             abort(403, 'Akses Ditolak: Akun Owner tidak diperbolehkan mengakses dashboard tenant secara langsung. Silakan gunakan Dashboard Owner.');
+        // Check if logged-in user is an owner from central database
+        if (Auth::check()) {
+            $currentUser = Auth::user();
+            // Check if this email exists in central 'owners' table
+            $isOwner = \DB::connection('mysql')->table('owners')->where('email', $currentUser->email)->exists();
+            
+            if ($isOwner) {
+                abort(403, 'Akses Ditolak: Akun Owner tidak diperbolehkan mengakses dashboard tenant secara langsung. Silakan gunakan Dashboard Owner.');
+            }
         }
 
         return $next($request);
