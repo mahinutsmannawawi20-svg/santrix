@@ -85,10 +85,7 @@ Route::domain($mainDomain)->group(function () use ($mainDomain) {
 |
 */
 
-// Match any subdomain EXCEPT the central domains (santrix.my.id, owner.santrix.my.id)
-Route::domain('{subdomain}.' . $mainDomain)
-    ->middleware([\App\Http\Middleware\ResolveTenant::class])
-    ->group(function () {
+Route::middleware([\App\Http\Middleware\ResolveTenant::class])->group(function () {
 
     // Auth Routes (Tenant)
     Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('tenant.login');

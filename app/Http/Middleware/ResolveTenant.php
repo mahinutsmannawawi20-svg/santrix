@@ -19,6 +19,10 @@ class ResolveTenant
         $normalizedHost = str_replace(['http://', 'https://'], '', $host);
         
         $centralDomains = config('tenancy.central_domains', ['santrix.my.id', 'santrix.test', 'localhost']);
+        // Also skip owner subdomain
+        $centralDomains[] = 'owner.santrix.my.id';
+        $centralDomains[] = 'owner.santrix.test';
+        $centralDomains[] = 'owner.localhost';
         
         // Skip resolution if request is for central domain
         if (in_array($normalizedHost, $centralDomains)) {
