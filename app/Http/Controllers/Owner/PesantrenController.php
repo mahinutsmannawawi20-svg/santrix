@@ -44,19 +44,19 @@ class PesantrenController extends Controller
         return view('owner.pesantren.index', compact('pesantrens'));
     }
 
-    public function show($central_domain, $id)
+    public function show($id)
     {
         $pesantren = Pesantren::with(['subscriptions', 'invoices', 'admin'])->findOrFail($id);
         return view('owner.pesantren.show', compact('pesantren'));
     }
 
-    public function edit($central_domain, $id)
+    public function edit($id)
     {
         $pesantren = Pesantren::findOrFail($id);
         return view('owner.pesantren.edit', compact('pesantren'));
     }
 
-    public function update($central_domain, Request $request, $id)
+    public function update(Request $request, $id)
     {
         $rules = [
             'package' => 'required|in:basic,advance,enterprise,trial',
@@ -96,7 +96,7 @@ class PesantrenController extends Controller
         return redirect()->route('owner.pesantren.show', $id)->with('success', 'Tenant updated successfully.');
     }
 
-    public function suspend($central_domain, $id)
+    public function suspend($id)
     {
         $pesantren = Pesantren::findOrFail($id);
         
