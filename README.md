@@ -103,10 +103,10 @@ Tech Stack
 Arsitektur Multi-Tenant
 
 ```
-santrix.my.id              → Landing Page
-owner.santrix.my.id        → Owner Dashboard
-riyadlulhuda.santrix.my.id → Tenant: Pesantren Riyadlul Huda
-al-ikhlas.santrix.my.id    → Tenant: Pesantren Al-Ikhlas
+yourdomain.com              → Landing Page
+owner.yourdomain.com        → Owner Dashboard
+pesantren1.yourdomain.com   → Tenant: Pesantren 1
+pesantren2.yourdomain.com   → Tenant: Pesantren 2
 ```
 
 Setiap pesantren mendapatkan subdomain unik dengan data isolation yang aman.
@@ -161,9 +161,9 @@ A    owner          → [IP VPS]
 
 Environment Variables
 ```env
-APP_URL=https://santrix.my.id
-CENTRAL_DOMAINS=santrix.my.id,owner.santrix.my.id
-SESSION_DOMAIN=.santrix.my.id
+APP_URL=https://yourdomain.com
+CENTRAL_DOMAINS=yourdomain.com,owner.yourdomain.com
+SESSION_DOMAIN=.yourdomain.com
 ```
 
 Post-Deployment
