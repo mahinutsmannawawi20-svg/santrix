@@ -18,8 +18,8 @@
                 <i data-feather="monitor" style="width: 32px; height: 32px; color: white;"></i>
             </div>
             <div>
-                <h2 style="font-size: 1.875rem; font-weight: 800; margin: 0 0 6px 0; letter-spacing: -0.025em;">Have a good day, Owner!</h2>
-                <p style="opacity: 0.9; font-size: 1.05rem; font-weight: 400; margin: 0;">Pantau performa bisnis dan pertumbuhan tenant Anda hari ini.</p>
+                <h2 style="font-size: 1.875rem; font-weight: 800; margin: 0 0 6px 0; letter-spacing: -0.025em; color: white !important;">Selamat beraktivitas, Owner!</h2>
+                <p style="opacity: 0.9; font-size: 1.05rem; font-weight: 400; margin: 0; color: white !important;">Pantau performa bisnis dan pertumbuhan tenant Anda hari ini.</p>
             </div>
         </div>
     </div>
