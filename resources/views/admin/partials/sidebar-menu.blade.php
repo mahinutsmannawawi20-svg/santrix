@@ -4,38 +4,36 @@
         <span>Dashboard</span>
     </a>
 </li>
-{{-- TODO: Implement activity log feature
-<li class="sidebar-menu-item">
-    <a href="{{ route('admin.activity-log') }}" class="sidebar-menu-link {{ request()->routeIs('admin.activity-log') ? 'active' : '' }}">
-        <i data-feather="activity" class="sidebar-menu-icon"></i>
+<li class="sidebar-item {{ request()->routeIs('admin.activity-log*') ? 'active' : '' }}">
+    <a href="{{ route('admin.activity-log') }}" class="sidebar-link">
+        <i data-feather="activity"></i>
         <span>Riwayat Aktivitas</span>
     </a>
 </li>
---}}
-{{-- TODO: Implement settings feature
-<li class="sidebar-menu-item">
-    <a href="{{ route('admin.pengaturan') }}" class="sidebar-menu-link {{ request()->routeIs('admin.pengaturan*') ? 'active' : '' }}">
-        <i data-feather="settings" class="sidebar-menu-icon"></i>
+<li class="sidebar-item {{ request()->routeIs('admin.pengaturan*') ? 'active' : '' }}">
+    <a href="{{ route('admin.pengaturan') }}" class="sidebar-link">
+        <i data-feather="settings"></i>
         <span>Pengaturan</span>
     </a>
 </li>
---}}
-{{-- TODO: Implement billing feature
-<li class="sidebar-menu-item">
-    <a href="{{ route('admin.billing.index') }}" class="sidebar-menu-link {{ request()->routeIs('admin.billing.*') ? 'active' : '' }}">
-        <i data-feather="credit-card" class="sidebar-menu-icon"></i>
-        <span>Billing & Langganan</span>
+<li class="sidebar-item {{ request()->routeIs('admin.billing*') ? 'active' : '' }}">
+    <a href="{{ route('admin.billing.index') }}" class="sidebar-link">
+        <i data-feather="credit-card"></i>
+        <span>Billing & Paket</span>
     </a>
 </li>
---}}
-{{-- TODO: Implement withdrawal feature
-<li class="sidebar-menu-item">
-    <a href="{{ route('admin.withdrawal.index') }}" class="sidebar-menu-link {{ request()->routeIs('admin.withdrawal.*') ? 'active' : '' }}">
-        <i data-feather="download" class="sidebar-menu-icon"></i>
-        <span>Tarik Dana</span>
+<li class="sidebar-item {{ request()->routeIs('admin.withdrawal*') ? 'active' : '' }}">
+    <a href="{{ route('admin.withdrawal.index') }}" class="sidebar-link">
+        <i data-feather="download"></i>
+        <span>Withdrawal Saldo</span>
     </a>
 </li>
---}}
+<li class="sidebar-item {{ request()->routeIs('admin.branding*') ? 'active' : '' }}">
+    <a href="{{ route('admin.branding') }}" class="sidebar-link">
+        <i data-feather="image"></i>
+        <span>Branding</span>
+    </a>
+</li>
 {{-- TODO: Implement branding feature
 <li class="sidebar-menu-item">
     <a href="{{ route('admin.settings.pesantren') }}" class="sidebar-menu-link {{ request()->routeIs('admin.settings.pesantren*') ? 'active' : '' }}">

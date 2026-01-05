@@ -41,10 +41,9 @@
     <!-- Quick Actions Grid -->
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-bottom: 32px;">
         
-        {{-- TODO: Implement settings feature
         <!-- Settings/App Card -->
-        <div class="card" style="background: white; border-radius: 16px; pading: 24px; border: 1px solid #f1f5f9; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); overflow: hidden; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
-            <div style="padding: 24px;">
+        <a href="{{ route('admin.pengaturan') }}?tab=app" class="card" style="background: white; border-radius: 16px; padding: 24px; border: 1px solid #f1f5f9; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); overflow: hidden; transition: transform 0.2s; display: block; text-decoration: none;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+            <div>
                 <div style="width: 48px; height: 48px; background: #eff6ff; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
                     <i data-feather="sliders" style="width: 24px; height: 24px; color: #3b82f6;"></i>
                 </div>
@@ -52,15 +51,15 @@
                 <p style="color: #64748b; font-size: 0.875rem; line-height: 1.5; margin-bottom: 24px;">
                     Konfigurasi identitas aplikasi, kontak, dan preferensi sistem umum.
                 </p>
-                <a href="{{ route('admin.pengaturan') }}?tab=app" style="display: inline-flex; align-items: center; color: #3b82f6; font-weight: 600; text-decoration: none; font-size: 0.875rem;">
+                <span style="display: inline-flex; align-items: center; color: #3b82f6; font-weight: 600; font-size: 0.875rem;">
                     Buka Pengaturan <i data-feather="arrow-right" style="width: 16px; height: 16px; margin-left: 4px;"></i>
-                </a>
+                </span>
             </div>
-        </div>
+        </a>
 
         <!-- User Management Card -->
-        <div class="card" style="background: white; border-radius: 16px; border: 1px solid #f1f5f9; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); overflow: hidden; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
-            <div style="padding: 24px;">
+        <a href="{{ route('admin.pengaturan') }}?tab=users" class="card" style="background: white; border-radius: 16px; padding: 24px; border: 1px solid #f1f5f9; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); overflow: hidden; transition: transform 0.2s; display: block; text-decoration: none;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+            <div>
                 <div style="width: 48px; height: 48px; background: #ecfdf5; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
                     <i data-feather="users" style="width: 24px; height: 24px; color: #10b981;"></i>
                 </div>
@@ -68,17 +67,15 @@
                 <p style="color: #64748b; font-size: 0.875rem; line-height: 1.5; margin-bottom: 24px;">
                     Kelola akun pengguna, peran (role), dan hak akses sistem.
                 </p>
-                <a href="{{ route('admin.pengaturan') }}?tab=users" style="display: inline-flex; align-items: center; color: #10b981; font-weight: 600; text-decoration: none; font-size: 0.875rem;">
+                <span style="display: inline-flex; align-items: center; color: #10b981; font-weight: 600; font-size: 0.875rem;">
                     Kelola User <i data-feather="arrow-right" style="width: 16px; height: 16px; margin-left: 4px;"></i>
-                </a>
+                </span>
             </div>
-        </div>
-        --}}
+        </a>
 
-        {{-- TODO: Implement kelas & asrama feature
         <!-- Kelas & Asrama Card -->
-        <div class="card" style="background: white; border-radius: 16px; border: 1px solid #f1f5f9; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); overflow: hidden; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
-            <div style="padding: 24px;">
+        <a href="{{ route('admin.pengaturan') }}?tab=kelas-asrama" class="card" style="background: white; border-radius: 16px; padding: 24px; border: 1px solid #f1f5f9; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); overflow: hidden; transition: transform 0.2s; display: block; text-decoration: none;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+            <div>
                 <div style="width: 48px; height: 48px; background: #fef3c7; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
                     <i data-feather="grid" style="width: 24px; height: 24px; color: #d97706;"></i>
                 </div>
@@ -86,13 +83,11 @@
                 <p style="color: #64748b; font-size: 0.875rem; line-height: 1.5; margin-bottom: 24px;">
                     Manajemen data master kelas, asrama, dan kamar santri.
                 </p>
-                <a href="{{ route('admin.pengaturan') }}?tab=kelas-asrama" style="display: inline-flex; align-items: center; color: #d97706; font-weight: 600; text-decoration: none; font-size: 0.875rem;">
+                <span style="display: inline-flex; align-items: center; color: #d97706; font-weight: 600; font-size: 0.875rem;">
                     Kelola Data Master <i data-feather="arrow-right" style="width: 16px; height: 16px; margin-left: 4px;"></i>
-                </a>
+                </span>
             </div>
-        </div>
-        --}}
-
+        </a>
     </div>
 
     <!-- System Info (Simplified) -->

@@ -145,14 +145,21 @@ Route::domain('{subdomain}.' . $mainDomain)->middleware([\App\Http\Middleware\Re
         Route::get('/', [App\Http\Controllers\AdminController::class, 'dashboard'])->name('dashboard');
         
         // Settings & User Management
-        Route::get('/settings', [App\Http\Controllers\AdminController::class, 'pengaturan'])->name('settings.index');
-        Route::put('/settings', [App\Http\Controllers\AdminController::class, 'updateAppSettings'])->name('settings.update');
+        Route::get('/settings', [App\Http\Controllers\Admin\PesantrenSettingsController::class, 'index'])->name('pengaturan'); // Changed to match view 'admin.pengaturan'
+        Route::post('/settings', [App\Http\Controllers\Admin\PesantrenSettingsController::class, 'update'])->name('pengaturan.update');
         
+        // Branding (Custom Theme/Logo)
+        Route::get('/branding', [App\Http\Controllers\Admin\PesantrenSettingsController::class, 'branding'])->name('branding');
+        Route::post('/branding', [App\Http\Controllers\Admin\PesantrenSettingsController::class, 'updateBranding'])->name('branding.update');
+
+        // Activity Logs
+        Route::get('/activity-log', [App\Http\Controllers\ActivityLogController::class, 'index'])->name('activity-log');
+
         // User CRUD
         Route::post('/users', [App\Http\Controllers\AdminController::class, 'createUser'])->name('users.store');
         Route::put('/users/{id}', [App\Http\Controllers\AdminController::class, 'updateUser'])->name('users.update');
 
-        // Kelas & Asrama Management
+        // Kelas & Asrama Management (API endpoints called by Settings page)
         Route::post('/kelas', [App\Http\Controllers\AdminController::class, 'storeKelas'])->name('kelas.store');
         Route::put('/kelas/{id}', [App\Http\Controllers\AdminController::class, 'updateKelas'])->name('kelas.update');
         Route::delete('/kelas/{id}', [App\Http\Controllers\AdminController::class, 'deleteKelas'])->name('kelas.destroy');
@@ -166,11 +173,17 @@ Route::domain('{subdomain}.' . $mainDomain)->middleware([\App\Http\Middleware\Re
 
         // Billing & Subscription
         Route::prefix('billing')->name('billing.')->group(function () {
-            Route::get('/', [App\Http\Controllers\Billing\BillingController::class, 'index'])->name('index');
-            Route::get('/plans', [App\Http\Controllers\Billing\BillingController::class, 'plans'])->name('plans');
-            Route::post('/subscribe', [App\Http\Controllers\Billing\BillingController::class, 'subscribe'])->name('subscribe');
-            Route::get('/invoices/{id}', [App\Http\Controllers\Billing\BillingController::class, 'show'])->name('show');
-            Route::post('/invoices/{id}/pay', [App\Http\Controllers\Billing\BillingController::class, 'pay'])->name('pay');
+            Route::get('/', [App\Http\Controllers\BillingController::class, 'index'])->name('index'); // Changed controller to tenant BillingController
+            Route::get('/plans', [App\Http\Controllers\BillingController::class, 'plans'])->name('plans');
+            Route::post('/subscribe', [App\Http\Controllers\BillingController::class, 'subscribe'])->name('subscribe');
+            Route::get('/invoices/{id}', [App\Http\Controllers\BillingController::class, 'show'])->name('show');
+            Route::post('/invoices/{id}/pay', [App\Http\Controllers\BillingController::class, 'pay'])->name('pay');
+        });
+
+        // Withdrawal Saldo (Tenant withdrawal request)
+        Route::prefix('withdrawal')->name('withdrawal.')->group(function () {
+            Route::get('/', [App\Http\Controllers\Admin\WithdrawalController::class, 'index'])->name('index');
+            Route::post('/', [App\Http\Controllers\Admin\WithdrawalController::class, 'store'])->name('store');
         });
     });
 
