@@ -1,122 +1,200 @@
-# 🕌 Santrix - Sistem Manajemen Pesantren Modern No. #1
+# 🕌 Santrix - Sistem Manajemen Pesantren Modern
 
-**Platform Manajemen Pesantren Cloud-Based Terlengkap & Aman**
+**Platform Cloud-Based Multi-Tenant untuk Digitalisasi Administrasi Pesantren**
 
-[![Laravel](https://img.shields.io/badge/Laravel-10-red?logo=laravel)](https://laravel.com)
+[![Laravel](https://img.shields.io/badge/Laravel-12.x-red?logo=laravel)](https://laravel.com)
 [![PHP](https://img.shields.io/badge/PHP-8.2+-blue?logo=php)](https://www.php.net)
-[![Tenancy](https://img.shields.io/badge/Tenancy-Multi--Tenant-green)](https://tenancyforlaravel.com)
-[![License](https://img.shields.io/badge/License-MIT-purple)]()
+[![MySQL](https://img.shields.io/badge/MySQL-8.0-orange?logo=mysql)](https://www.mysql.com)
+[![Multi-Tenant](https://img.shields.io/badge/Architecture-Multi--Tenant-green)](https://tenancyforlaravel.com)
 
 ---
 
-![Santrix Landing Page](https://santrix.my.id/images/seo-og-image.jpg)
+## � Preview Aplikasi
 
-## 📖 Tentang Santrix
-Santrix adalah solusi **SaaS (Software as a Service)** untuk digitalisasi administrasi pesantren. Didesain untuk menangani kompleksitas manajemen pesantren modern maupun salaf, mulai dari **Keuangan Syahriah, Akademik Kitab Kuning/Umum, hingga Laporan Keuangan Yayasan.**
-
-### 🚀 Keunggulan Utama
-- **Multi-Tenant Architecture**: Satu aplikasi untuk ribuan pesantren dengan database terpisah (Data isolation).
-- **Subdomain Otomatis**: Setiap pesantren mendapatkan subdomain unik (contoh: `al-ikhlas.santrix.my.id`).
-- **Owner Dashboard**: Panel kontrol pusat untuk memantau seluruh tenant pesantren.
-- **Security First**: Otomatis HTTPS/SSL (Let's Encrypt), Proteksi CSRF/XSS, dan Backup Berkala.
+### Dashboard Admin & Yayasan
+![Dashboard Admin](public/images/preview-admin.png)
+Kontrol penuh sistem: manajemen user multi-role, backup database otomatis, dan monitoring aktivitas real-time.
 
 ---
 
-## ✨ Fitur Unggulan
-
-### 💰 1. Keuangan & SPP (Syahriah)
-- Dashboard Arus Kas Real-time
-- Tagihan Syahriah & Tabungan Santri
-- **WhatsApp Gateway**: Kirim tagihan & bukti bayar otomatis ke Wali Santri.
-- Laporan Keuangan Harian/Bulanan (PDF/Excel)
-
-### 📚 2. Akademik & Pendidikan
-- Manajemen Kelas & Asrama (Kobong)
-- Input Nilai Hafalan (Talaran) & Kitab Kuning
-- Absensi Harian/Mingguan
-- Cetak Rapor Standar Pondok/Diknas (PDF)
-
-### 👮 3. Keamanan & Akses
-- **Multi-Role**: Admin, Sekretaris, Bendahara, Pendidikan, Owner.
-- **Secure Login**: Dilengkapi fitur "Show Password" toggle & Rate Limiting.
-- **HTTPS Forced**: Keamanan data terenkripsi standar perbankan.
+### Dashboard Bendahara (Keuangan & SPP)
+![Dashboard Bendahara](public/images/preview-bendahara.png)
+Transparansi arus kas, pemasukan SPP Syahriah, monitoring tagihan, dan laporan keuangan.
 
 ---
 
-## 🛠️ Teknologi yang Digunakan
-- **Framework**: Laravel 10 (PHP 8.2)
-- **Database**: MariaDB / MySQL 8.0
-- **Frontend**: Blade, Tailwind CSS, Alpine.js, Feather Icons
-- **Server**: Nginx (Ubuntu VPS)
-- **Tools**: Composer, NPM (Vite), Certbot (SSL), Git
+### Dashboard Sekretaris (Data Santri)
+![Dashboard Sekretaris](public/images/preview-sekretaris.png)
+Kelola data santri terpadu: biodata, asrama, kelas, mutasi, dan administrasi kesantrian.
 
 ---
 
-## 🚀 Instalasi (Development)
-
-Jika Anda ingin menjalankan project ini di lokal:
-
-1. **Clone Repository**
-   ```bash
-   git clone https://github.com/mahinutsmannawawi20-svg/santrix.git
-   cd santrix
-   ```
-
-2. **Install Dependencies**
-   ```bash
-   composer install
-   npm install && npm run build
-   ```
-
-3. **Setup Environment**
-   - Copy `.env.example` ke `.env`
-   - Setup database connection
-   - **PENTING**: Setup `CENTRAL_DOMAINS` untuk tenancy
-     ```env
-     CENTRAL_DOMAINS=santrix.test,owner.santrix.test
-     ```
-
-4. **Migrate & Seed**
-   ```bash
-   php artisan migrate --seed
-   ```
-
-5. **Jalankan Server**
-   ```bash
-   php artisan serve
-   ```
-   Akses di `http://santrix.test` (Gunakan Laravel Valet atau Laragon untuk support subdomain).
+### Akademik & E-Rapor Digital
+![Rekap Nilai](public/images/preview-akademik.png)
+Input nilai ujian semester, rekapitulasi otomatis, ranking, dan cetak rapor digital.
 
 ---
 
-## ☁️ Deployment (Production VPS)
-
-Panduan singkat deploy di VPS (Ubuntu 22.04):
-
-1. **Setup DNS**: A Record `*` (Wildcard) dan `@` ke IP VPS.
-2. **Nginx Config**: Setup block server untuk handle Wildcard Subdomains.
-3. **SSL (Certbot)**:
-   ```bash
-   certbot --nginx -d santrix.my.id -d owner.santrix.my.id
-   ```
-4. **Env Variables**:
-   ```env
-   APP_URL=https://santrix.my.id
-   CENTRAL_DOMAINS=santrix.my.id,owner.santrix.my.id
-   SESSION_DOMAIN=.santrix.my.id
-   ```
-5. **Optimize**:
-   ```bash
-   php artisan config:cache
-   php artisan route:cache
-   php artisan view:cache
-   ```
+### Sistem Login Multi-Role
+![Login Page](public/images/preview-login.png)
+Keamanan terjamin dengan pemisahan hak akses: Admin, Sekretaris, Bendahara, dan Pendidikan.
 
 ---
 
-## 👨‍💻 Developer & Credits
+## ✨ Fitur Utama
 
-Dibuat dengan ❤️ oleh **Mahin Utsman Nawawi** & Team Velora.
-Dedikasi untuk kemajuan Pesantren Indonesia.
+### 💰 Keuangan & SPP (Syahriah)
+- Dashboard dengan kartu statistik real-time (Saldo, Pemasukan, Pengeluaran, Tunggakan)
+- Tagihan Syahriah otomatis per bulan
+- Cek tunggakan santri
+- **WhatsApp Gateway**: Kirim bukti bayar otomatis ke Wali Santri
+- Laporan keuangan harian/bulanan (PDF)
+
+### 📊 Dashboard Bendahara
+- Grafik pemasukan vs pengeluaran per bulan
+- Statistik per asrama dan per kelas
+- Monitoring status pembayaran (Lunas vs Menunggak)
+- Quick action shortcuts
+
+### 👥 Data Santri (Sekretaris)
+- Database santri lengkap (Putra/Putri)
+- Manajemen asrama dan penempatan kamar
+- Mutasi santri (masuk/keluar/pindah)
+- Kartu digital santri
+- Kenaikan kelas otomatis
+
+### 📚 Akademik & Pendidikan
+- Manajemen kelas dan mata pelajaran
+- Input nilai ujian semester (multi-mata pelajaran)
+- Rekapitulasi nilai otomatis dengan ranking
+- E-Rapor digital dengan format standar
+- Kalender akademik
+
+### � Keamanan & Multi-Role
+| Role | Akses |
+|------|-------|
+| **Admin** | Full control: user management, backup, settings |
+| **Sekretaris** | Data santri, mutasi, laporan |
+| **Bendahara** | Keuangan, SPP, tagihan, laporan |
+| **Pendidikan** | Nilai, rapor, akademik |
+
+### 🏢 Owner Dashboard (Multi-Tenant)
+- Kelola semua pesantren dari satu panel
+- Manajemen paket langganan
+- Monitoring pendapatan per tenant
+- Activity logs
+- Fitur withdrawal
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Teknologi |
+|-------|-----------|
+| **Backend** | Laravel 12.x (PHP 8.2+) |
+| **Database** | MySQL 8.0 |
+| **Frontend** | Blade Templates, Tailwind CSS |
+| **Icons** | Feather Icons |
+| **JavaScript** | Alpine.js, Vanilla JS |
+| **Server** | Nginx (Ubuntu VPS) |
+| **SSL** | Let's Encrypt (Certbot) |
+| **Domain** | Wildcard Subdomain (*.santrix.my.id) |
+
+---
+
+## 🏗️ Arsitektur Multi-Tenant
+
+```
+santrix.my.id              → Landing Page
+owner.santrix.my.id        → Owner Dashboard
+riyadlulhuda.santrix.my.id → Tenant: Pesantren Riyadlul Huda
+al-ikhlas.santrix.my.id    → Tenant: Pesantren Al-Ikhlas
+```
+
+Setiap pesantren mendapatkan subdomain unik dengan **data isolation** yang aman.
+
+---
+
+## 🚀 Quick Start (Development)
+
+```bash
+# Clone
+git clone https://github.com/mahinutsmannawawi20-svg/santrix.git
+cd santrix
+
+# Install dependencies
+composer install
+npm install && npm run build
+
+# Setup environment
+cp .env.example .env
+php artisan key:generate
+
+# Configure .env
+# Set database credentials
+# Set CENTRAL_DOMAINS=santrix.test,owner.santrix.test
+
+# Migrate & seed
+php artisan migrate --seed
+
+# Run
+php artisan serve
+```
+
+> ⚠️ **Catatan**: Gunakan Laravel Valet atau Laragon untuk support wildcard subdomain di development.
+
+---
+
+## ☁️ Production Deployment
+
+### Prerequisites
+- Ubuntu 22.04 VPS
+- Nginx
+- PHP 8.2+ dengan extensions (pdo, mysql, mbstring, xml, curl, zip)
+- MySQL 8.0
+- Certbot untuk SSL
+
+### DNS Setup
+```
+A    @              → [IP VPS]
+A    *              → [IP VPS]  (Wildcard)
+A    owner          → [IP VPS]
+```
+
+### Environment Variables
+```env
+APP_URL=https://santrix.my.id
+CENTRAL_DOMAINS=santrix.my.id,owner.santrix.my.id
+SESSION_DOMAIN=.santrix.my.id
+```
+
+### Post-Deployment
+```bash
+php artisan migrate --force
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+php artisan optimize
+```
+
+---
+
+## 📱 Responsivitas
+
+Aplikasi dioptimalkan untuk:
+- ✅ Desktop (1920px+)
+- ✅ Laptop (1366px)
+- ✅ Tablet (768px)
+- ✅ Mobile (375px)
+
+---
+
+## 👨‍💻 Developer
+
+Dikembangkan oleh **Mahin Utsman Nawawi, S.H** & Tim Velora.
+
+Dedikasi untuk kemajuan digitalisasi Pesantren Indonesia.
+
+---
 
 **© 2026 Santrix Project.** All rights reserved.
