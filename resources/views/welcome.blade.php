@@ -176,71 +176,68 @@
                 <div class="rounded-3xl border-8 border-slate-900/5 shadow-2xl overflow-hidden bg-white relative group">
                     
                     <!-- Carousel Wrapper -->
-                    <div id="dashboardCarousel" class="relative">
-                        <!-- Slides (Inline height to fix visibility issue on VPS without npm run build) -->
-                        <div class="overflow-hidden relative" style="height: 600px;">
-                            
-                            <!-- Slide 1: Admin -->
-                            <div class="carousel-item absolute inset-0 transition-opacity duration-700 opacity-100 z-10" data-index="0">
-                                <img src="{{ asset('images/preview-admin.png') }}" class="w-full h-full object-cover object-top" alt="Dashboard Admin">
-                                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-900/90 via-slate-900/60 to-transparent p-8 md:p-12 text-white">
-                                    <h3 class="text-2xl md:text-3xl font-bold mb-2">Dashboard Admin & Yayasan</h3>
-                                    <p class="text-slate-300 text-sm md:text-lg max-w-2xl">Kontrol penuh sistem dengan manajemen user, backup data otomatis, dan monitoring aktivitas real-time.</p>
-                                </div>
+                    <div id="dashboardCarousel" class="relative" style="width: 100%; padding-bottom: 56.25%; position: relative; overflow: hidden; background: #f1f5f9;">
+                        
+                        <!-- Slide 1: Admin -->
+                        <div class="carousel-item" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; transition: opacity 0.7s ease-in-out; opacity: 1; z-index: 10;" data-index="0">
+                            <img src="{{ asset('images/preview-admin.png') }}" style="width: 100%; height: 100%; object-fit: contain; object-position: top; background: #f8fafc;" alt="Dashboard Admin">
+                            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.6) 50%, rgba(15, 23, 42, 0) 100%); padding: 32px; color: white;">
+                                <h3 class="text-2xl md:text-3xl font-bold mb-2" style="color: white; margin-bottom: 8px;">Dashboard Admin & Yayasan</h3>
+                                <p style="color: #cbd5e1; font-size: 1rem; margin: 0; max-width: 600px;">Kontrol penuh sistem dengan manajemen user, backup data otomatis, dan monitoring aktivitas real-time.</p>
                             </div>
+                        </div>
 
-                            <!-- Slide 2: Bendahara -->
-                            <div class="carousel-item absolute inset-0 transition-opacity duration-700 opacity-0 z-0" data-index="1">
-                                <img src="{{ asset('images/preview-bendahara.png') }}" class="w-full h-full object-cover object-top" alt="Dashboard Bendahara">
-                                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-900/90 via-slate-900/60 to-transparent p-8 md:p-12 text-white">
-                                    <h3 class="text-2xl md:text-3xl font-bold mb-2">Keuangan & SPP</h3>
-                                    <p class="text-slate-300 text-sm md:text-lg max-w-2xl">Transparansi arus kas, pemasukan SPP Syahriah, dan monitoring tagihan santri yang akurat.</p>
-                                </div>
+                        <!-- Slide 2: Bendahara -->
+                        <div class="carousel-item" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; transition: opacity 0.7s ease-in-out; opacity: 0; z-index: 0;" data-index="1">
+                            <img src="{{ asset('images/preview-bendahara.png') }}" style="width: 100%; height: 100%; object-fit: contain; object-position: top; background: #f8fafc;" alt="Dashboard Bendahara">
+                            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.6) 50%, rgba(15, 23, 42, 0) 100%); padding: 32px; color: white;">
+                                <h3 class="text-2xl md:text-3xl font-bold mb-2" style="color: white; margin-bottom: 8px;">Keuangan & SPP</h3>
+                                <p style="color: #cbd5e1; font-size: 1rem; margin: 0; max-width: 600px;">Transparansi arus kas, pemasukan SPP Syahriah, dan monitoring tagihan santri yang akurat.</p>
                             </div>
+                        </div>
 
-                            <!-- Slide 3: Sekretaris -->
-                            <div class="carousel-item absolute inset-0 transition-opacity duration-700 opacity-0 z-0" data-index="2">
-                                <img src="{{ asset('images/preview-sekretaris.png') }}" class="w-full h-full object-cover object-top" alt="Dashboard Sekretaris">
-                                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-900/90 via-slate-900/60 to-transparent p-8 md:p-12 text-white">
-                                    <h3 class="text-2xl md:text-3xl font-bold mb-2">Database Santri Terpadu</h3>
-                                    <p class="text-slate-300 text-sm md:text-lg max-w-2xl">Kelola data diri, asrama, mutasi, dan administrasi kessantrian dalam satu pintu.</p>
-                                </div>
+                        <!-- Slide 3: Sekretaris -->
+                        <div class="carousel-item" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; transition: opacity 0.7s ease-in-out; opacity: 0; z-index: 0;" data-index="2">
+                            <img src="{{ asset('images/preview-sekretaris.png') }}" style="width: 100%; height: 100%; object-fit: contain; object-position: top; background: #f8fafc;" alt="Dashboard Sekretaris">
+                            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.6) 50%, rgba(15, 23, 42, 0) 100%); padding: 32px; color: white;">
+                                <h3 class="text-2xl md:text-3xl font-bold mb-2" style="color: white; margin-bottom: 8px;">Database Santri Terpadu</h3>
+                                <p style="color: #cbd5e1; font-size: 1rem; margin: 0; max-width: 600px;">Kelola data diri, asrama, mutasi, dan administrasi kessantrian dalam satu pintu.</p>
                             </div>
+                        </div>
 
-                            <!-- Slide 4: Akademik -->
-                            <div class="carousel-item absolute inset-0 transition-opacity duration-700 opacity-0 z-0" data-index="3">
-                                <img src="{{ asset('images/preview-akademik.png') }}" class="w-full h-full object-cover object-top" alt="Rekap Nilai">
-                                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-900/90 via-slate-900/60 to-transparent p-8 md:p-12 text-white">
-                                    <h3 class="text-2xl md:text-3xl font-bold mb-2">Akademik & E-Rapor Digital</h3>
-                                    <p class="text-slate-300 text-sm md:text-lg max-w-2xl">Input nilai ujian, hitung rata-rata otomatis, dan cetak rapor santri dengan mudah.</p>
-                                </div>
+                        <!-- Slide 4: Akademik -->
+                        <div class="carousel-item" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; transition: opacity 0.7s ease-in-out; opacity: 0; z-index: 0;" data-index="3">
+                            <img src="{{ asset('images/preview-akademik.png') }}" style="width: 100%; height: 100%; object-fit: contain; object-position: top; background: #f8fafc;" alt="Rekap Nilai">
+                            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.6) 50%, rgba(15, 23, 42, 0) 100%); padding: 32px; color: white;">
+                                <h3 class="text-2xl md:text-3xl font-bold mb-2" style="color: white; margin-bottom: 8px;">Akademik & E-Rapor Digital</h3>
+                                <p style="color: #cbd5e1; font-size: 1rem; margin: 0; max-width: 600px;">Input nilai ujian, hitung rata-rata otomatis, dan cetak rapor santri dengan mudah.</p>
                             </div>
+                        </div>
 
-                             <!-- Slide 5: Login -->
-                             <div class="carousel-item absolute inset-0 transition-opacity duration-700 opacity-0 z-0" data-index="4">
-                                <img src="{{ asset('images/preview-login.png') }}" class="w-full h-full object-cover object-top" alt="Login Page">
-                                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-900/90 via-slate-900/60 to-transparent p-8 md:p-12 text-white">
-                                    <h3 class="text-2xl md:text-3xl font-bold mb-2">Sistem Akses Multi-Role</h3>
-                                    <p class="text-slate-300 text-sm md:text-lg max-w-2xl">Keamanan terjamin dengan pemisahan hak akses spesifik untuk setiap jabatan.</p>
-                                </div>
+                         <!-- Slide 5: Login -->
+                         <div class="carousel-item" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; transition: opacity 0.7s ease-in-out; opacity: 0; z-index: 0;" data-index="4">
+                            <img src="{{ asset('images/preview-login.png') }}" style="width: 100%; height: 100%; object-fit: contain; object-position: top; background: #f8fafc;" alt="Login Page">
+                            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.6) 50%, rgba(15, 23, 42, 0) 100%); padding: 32px; color: white;">
+                                <h3 class="text-2xl md:text-3xl font-bold mb-2" style="color: white; margin-bottom: 8px;">Sistem Akses Multi-Role</h3>
+                                <p style="color: #cbd5e1; font-size: 1rem; margin: 0; max-width: 600px;">Keamanan terjamin dengan pemisahan hak akses spesifik untuk setiap jabatan.</p>
                             </div>
                         </div>
 
                         <!-- Controls -->
-                        <button onclick="moveSlide(-1)" class="absolute top-1/2 left-4 transform -translate-y-1/2 w-12 h-12 bg-white/20 hover:bg-white/40 backdrop-blur-md rounded-full flex items-center justify-center text-white transition-all z-20">
-                            <i data-feather="chevron-left" class="w-6 h-6"></i>
+                        <button onclick="moveSlide(-1)" style="position: absolute; top: 50%; left: 16px; transform: translateY(-50%); width: 48px; height: 48px; background: rgba(255, 255, 255, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; border: none; cursor: pointer; backdrop-filter: blur(4px); z-index: 20;">
+                            <i data-feather="chevron-left" style="width: 24px; height: 24px;"></i>
                         </button>
-                        <button onclick="moveSlide(1)" class="absolute top-1/2 right-4 transform -translate-y-1/2 w-12 h-12 bg-white/20 hover:bg-white/40 backdrop-blur-md rounded-full flex items-center justify-center text-white transition-all z-20">
-                            <i data-feather="chevron-right" class="w-6 h-6"></i>
+                        <button onclick="moveSlide(1)" style="position: absolute; top: 50%; right: 16px; transform: translateY(-50%); width: 48px; height: 48px; background: rgba(255, 255, 255, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; border: none; cursor: pointer; backdrop-filter: blur(4px); z-index: 20;">
+                            <i data-feather="chevron-right" style="width: 24px; height: 24px;"></i>
                         </button>
 
                         <!-- Indicators -->
-                        <div class="absolute bottom-6 right-8 z-20 flex gap-2">
-                            <button onclick="goToSlide(0)" class="indicator w-2.5 h-2.5 rounded-full bg-white transition-all w-8"></button>
-                            <button onclick="goToSlide(1)" class="indicator w-2.5 h-2.5 rounded-full bg-white/50 hover:bg-white transition-all"></button>
-                            <button onclick="goToSlide(2)" class="indicator w-2.5 h-2.5 rounded-full bg-white/50 hover:bg-white transition-all"></button>
-                            <button onclick="goToSlide(3)" class="indicator w-2.5 h-2.5 rounded-full bg-white/50 hover:bg-white transition-all"></button>
-                            <button onclick="goToSlide(4)" class="indicator w-2.5 h-2.5 rounded-full bg-white/50 hover:bg-white transition-all"></button>
+                        <div style="position: absolute; bottom: 24px; right: 32px; z-index: 20; display: flex; gap: 8px;">
+                            <button onclick="goToSlide(0)" class="indicator" style="width: 32px; height: 10px; border-radius: 10px; background: white; border: none; transition: all 0.3s;"></button>
+                            <button onclick="goToSlide(1)" class="indicator" style="width: 10px; height: 10px; border-radius: 50%; background: rgba(255, 255, 255, 0.5); border: none; transition: all 0.3s;"></button>
+                            <button onclick="goToSlide(2)" class="indicator" style="width: 10px; height: 10px; border-radius: 50%; background: rgba(255, 255, 255, 0.5); border: none; transition: all 0.3s;"></button>
+                            <button onclick="goToSlide(3)" class="indicator" style="width: 10px; height: 10px; border-radius: 50%; background: rgba(255, 255, 255, 0.5); border: none; transition: all 0.3s;"></button>
+                            <button onclick="goToSlide(4)" class="indicator" style="width: 10px; height: 10px; border-radius: 50%; background: rgba(255, 255, 255, 0.5); border: none; transition: all 0.3s;"></button>
                         </div>
                     </div>
                 </div>
