@@ -54,6 +54,9 @@ class ResolveTenant
         // Share with all views
         view()->share('currentTenant', $tenant);
 
+        // Set URL default for subdomain parameter (required for domain-scoped routes)
+        \Illuminate\Support\Facades\URL::defaults(['subdomain' => $subdomain]);
+
         // Set URL default for central_domain parameter used in some routes
         $centralDomain = implode('.', array_slice($parts, 1));
         if ($centralDomain) {
