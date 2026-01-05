@@ -48,6 +48,9 @@ class EnsureLoginVerified
         }
 
         // Jika tidak trusted, redirect ke verifikasi
+        if (app()->has('CurrentTenant')) {
+             return redirect()->route('tenant.verification.notice');
+        }
         return redirect()->route('login.verify');
     }
 }

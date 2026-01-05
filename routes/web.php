@@ -24,6 +24,12 @@ Route::middleware([\App\Http\Middleware\ResolveTenant::class])->group(function (
         ->middleware('throttle:6,1'); // SECURITY: Rate limit
     Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('tenant.logout');
 
+    // Verification Routes (Tenant)
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/verify-login', [App\Http\Controllers\Auth\VerificationController::class, 'show'])->name('tenant.verification.notice');
+        Route::post('/verify-login', [App\Http\Controllers\Auth\VerificationController::class, 'verify'])->name('tenant.verification.verify');
+    });
+
     Route::get('/', function () {
         if (!Auth::check()) {
             return redirect()->route('tenant.login');

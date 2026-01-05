@@ -103,7 +103,7 @@
             </div>
         @endif
 
-        <form action="{{ route('login.verify.check') }}" method="POST">
+        <form action="{{ app()->has('CurrentTenant') ? route('tenant.verification.verify') : route('login.verify.check') }}" method="POST">
             @csrf
             <div class="input-group">
                 <input type="text" name="token" maxlength="6" placeholder="000000" autofocus required autocomplete="off">
