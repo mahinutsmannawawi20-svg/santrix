@@ -12,30 +12,38 @@
     </a>
 </li>
 --}}
+{{-- TODO: Implement settings feature
 <li class="sidebar-menu-item">
     <a href="{{ route('admin.pengaturan') }}" class="sidebar-menu-link {{ request()->routeIs('admin.pengaturan*') ? 'active' : '' }}">
         <i data-feather="settings" class="sidebar-menu-icon"></i>
         <span>Pengaturan</span>
     </a>
 </li>
+--}}
+{{-- TODO: Implement billing feature
 <li class="sidebar-menu-item">
     <a href="{{ route('admin.billing.index') }}" class="sidebar-menu-link {{ request()->routeIs('admin.billing.*') ? 'active' : '' }}">
         <i data-feather="credit-card" class="sidebar-menu-icon"></i>
         <span>Billing & Langganan</span>
     </a>
 </li>
+--}}
+{{-- TODO: Implement withdrawal feature
 <li class="sidebar-menu-item">
     <a href="{{ route('admin.withdrawal.index') }}" class="sidebar-menu-link {{ request()->routeIs('admin.withdrawal.*') ? 'active' : '' }}">
         <i data-feather="download" class="sidebar-menu-icon"></i>
         <span>Tarik Dana</span>
     </a>
 </li>
+--}}
+{{-- TODO: Implement branding feature
 <li class="sidebar-menu-item">
     <a href="{{ route('admin.settings.pesantren') }}" class="sidebar-menu-link {{ request()->routeIs('admin.settings.pesantren*') ? 'active' : '' }}">
         <i data-feather="image" class="sidebar-menu-icon"></i>
         <span>Branding Pesantren</span>
     </a>
 </li>
+--}}
 
 <li class="sidebar-menu-item" style="margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.1);">
     <span style="font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #64748b; padding: 0 16px;">Akses Modul</span>
