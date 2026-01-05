@@ -157,7 +157,7 @@ Route::middleware([\App\Http\Middleware\ResolveTenant::class])->group(function (
         Route::get('/laporan', [App\Http\Controllers\BendaharaController::class, 'laporan'])->name('laporan.index');
         Route::get('/laporan/pdf', [App\Http\Controllers\BendaharaController::class, 'generatePdf'])->name('laporan.pdf');
     });
-    */
+
 
     // Shared Routes for All Authenticated Tenant Users
     Route::middleware(['auth'])->group(function () {
