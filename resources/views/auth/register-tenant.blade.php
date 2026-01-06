@@ -225,18 +225,21 @@
                         
                         <div class="space-y-3">
                             <!-- Option 1: Trial (Recommended) -->
-                            <label class="flex items-center p-4 border rounded-lg cursor-pointer transition-all bg-white border-indigo-200 hover:border-indigo-400 relative">
-                                <input type="radio" name="payment_method" value="trial" class="w-5 h-5 text-indigo-600 focus:ring-indigo-500" checked>
-                                <div class="ml-3 flex-1">
-                                    <span class="block text-sm font-bold text-slate-900">Coba Gratis {{ $trialDays }} Hari (Rekomendasi)</span>
-                                    <span class="block text-xs text-slate-500">Nikmati fitur lengkap tanpa bayar dulu.</span>
+                            <!-- Option 1: Demo (Redirect) -->
+                            <a href="{{ route('demo.start', ['type' => 'sekretaris']) }}" target="_blank" class="flex items-center p-4 border rounded-lg cursor-pointer transition-all bg-white border-cyan-200 hover:border-cyan-400 group relative">
+                                <div class="w-5 h-5 rounded-full border-2 border-cyan-500 flex items-center justify-center">
+                                    <i data-feather="monitor" class="w-3 h-3 text-cyan-500"></i>
                                 </div>
-                                <span class="absolute top-2 right-2 bg-indigo-100 text-indigo-700 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Paling Aman</span>
-                            </label>
+                                <div class="ml-3 flex-1">
+                                    <span class="block text-sm font-bold text-slate-900 group-hover:text-cyan-600 transition-colors">Coba Demo Aja Dulu</span>
+                                    <span class="block text-xs text-slate-500">Lihat simulasi dashboard lengkap tanpa daftar.</span>
+                                </div>
+                                <i data-feather="external-link" class="w-4 h-4 text-slate-300 group-hover:text-cyan-500"></i>
+                            </a>
 
                             <!-- Option 2: Direct Payment -->
-                            <label class="flex items-center p-4 border rounded-lg cursor-pointer transition-all bg-white border-slate-200 hover:border-indigo-400">
-                                <input type="radio" name="payment_method" value="transfer" class="w-5 h-5 text-indigo-600 focus:ring-indigo-500">
+                            <label class="flex items-center p-4 border rounded-lg cursor-pointer transition-all bg-white border-slate-200 hover:border-indigo-400 ring-2 ring-indigo-500/10">
+                                <input type="radio" name="payment_method" value="transfer" class="w-5 h-5 text-indigo-600 focus:ring-indigo-500" checked>
                                 <div class="ml-3 flex-1">
                                     <span class="block text-sm font-bold text-slate-900">Langsung Bayar / Langganan</span>
                                     <span class="block text-xs text-slate-500">Lewati masa trial, langsung aktifkan langganan.</span>
