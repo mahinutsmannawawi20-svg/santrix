@@ -53,6 +53,11 @@ class CheckSubscription
         }
 
         // 3. Real-time Expiration Check
+        // BYPASS for Demo Package to prevent timezone/session issues
+        if ($pesantren->package === 'demo') {
+            return $next($request);
+        }
+
         $isExpired = !$pesantren->expired_at || Carbon::parse($pesantren->expired_at)->isPast();
         
         if ($isExpired) {
