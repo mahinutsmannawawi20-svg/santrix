@@ -251,6 +251,68 @@ export default function Welcome({ stats, packages }: WelcomeProps) {
                 </div>
             </section>
 
+            {/* Dashboard Preview Section */}
+            <section className="py-16 bg-gradient-to-b from-white to-slate-50">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="text-center max-w-3xl mx-auto mb-12">
+                        <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-4">
+                            Tampilan Dashboard Modern
+                        </h2>
+                        <p className="text-slate-600">
+                            Interface yang bersih dan mudah digunakan untuk semua level pengguna
+                        </p>
+                    </div>
+
+                    {/* Dashboard Mockup */}
+                    <div className="relative max-w-5xl mx-auto">
+                        <div className="bg-gradient-to-br from-indigo-600 to-violet-600 rounded-2xl p-1 shadow-2xl shadow-indigo-200">
+                            <div className="bg-slate-900 rounded-xl overflow-hidden">
+                                {/* Browser Top Bar */}
+                                <div className="bg-slate-800 px-4 py-3 flex items-center gap-2">
+                                    <div className="flex gap-1.5">
+                                        <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                                        <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                        <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                                    </div>
+                                    <div className="flex-1 bg-slate-700 rounded-lg px-4 py-1.5 text-slate-400 text-sm text-center">
+                                        santrix.my.id/dashboard
+                                    </div>
+                                </div>
+                                {/* Dashboard Content Preview */}
+                                <div className="bg-slate-100 p-6">
+                                    <div className="grid grid-cols-4 gap-4 mb-4">
+                                        <div className="bg-white rounded-lg p-4 shadow-sm">
+                                            <div className="text-2xl font-bold text-indigo-600">245</div>
+                                            <div className="text-xs text-slate-500">Total Santri</div>
+                                        </div>
+                                        <div className="bg-white rounded-lg p-4 shadow-sm">
+                                            <div className="text-2xl font-bold text-emerald-600">12.5jt</div>
+                                            <div className="text-xs text-slate-500">Pemasukan</div>
+                                        </div>
+                                        <div className="bg-white rounded-lg p-4 shadow-sm">
+                                            <div className="text-2xl font-bold text-violet-600">98%</div>
+                                            <div className="text-xs text-slate-500">Kehadiran</div>
+                                        </div>
+                                        <div className="bg-white rounded-lg p-4 shadow-sm">
+                                            <div className="text-2xl font-bold text-orange-600">15</div>
+                                            <div className="text-xs text-slate-500">Kelas Aktif</div>
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-3 gap-4">
+                                        <div className="col-span-2 bg-white rounded-lg p-4 shadow-sm h-32"></div>
+                                        <div className="bg-white rounded-lg p-4 shadow-sm h-32"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Decorative Elements */}
+                        <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-indigo-100 rounded-2xl -z-10"></div>
+                        <div className="absolute -top-4 -left-4 w-16 h-16 bg-violet-100 rounded-xl -z-10"></div>
+                    </div>
+                </div>
+            </section>
+
             {/* Features Section */}
             <section id="features" className="py-24 bg-white relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-96 h-96 bg-indigo-50 rounded-full blur-3xl opacity-50 -translate-x-1/2 -translate-y-1/2"></div>
@@ -326,7 +388,7 @@ export default function Welcome({ stats, packages }: WelcomeProps) {
                         </p>
                     </div>
 
-                    <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
                         {packages.map((pkg, index) => (
                             <div
                                 key={pkg.id}
@@ -370,6 +432,63 @@ export default function Welcome({ stats, packages }: WelcomeProps) {
                                 >
                                     Pilih Paket
                                 </Link>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Testimonials Section */}
+            <section className="py-24 bg-white">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="text-center max-w-3xl mx-auto mb-16">
+                        <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-4">
+                            Dipercaya Pesantren Seluruh Indonesia
+                        </h2>
+                        <p className="text-lg text-slate-600">
+                            Testimoni dari pengguna Santrix
+                        </p>
+                    </div>
+
+                    <div className="grid md:grid-cols-3 gap-8">
+                        {[
+                            {
+                                name: 'Ust. Ahmad Fauzi',
+                                role: 'Mudir PP. Riyadlul Huda',
+                                text: 'Santrix sangat membantu kami mengelola data santri dan keuangan pesantren. Semuanya jadi lebih rapi dan terorganisir.',
+                            },
+                            {
+                                name: 'Ust. Muhammad Rizki',
+                                role: 'Kepala TU PP. Darul Ulum',
+                                text: 'Fitur laporan otomatis sangat menghemat waktu kami. Sekarang tidak perlu lagi input manual ke Excel.',
+                            },
+                            {
+                                name: 'Ustadzah Siti Aminah',
+                                role: 'Bendahara PP. Nurul Hikmah',
+                                text: 'Tracking pembayaran SPP jadi mudah. Wali santri juga bisa cek tagihan langsung via WhatsApp.',
+                            },
+                        ].map((testimonial, index) => (
+                            <div
+                                key={index}
+                                className="bg-gradient-to-br from-slate-50 to-white rounded-2xl p-8 border border-slate-100 shadow-sm hover:shadow-md transition-shadow"
+                            >
+                                <div className="flex items-center gap-1 mb-4">
+                                    {[...Array(5)].map((_, i) => (
+                                        <span key={i} className="text-yellow-400">★</span>
+                                    ))}
+                                </div>
+                                <p className="text-slate-600 mb-6 italic">
+                                    "{testimonial.text}"
+                                </p>
+                                <div className="flex items-center gap-4">
+                                    <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-violet-500 rounded-full flex items-center justify-center text-white font-bold">
+                                        {testimonial.name.charAt(0)}
+                                    </div>
+                                    <div>
+                                        <div className="font-bold text-slate-900">{testimonial.name}</div>
+                                        <div className="text-sm text-slate-500">{testimonial.role}</div>
+                                    </div>
+                                </div>
                             </div>
                         ))}
                     </div>
