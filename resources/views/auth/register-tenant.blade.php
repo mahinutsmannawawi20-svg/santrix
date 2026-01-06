@@ -151,7 +151,8 @@
                                     <input type="password" name="password" id="password"
                                         class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" 
                                         style="padding-right: 2.5rem;"
-                                        placeholder="Minimal 8 karakter" required>
+                                        placeholder="Minimal 8 karakter" required
+                                        readonly onfocus="this.removeAttribute('readonly');" autocomplete="new-password">
                                     <button type="button" onclick="togglePassword('password')" 
                                         class="text-slate-400 hover:text-indigo-600"
                                         style="position: absolute; right: 0; top: 0; bottom: 0; padding: 0 12px; display: flex; align-items: center; background: transparent; border: none;">
@@ -212,7 +213,8 @@
                                 <label class="block text-sm font-semibold text-slate-700 mb-2">Atas Nama <span class="text-red-500">*</span></label>
                                 <input type="text" name="bank_account_name" value="{{ old('bank_account_name') }}" 
                                     class="w-full px-4 py-3 border border-amber-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 bg-white" 
-                                    placeholder="Nama Pemilik" autocomplete="off" required>
+                                    placeholder="Nama Pemilik" required
+                                    readonly onfocus="this.removeAttribute('readonly');" autocomplete="off">
                                 @error('bank_account_name') <div class="text-red-600 text-xs mt-1">{{ $message }}</div> @enderror
                             </div>
                         </div>
