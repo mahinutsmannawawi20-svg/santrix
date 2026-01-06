@@ -31,7 +31,7 @@ interface WelcomeProps {
 // Animation variants
 const fadeInUp = {
     hidden: { opacity: 0, y: 60 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } }
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } }
 };
 
 const fadeIn = {
@@ -49,7 +49,7 @@ const staggerContainer = {
 
 const scaleIn = {
     hidden: { opacity: 0, scale: 0.8 },
-    visible: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: 'easeOut' } }
+    visible: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } }
 };
 
 // Islamic geometric pattern SVG
@@ -722,8 +722,8 @@ export default function Welcome({ stats, packages }: WelcomeProps) {
                                         <Link
                                             href="/register-pesantren"
                                             className={`block w-full py-3 text-center font-bold rounded-xl transition-all ${index === 1
-                                                    ? 'bg-gradient-to-r from-indigo-500 to-violet-500 text-white shadow-lg shadow-indigo-500/30'
-                                                    : 'bg-white/10 text-white hover:bg-white/20'
+                                                ? 'bg-gradient-to-r from-indigo-500 to-violet-500 text-white shadow-lg shadow-indigo-500/30'
+                                                : 'bg-white/10 text-white hover:bg-white/20'
                                                 }`}
                                         >
                                             Pilih Paket
