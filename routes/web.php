@@ -212,6 +212,8 @@ Route::domain('{subdomain}.' . $mainDomain)->middleware([\App\Http\Middleware\Re
              Route::post('/', [App\Http\Controllers\Admin\TahunAjaranController::class, 'store'])->name('store');
              // Fix: Allow POST as fallback if PUT spoofing fails
              Route::match(['put', 'post'], '/{id}', [App\Http\Controllers\Admin\TahunAjaranController::class, 'update'])->name('update');
+             // Explicit "Save" route to bypass potential 404s on PUT
+             Route::post('/{id}/save', [App\Http\Controllers\Admin\TahunAjaranController::class, 'update'])->name('update_explicit');
              Route::delete('/{id}', [App\Http\Controllers\Admin\TahunAjaranController::class, 'destroy'])->name('destroy');
         });
 

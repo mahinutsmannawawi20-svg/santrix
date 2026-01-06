@@ -106,9 +106,10 @@
     @foreach($tahunAjaran as $tahun)
     <div id="editModal{{ $tahun->id }}" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; align-items: center; justify-content: center;">
         <div style="background: white; border-radius: 20px; padding: 32px; max-width: 500px; width: 90%; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
-            <form action="{{ route('admin.pengaturan.tahun-ajaran.update', $tahun->id) }}" method="POST">
+            <form action="{{ route('admin.pengaturan.tahun-ajaran.update_explicit', $tahun->id) }}" method="POST">
                 @csrf
-                @method('PUT')
+                {{-- Method spoofing optional if we support direct POST, but keep for compatibility if controller expects --}}
+                {{-- We can remove @method('PUT') since we are hitting a POST route --}}
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
                     <h5 style="font-size: 1.5rem; font-weight: 800; color: #1f2937; margin: 0;">Edit Tahun Ajaran</h5>
                     <button type="button" data-modal-close style="background: none; border: none; cursor: pointer; color: #9ca3af;">
