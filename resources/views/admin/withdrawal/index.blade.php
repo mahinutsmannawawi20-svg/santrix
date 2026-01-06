@@ -3,8 +3,12 @@
 @section('title', 'Pencairan Dana')
 @section('subtitle', 'Kelola pencairan dana dari Payment Gateway Syahriah')
 
+@section('sidebar-menu')
+    @include('admin.partials.sidebar-menu')
+@endsection
+
 @section('content')
-<div class="space-y-6">
+<div style="padding: 24px; max-width: 1400px; margin: 0 auto;">
 
     <!-- Header Stats -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
