@@ -148,7 +148,7 @@ class SekretarisController extends Controller
                 'asrama' => $asrama->nama_asrama ?? '-',
             ]);
         } catch (\Exception $e) {
-            \Log::warning('Telegram notification failed: ' . $e->getMessage());
+            Log::warning('Telegram notification failed: ' . $e->getMessage());
         }
         
         return redirect()->route('sekretaris.data-santri')
@@ -245,7 +245,7 @@ class SekretarisController extends Controller
                     $failed++;
                 }
             } catch (\Exception $e) {
-                \Log::error("VA Generate failed for Santri ID {$santri->id}: " . $e->getMessage());
+                Log::error("VA Generate failed for Santri ID {$santri->id}: " . $e->getMessage());
                 $failed++;
             }
         }
@@ -328,7 +328,7 @@ class SekretarisController extends Controller
                 $icon
             );
         } catch (\Exception $e) {
-            \Log::warning('Telegram notification failed: ' . $e->getMessage());
+            Log::warning('Telegram notification failed: ' . $e->getMessage());
         }
         
         return redirect()->route('sekretaris.mutasi-santri')
