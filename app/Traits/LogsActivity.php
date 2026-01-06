@@ -12,12 +12,13 @@ trait LogsActivity
     public static function bootLogsActivity(): void
     {
         // Log when model is created
+        // Log when model is created
         static::created(function ($model) {
             ActivityLog::logActivity(
-                $model,
-                'created',
                 'Data ' . class_basename($model) . ' dibuat',
-                ['attributes' => $model->getAttributes()]
+                $model,
+                ['attributes' => $model->getAttributes()],
+                'created'
             );
         });
 
@@ -37,13 +38,13 @@ trait LogsActivity
             
             if (!empty($changes)) {
                 ActivityLog::logActivity(
-                    $model,
-                    'updated',
                     'Data ' . class_basename($model) . ' diperbarui',
+                    $model,
                     [
                         'old' => $original,
                         'attributes' => $changes
-                    ]
+                    ],
+                    'updated'
                 );
             }
         });
@@ -51,10 +52,10 @@ trait LogsActivity
         // Log when model is deleted
         static::deleted(function ($model) {
             ActivityLog::logActivity(
-                $model,
-                'deleted',
                 'Data ' . class_basename($model) . ' dihapus',
-                ['old' => $model->getAttributes()]
+                $model,
+                ['old' => $model->getAttributes()],
+                'deleted'
             );
         });
     }
