@@ -40,13 +40,13 @@ class DemoController extends Controller
             ]);
 
             // 3. Create Admin User
-            $user = User::create([
-                'name' => 'Admin Demo',
-                'email' => 'admin@' . $subdomain . '.test',
-                'password' => Hash::make('password'), // Standard password
-                'role' => 'admin',
-                'pesantren_id' => $pesantren->id,
-            ]);
+            $user = new User();
+            $user->name = 'Admin Demo';
+            $user->email = 'admin@' . $subdomain . '.test';
+            $user->password = Hash::make('password');
+            $user->role = 'admin';
+            $user->pesantren_id = $pesantren->id;
+            $user->save();
 
             // 4. Create Dummy Subscription (so middleware doesn't block)
             Subscription::create([
