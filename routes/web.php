@@ -329,7 +329,12 @@ Route::domain('{subdomain}.' . $mainDomain)->middleware([\App\Http\Middleware\Re
         
         // Syahriah/SPP
         Route::get('/syahriah', [App\Http\Controllers\BendaharaController::class, 'syahriah'])->name('syahriah');
-        Route::get('/tunggakan', [App\Http\Controllers\BendaharaController::class, 'syahriah'])->name('cek-tunggakan'); // Use correct name 'cek-tunggakan' as requested
+        Route::get('/tunggakan', [App\Http\Controllers\BendaharaController::class, 'cekTunggakan'])->name('cek-tunggakan');
+        Route::post('/tunggakan/proses', [App\Http\Controllers\BendaharaController::class, 'prosesCekTunggakan'])->name('cek-tunggakan.proses');
+        Route::get('/tunggakan/export', [App\Http\Controllers\BendaharaController::class, 'exportLaporanTunggakan'])->name('cek-tunggakan.export');
+        Route::get('/billing/targets', [App\Http\Controllers\BendaharaController::class, 'getBillingTargets'])->name('billing.targets');
+        Route::post('/billing/send', [App\Http\Controllers\BendaharaController::class, 'sendBillingNotification'])->name('billing.send');
+        
         Route::post('/syahriah/generate', [App\Http\Controllers\BendaharaController::class, 'generateSyahriah'])->name('syahriah.generate');
         Route::post('/syahriah/{id}/pay', [App\Http\Controllers\BendaharaController::class, 'paySyahriah'])->name('syahriah.pay');
         Route::post('/syahriah', [App\Http\Controllers\BendaharaController::class, 'storeSyahriah'])->name('syahriah.store');
@@ -361,7 +366,12 @@ Route::domain('{subdomain}.' . $mainDomain)->middleware([\App\Http\Middleware\Re
 
         // Laporan
         Route::get('/laporan', [App\Http\Controllers\BendaharaController::class, 'laporan'])->name('laporan');
-        Route::get('/laporan/pdf', [App\Http\Controllers\BendaharaController::class, 'generatePdf'])->name('laporan.pdf');
+        Route::get('/laporan/export-syahriah', [App\Http\Controllers\BendaharaController::class, 'exportLaporanSyahriah'])->name('laporan.export-syahriah');
+        Route::get('/laporan/export-pemasukan', [App\Http\Controllers\BendaharaController::class, 'exportLaporanPemasukan'])->name('laporan.export-pemasukan');
+        Route::get('/laporan/export-pengeluaran', [App\Http\Controllers\BendaharaController::class, 'exportLaporanPengeluaran'])->name('laporan.export-pengeluaran');
+        Route::get('/laporan/export-kas', [App\Http\Controllers\BendaharaController::class, 'exportLaporanKas'])->name('laporan.export-kas');
+        Route::get('/laporan/export-gaji', [App\Http\Controllers\BendaharaController::class, 'exportLaporanGaji'])->name('laporan.export-gaji');
+        Route::get('/laporan/export-keuangan-lengkap', [App\Http\Controllers\BendaharaController::class, 'exportLaporanKeuanganLengkap'])->name('laporan.export-keuangan-lengkap');
     });
 
     // Shared Routes for All Authenticated Tenant Users

@@ -1204,4 +1204,87 @@ class BendaharaController extends Controller
             'totalSantriMenunggak', 'grandTotalBulan', 'grandTotalRupiah'
         ))->header('Content-Type', 'text/html');
     }
+    public function getBillingTargets()
+    {
+        $query = Santri::where('is_active', true)->with(['kelas', 'asrama', 'kobong']);
+        $santriList = $query->get();
+        
+        $biayaBulanan = 500000;
+        $endDate = now();
+        $targets = [];
+        
+        foreach ($santriList as $santri) {
+            $startDate = $santri->tanggal_masuk ?? $santri->created_at;
+            $allMonths = [];
+            $current = $startDate->copy()->startOfMonth();
+            while ($current <= $endDate) {
+                $allMonths[] = $current->month . '-' . $current->year;
+                $current->addMonth();
+            }
+
+            $paidMonths = Syahriah::where('santri_id', $santri->id)
+                ->where('is_lunas', true)
+                ->get()
+                ->map(fn($item) => $item->bulan . '-' . $item->tahun)
+                ->toArray();
+
+            $unpaidCount = 0;
+            foreach ($allMonths as $monthKey) {
+                if (!in_array($monthKey, $paidMonths)) {
+                    $unpaidCount++;
+                }
+            }
+
+            if ($unpaidCount > 0) {
+                $targets[] = [
+                    'id' => $santri->id,
+                    'nama' => $santri->nama_santri,
+                    'phone' => $santri->no_hp_ortu_wali,
+                    'unpaid_months' => $unpaidCount,
+                    'total_arrears' => $unpaidCount * $biayaBulanan,
+                    'kelas' => $santri->kelas->nama_kelas ?? '-'
+                ];
+            }
+        }
+        
+        return response()->json([
+            'count' => count($targets),
+            'targets' => $targets
+        ]);
+    }
+
+    public function sendBillingNotification(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:santri,id',
+            'phone' => 'required',
+            'unpaid_months' => 'required',
+            'total_arrears' => 'required'
+        ]);
+
+        $santri = Santri::find($request->id);
+        $phone = $request->phone;
+        
+        // Format Phone (remove 0/62 prefix, etc handled by Service usually, but let's ensure)
+        
+        $message = "Assalamu'alaikum Wr. Wb.\n\n" .
+            "Yth. Wali dari Ananda *{$santri->nama_santri}*\n" .
+            "NIS: {$santri->nis}\n" .
+            "Kelas: " . ($santri->kelas->nama_kelas ?? '-') . "\n\n" .
+            "Kami informasikan bahwa terdapat *tunggakan Syahriah* sebanyak {$request->unpaid_months} bulan.\n\n" .
+            "💰 *Total Tunggakan:* Rp " . number_format($request->total_arrears, 0, ',', '.') . "\n\n" .
+            "Mohon dapat melunasi melalui Bendahara " . (Auth::user()->pesantren->nama_pesantren ?? 'Pesantren') . ".\n\n" .
+            "Jazakumullahu Khairan.\n" .
+            "_Bendahara_";
+
+        try {
+            $fonnte = app(\App\Services\FonnteService::class);
+            $fonnte->sendWhatsApp($phone, $message);
+            
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            Log::error("WA Blast Error: " . $e->getMessage());
+            return response()->json(['success' => false, 'error' => $e->getMessage()]);
+        }
+    }
 }
