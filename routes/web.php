@@ -251,6 +251,10 @@ Route::domain('{subdomain}.' . $mainDomain)->middleware([\App\Http\Middleware\Re
         // Absensi
         Route::get('/absensi', [App\Http\Controllers\PendidikanController::class, 'absensi'])->name('absensi');
         Route::post('/absensi', [App\Http\Controllers\PendidikanController::class, 'storeAbsensi'])->name('absensi.store');
+        Route::get('/absensi/rekap', [App\Http\Controllers\PendidikanController::class, 'rekapAbsensi'])->name('absensi.rekap');
+        Route::put('/absensi/{id}', [App\Http\Controllers\PendidikanController::class, 'updateAbsensi'])->name('absensi.update');
+        Route::delete('/absensi/{id}', [App\Http\Controllers\PendidikanController::class, 'destroyAbsensi'])->name('absensi.destroy');
+        Route::get('/absensi/cetak', [App\Http\Controllers\PendidikanController::class, 'cetakAbsensi'])->name('absensi.cetak');
         
         // Laporan (E-Rapor)
         Route::get('/laporan', [App\Http\Controllers\PendidikanController::class, 'laporan'])->name('laporan');

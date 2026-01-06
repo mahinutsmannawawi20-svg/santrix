@@ -1418,8 +1418,8 @@ class PendidikanController extends Controller
     {
         $validated = $request->validate([
             'kelas_id' => 'required|exists:kelas,id',
-            'tahun' => 'required|integer',
-            'minggu_ke' => 'required|integer|min:1|max:52',
+            'tahun' => 'required|integer|min:2000|max:2099',
+            'minggu_ke' => 'required|integer|min:1|max:53',
             'santri' => 'required|array',
             'santri.*.id' => 'required|exists:santri,id',
             'santri.*.alfa_sorogan' => 'required|integer|min:0',
