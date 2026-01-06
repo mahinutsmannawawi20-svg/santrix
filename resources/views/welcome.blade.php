@@ -332,9 +332,9 @@
     </section>
 
     <!-- Testimonials Section -->
-    <section id="testimonials" class="py-24 bg-slate-900">
+    <section id="testimonials" class="py-24 bg-slate-900 overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-16" data-aos="fade-up">
+            <div class="text-center max-w-3xl mx-auto mb-16">
                 <span class="inline-block px-4 py-1.5 bg-amber-500/10 text-amber-400 text-sm font-medium rounded-full border border-amber-500/20 mb-4">
                     Testimoni
                 </span>
@@ -346,35 +346,98 @@
                 </p>
             </div>
 
-            <div class="grid md:grid-cols-3 gap-8">
-                @php
-                    $testimonials = [
-                        ['name' => 'Ust. Ahmad Fauzi', 'role' => 'Mudir PP. Riyadlul Huda', 'text' => 'Santrix sangat membantu mengelola data santri dan keuangan. Semuanya jadi lebih rapi.', 'avatar' => 'AF'],
-                        ['name' => 'Ust. Muhammad Rizki', 'role' => 'Kepala TU PP. Darul Ulum', 'text' => 'Fitur laporan otomatis menghemat waktu kami. Tidak perlu input manual setiap bulan.', 'avatar' => 'MR'],
-                        ['name' => 'Ustadzah Siti Aminah', 'role' => 'Bendahara PP. Nurul Hikmah', 'text' => 'Tracking pembayaran SPP jadi mudah. Wali santri bisa cek tagihan via WhatsApp.', 'avatar' => 'SA'],
-                    ];
-                @endphp
-                @foreach($testimonials as $index => $t)
-                <div class="bg-slate-800/50 rounded-2xl p-8 border border-white/5 hover:-translate-y-2 transition-all duration-300" data-aos="fade-up" data-aos-delay="{{ ($index + 1) * 100 }}">
-                    <div class="flex gap-1 mb-4">
-                        @for($i = 0; $i < 5; $i++)
-                        <svg class="w-5 h-5 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
-                        @endfor
-                    </div>
-                    <p class="text-slate-300 mb-6 leading-relaxed">"{{ $t['text'] }}"</p>
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
-                            {{ $t['avatar'] }}
+            <!-- Infinite Carousel -->
+            <div class="relative">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        @php
+                            $testimonials = [
+                                ['name' => 'Ust. Ahmad Fauzi', 'role' => 'Mudir PP. Riyadlul Huda', 'text' => 'Santrix sangat membantu mengelola data santri dan keuangan. Semuanya jadi lebih rapi dan terorganisir.', 'avatar' => 'AF'],
+                                ['name' => 'Ust. Muhammad Rizki', 'role' => 'Kepala TU PP. Darul Ulum', 'text' => 'Fitur laporan otomatis menghemat waktu kami. Tidak perlu input manual setiap bulan lagi.', 'avatar' => 'MR'],
+                                ['name' => 'Ustadzah Siti Aminah', 'role' => 'Bendahara PP. Nurul Hikmah', 'text' => 'Tracking pembayaran SPP jadi mudah. Wali santri bisa cek tagihan via WhatsApp secara real-time.', 'avatar' => 'SA'],
+                                ['name' => 'Ust. Abdul Malik', 'role' => 'Direktur PP. Al-Ikhlas', 'text' => 'Dashboard yang intuitif memudahkan monitoring seluruh aktivitas pesantren dalam satu platform.', 'avatar' => 'AM'],
+                                ['name' => 'Ustadzah Fatimah', 'role' => 'Sekretaris PP. Darul Falah', 'text' => 'Sistem mutasi santri sangat membantu tracking perpindahan dan kenaikan kelas secara otomatis.', 'avatar' => 'FA'],
+                                ['name' => 'Ust. Hasan Basri', 'role' => 'Mudir PP. Nurul Iman', 'text' => 'Notifikasi WhatsApp otomatis sangat membantu komunikasi dengan wali santri. Efisien sekali!', 'avatar' => 'HB'],
+                                ['name' => 'Ust. Ibrahim Khalil', 'role' => 'Bendahara PP. Al-Hidayah', 'text' => 'Integrasi Midtrans memudahkan pembayaran online. Wali santri tidak perlu datang langsung.', 'avatar' => 'IK'],
+                                ['name' => 'Ustadzah Khadijah', 'role' => 'Kepala Madrasah PP. Raudhatul Jannah', 'text' => 'Fitur nilai dan raport digital sangat membantu evaluasi akademik santri setiap semester.', 'avatar' => 'KH'],
+                                ['name' => 'Ust. Lukman Hakim', 'role' => 'Wakil Mudir PP. Darul Hikmah', 'text' => 'Multi-user access dengan role berbeda sangat membantu pembagian tugas tim administrasi.', 'avatar' => 'LH'],
+                                ['name' => 'Ustadzah Maryam', 'role' => 'Pengurus Asrama PP. Al-Barokah', 'text' => 'Manajemen asrama dan kobong jadi lebih terstruktur. Data santri per kamar sangat detail.', 'avatar' => 'MA'],
+                                ['name' => 'Ust. Nashir Ahmad', 'role' => 'Mudir PP. Darul Qur\'an', 'text' => 'Backup otomatis setiap hari membuat data kami aman. Tidak khawatir kehilangan data lagi.', 'avatar' => 'NA'],
+                                ['name' => 'Ustadzah Aisyah', 'role' => 'Bendahara PP. Nurul Huda', 'text' => 'Laporan keuangan bulanan sangat lengkap. Transparansi keuangan pesantren meningkat drastis.', 'avatar' => 'AI'],
+                                ['name' => 'Ust. Qasim Idris', 'role' => 'Kepala TU PP. Al-Furqon', 'text' => 'Export data ke Excel sangat membantu untuk laporan ke yayasan. Praktis dan cepat!', 'avatar' => 'QI'],
+                                ['name' => 'Ustadzah Ruqayyah', 'role' => 'Sekretaris PP. Darul Aitam', 'text' => 'Cetak kartu santri dan surat-surat administrasi jadi lebih profesional dengan template yang disediakan.', 'avatar' => 'RU'],
+                                ['name' => 'Ust. Salman Farisi', 'role' => 'Mudir PP. Al-Mubarok', 'text' => 'Support tim Santrix sangat responsif. Setiap kendala langsung dibantu dengan cepat dan ramah.', 'avatar' => 'SF'],
+                            ];
+                        @endphp
+                        
+                        <!-- Duplicate for infinite loop -->
+                        @foreach(array_merge($testimonials, $testimonials) as $index => $t)
+                        <div class="carousel-item">
+                            <div class="bg-slate-800/50 rounded-2xl p-6 border border-white/5 h-full">
+                                <div class="flex gap-1 mb-3">
+                                    @for($i = 0; $i < 5; $i++)
+                                    <svg class="w-4 h-4 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                                    @endfor
+                                </div>
+                                <p class="text-slate-300 mb-4 leading-relaxed text-sm">"{{ $t['text'] }}"</p>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-full flex items-center justify-center text-white font-bold text-xs">
+                                        {{ $t['avatar'] }}
+                                    </div>
+                                    <div>
+                                        <div class="font-semibold text-white text-sm">{{ $t['name'] }}</div>
+                                        <div class="text-xs text-slate-400">{{ $t['role'] }}</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div>
-                            <div class="font-semibold text-white text-sm">{{ $t['name'] }}</div>
-                            <div class="text-xs text-slate-400">{{ $t['role'] }}</div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
-                @endforeach
             </div>
         </div>
+
+        <style>
+            .carousel-container {
+                overflow: hidden;
+                position: relative;
+            }
+            .carousel-track {
+                display: flex;
+                gap: 1.5rem;
+                animation: scroll 60s linear infinite;
+                width: max-content;
+            }
+            .carousel-track:hover {
+                animation-play-state: paused;
+            }
+            .carousel-item {
+                flex: 0 0 350px;
+                max-width: 350px;
+            }
+            @keyframes scroll {
+                0% {
+                    transform: translateX(0);
+                }
+                100% {
+                    transform: translateX(calc(-350px * 15 - 1.5rem * 15));
+                }
+            }
+            @media (max-width: 640px) {
+                .carousel-item {
+                    flex: 0 0 280px;
+                    max-width: 280px;
+                }
+                @keyframes scroll {
+                    0% {
+                        transform: translateX(0);
+                    }
+                    100% {
+                        transform: translateX(calc(-280px * 15 - 1.5rem * 15));
+                    }
+                }
+            }
+        </style>
     </section>
 
     <!-- CTA Section -->
