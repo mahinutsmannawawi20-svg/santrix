@@ -50,7 +50,10 @@
                             @forelse($tahunAjaran as $tahun)
                             <tr class="{{ $tahun->is_active ? 'table-success' : '' }}">
                                 <td class="fw-bold">{{ $tahun->nama }}</td>
-                                <td>{{ date('d M Y', strtotime($tahun->tanggal_mulai)) }} - {{ date('d M Y', strtotime($tahun->tanggal_selesai)) }}</td>
+                                <td>
+                                    {{ $tahun->tanggal_mulai ? date('d M Y', strtotime($tahun->tanggal_mulai)) : '-' }} - 
+                                    {{ $tahun->tanggal_selesai ? date('d M Y', strtotime($tahun->tanggal_selesai)) : '-' }}
+                                </td>
                                 <td>
                                     @if($tahun->is_active)
                                         <span class="badge bg-success">AKTIF</span>
@@ -91,12 +94,11 @@
                                                     <input type="text" name="nama" class="form-control" value="{{ $tahun->nama }}" required placeholder="Contoh: 2024/2025">
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label class="form-label">Tanggal Mulai</label>
-                                                    <input type="date" name="tanggal_mulai" class="form-control" value="{{ $tahun->tanggal_mulai->format('Y-m-d') }}" required>
+                                                    <input type="date" name="tanggal_mulai" class="form-control" value="{{ $tahun->tanggal_mulai ? $tahun->tanggal_mulai->format('Y-m-d') : '' }}" required>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label class="form-label">Tanggal Selesai</label>
-                                                    <input type="date" name="tanggal_selesai" class="form-control" value="{{ $tahun->tanggal_selesai->format('Y-m-d') }}" required>
+                                                    <input type="date" name="tanggal_selesai" class="form-control" value="{{ $tahun->tanggal_selesai ? $tahun->tanggal_selesai->format('Y-m-d') : '' }}" required>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label class="form-label">Status Aktif</label>

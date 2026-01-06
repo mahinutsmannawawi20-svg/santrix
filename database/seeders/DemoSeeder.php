@@ -22,8 +22,8 @@ class DemoSeeder extends Seeder
             'pesantren_id' => $pesantren->id,
             'nama' => '2025/2026 Ganjil',
             'is_active' => true,
-            // 'tanggal_mulai' => '2025-07-01', // Optional if not in migration
-            // 'tanggal_selesai' => '2025-12-31', // Optional if not in migration
+            'tanggal_mulai' => now()->startOfYear(),
+            'tanggal_selesai' => now()->endOfYear(),
         ]);
 
         // 2. Setup Kelas
