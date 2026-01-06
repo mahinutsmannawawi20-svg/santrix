@@ -52,13 +52,6 @@ Route::domain('owner.' . $mainDomain)->group(function () {
         });
     
     // Redirect root to owner dashboard if logged in, else login
-    Route::get('/', function() {
-        return Auth::check() ? redirect()->route('owner.dashboard') : redirect()->route('login');
-    });
-});
-
-/*
-|--------------------------------------------------------------------------
 | 2. CENTRAL DOMAIN ROUTES (santrix.my.id)
 |--------------------------------------------------------------------------
 */

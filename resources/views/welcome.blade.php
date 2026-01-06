@@ -351,7 +351,7 @@
                                 <p class="text-indigo-700 text-sm font-medium">Administrasi & Data Santri</p>
                             </div>
                         </div>
-                        <a href="{{ route('login') }}" class="hidden sm:flex items-center gap-2 px-4 py-2 bg-white text-indigo-700 text-sm font-bold rounded-lg border border-indigo-200 hover:bg-indigo-50 transition-colors">
+                        <a href="{{ route('demo.start', ['type' => 'sekretaris']) }}" class="hidden sm:flex items-center gap-2 px-4 py-2 bg-white text-indigo-700 text-sm font-bold rounded-lg border border-indigo-200 hover:bg-indigo-50 transition-colors">
                             Masuk
                             <i data-feather="arrow-right" class="w-4 h-4"></i>
                         </a>
@@ -395,8 +395,8 @@
                         </div>
 
                         <div class="mt-6 pt-4 border-t border-slate-100 flex gap-3">
-                            <a href="#" class="flex-1 py-2 text-center text-xs font-bold uppercase tracking-wider bg-indigo-50 text-indigo-700 rounded hover:bg-indigo-100 transition-colors">Input Santri</a>
-                            <a href="#" class="flex-1 py-2 text-center text-xs font-bold uppercase tracking-wider bg-indigo-50 text-indigo-700 rounded hover:bg-indigo-100 transition-colors">Cek Kamar</a>
+                            <a href="{{ route('demo.start', ['type' => 'sekretaris']) }}" class="flex-1 py-2 text-center text-xs font-bold uppercase tracking-wider bg-indigo-50 text-indigo-700 rounded hover:bg-indigo-100 transition-colors">Input Santri</a>
+                            <a href="{{ route('demo.start', ['type' => 'sekretaris']) }}" class="flex-1 py-2 text-center text-xs font-bold uppercase tracking-wider bg-indigo-50 text-indigo-700 rounded hover:bg-indigo-100 transition-colors">Cek Kamar</a>
                         </div>
                     </div>
                 </div>
@@ -413,7 +413,7 @@
                                 <p class="text-emerald-700 text-sm font-medium">Cashflow & SPP</p>
                             </div>
                         </div>
-                        <a href="{{ route('login') }}" class="hidden sm:flex items-center gap-2 px-4 py-2 bg-white text-emerald-700 text-sm font-bold rounded-lg border border-emerald-200 hover:bg-emerald-50 transition-colors">
+                        <a href="{{ route('demo.start', ['type' => 'bendahara']) }}" class="hidden sm:flex items-center gap-2 px-4 py-2 bg-white text-emerald-700 text-sm font-bold rounded-lg border border-emerald-200 hover:bg-emerald-50 transition-colors">
                             Masuk
                             <i data-feather="arrow-right" class="w-4 h-4"></i>
                         </a>
@@ -456,8 +456,8 @@
                         </div>
 
                         <div class="mt-6 pt-4 border-t border-slate-100 flex gap-3">
-                            <a href="#" class="flex-1 py-2 text-center text-xs font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700 rounded hover:bg-emerald-100 transition-colors">Buat Tagihan</a>
-                            <a href="#" class="flex-1 py-2 text-center text-xs font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700 rounded hover:bg-emerald-100 transition-colors">Catat Bayar</a>
+                            <a href="{{ route('demo.start', ['type' => 'bendahara']) }}" class="flex-1 py-2 text-center text-xs font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700 rounded hover:bg-emerald-100 transition-colors">Buat Tagihan</a>
+                            <a href="{{ route('demo.start', ['type' => 'bendahara']) }}" class="flex-1 py-2 text-center text-xs font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700 rounded hover:bg-emerald-100 transition-colors">Catat Bayar</a>
                         </div>
                     </div>
                 </div>
@@ -474,7 +474,7 @@
                                 <p class="text-blue-700 text-sm font-medium">Kurikulum & Rapor</p>
                             </div>
                         </div>
-                        <a href="{{ route('login') }}" class="hidden sm:flex items-center gap-2 px-4 py-2 bg-white text-blue-700 text-sm font-bold rounded-lg border border-blue-200 hover:bg-blue-50 transition-colors">
+                        <a href="{{ route('demo.start', ['type' => 'pendidikan']) }}" class="hidden sm:flex items-center gap-2 px-4 py-2 bg-white text-blue-700 text-sm font-bold rounded-lg border border-blue-200 hover:bg-blue-50 transition-colors">
                             Masuk
                             <i data-feather="arrow-right" class="w-4 h-4"></i>
                         </a>
@@ -517,8 +517,8 @@
                         </div>
 
                         <div class="mt-6 pt-4 border-t border-slate-100 flex gap-3">
-                            <a href="#" class="flex-1 py-2 text-center text-xs font-bold uppercase tracking-wider bg-blue-50 text-blue-700 rounded hover:bg-blue-100 transition-colors">Input Nilai</a>
-                            <a href="#" class="flex-1 py-2 text-center text-xs font-bold uppercase tracking-wider bg-blue-50 text-blue-700 rounded hover:bg-blue-100 transition-colors">Cetak Rapor</a>
+                            <a href="{{ route('demo.start', ['type' => 'pendidikan']) }}" class="flex-1 py-2 text-center text-xs font-bold uppercase tracking-wider bg-blue-50 text-blue-700 rounded hover:bg-blue-100 transition-colors">Input Nilai</a>
+                            <a href="{{ route('demo.start', ['type' => 'pendidikan']) }}" class="flex-1 py-2 text-center text-xs font-bold uppercase tracking-wider bg-blue-50 text-blue-700 rounded hover:bg-blue-100 transition-colors">Cetak Rapor</a>
                         </div>
                     </div>
                 </div>
@@ -535,7 +535,7 @@
                                 <p class="text-slate-600 text-sm font-medium">Kontrol & Backup Data</p>
                             </div>
                         </div>
-                        <a href="{{ route('login') }}" class="hidden sm:flex items-center gap-2 px-4 py-2 bg-white text-slate-700 text-sm font-bold rounded-lg border border-slate-200 hover:bg-slate-50 transition-colors">
+                        <a href="{{ route('demo.start', ['type' => 'admin']) }}" class="hidden sm:flex items-center gap-2 px-4 py-2 bg-white text-slate-700 text-sm font-bold rounded-lg border border-slate-200 hover:bg-slate-50 transition-colors">
                             Masuk
                             <i data-feather="arrow-right" class="w-4 h-4"></i>
                         </a>
@@ -570,8 +570,8 @@
                         </div>
 
                         <div class="mt-6 pt-4 border-t border-slate-100 flex gap-3">
-                            <a href="#" class="flex-1 py-2 text-center text-xs font-bold uppercase tracking-wider bg-slate-100 text-slate-700 rounded hover:bg-slate-200 transition-colors">Download Backup</a>
-                            <a href="#" class="flex-1 py-2 text-center text-xs font-bold uppercase tracking-wider bg-slate-100 text-slate-700 rounded hover:bg-slate-200 transition-colors">Tambah User</a>
+                            <a href="{{ route('demo.start', ['type' => 'admin']) }}" class="flex-1 py-2 text-center text-xs font-bold uppercase tracking-wider bg-slate-100 text-slate-700 rounded hover:bg-slate-200 transition-colors">Download Backup</a>
+                            <a href="{{ route('demo.start', ['type' => 'admin']) }}" class="flex-1 py-2 text-center text-xs font-bold uppercase tracking-wider bg-slate-100 text-slate-700 rounded hover:bg-slate-200 transition-colors">Tambah User</a>
                         </div>
                     </div>
                 </div>
