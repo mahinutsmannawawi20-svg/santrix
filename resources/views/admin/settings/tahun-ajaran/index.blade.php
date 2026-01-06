@@ -1,5 +1,11 @@
 @extends('layouts.app')
 
+@section('title', 'Pengaturan Tahun Ajaran')
+
+@section('sidebar-menu')
+    @include('admin.partials.sidebar-menu')
+@endsection
+
 @section('content')
 <div class="row">
     <div class="col-12">
@@ -77,46 +83,7 @@
                                 </td>
                             </tr>
 
-                            <!-- Edit Modal -->
-                            <div class="modal fade" id="editModal{{ $tahun->id }}" tabindex="-1">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <form action="{{ route('admin.pengaturan.tahun-ajaran.update', $tahun->id) }}" method="POST">
-                                            @csrf
-                                            @method('PUT')
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">Edit Tahun Ajaran</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="mb-3">
-                                                    <label class="form-label">Nama Tahun Ajaran</label>
-                                                    <input type="text" name="nama" class="form-control" value="{{ $tahun->nama }}" required placeholder="Contoh: 2024/2025">
-                                                </div>
-                                                <div class="mb-3">
-                                                    <input type="date" name="tanggal_mulai" class="form-control" value="{{ $tahun->tanggal_mulai ? $tahun->tanggal_mulai->format('Y-m-d') : '' }}" required>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label">Tanggal Selesai</label>
-                                                    <input type="date" name="tanggal_selesai" class="form-control" value="{{ $tahun->tanggal_selesai ? $tahun->tanggal_selesai->format('Y-m-d') : '' }}" required>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label">Status Aktif</label>
-                                                    <select name="is_active" class="form-select">
-                                                        <option value="0" {{ !$tahun->is_active ? 'selected' : '' }}>Tidak Aktif</option>
-                                                        <option value="1" {{ $tahun->is_active ? 'selected' : '' }}>AKTIF (Set sebagai tahun berjalan)</option>
-                                                    </select>
-                                                    <small class="text-muted">Mengaktifkan tahun ini akan menonaktifkan tahun ajaran lainnya.</small>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                                <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
+                            <!-- Edit Modal moved to bottom -->
                             @empty
                             <tr>
                                 <td colspan="4" class="text-center">Belum ada data tahun ajaran.</td>
@@ -129,6 +96,50 @@
         </div>
     </div>
 </div>
+
+<!-- Edit Modals (Moved Outside Table) -->
+@foreach($tahunAjaran as $tahun)
+<div class="modal fade" id="editModal{{ $tahun->id }}" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="{{ route('admin.pengaturan.tahun-ajaran.update', $tahun->id) }}" method="POST">
+                @csrf
+                @method('PUT')
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Tahun Ajaran</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Nama Tahun Ajaran</label>
+                        <input type="text" name="nama" class="form-control" value="{{ $tahun->nama }}" required placeholder="Contoh: 2024/2025">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Tanggal Mulai</label>
+                        <input type="date" name="tanggal_mulai" class="form-control" value="{{ $tahun->tanggal_mulai ? $tahun->tanggal_mulai->format('Y-m-d') : '' }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Tanggal Selesai</label>
+                        <input type="date" name="tanggal_selesai" class="form-control" value="{{ $tahun->tanggal_selesai ? $tahun->tanggal_selesai->format('Y-m-d') : '' }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Status Aktif</label>
+                        <select name="is_active" class="form-select">
+                            <option value="0" {{ !$tahun->is_active ? 'selected' : '' }}>Tidak Aktif</option>
+                            <option value="1" {{ $tahun->is_active ? 'selected' : '' }}>AKTIF (Set sebagai tahun berjalan)</option>
+                        </select>
+                        <small class="text-muted">Mengaktifkan tahun ini akan menonaktifkan tahun ajaran lainnya.</small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endforeach
 
 <!-- Create Modal -->
 <div class="modal fade" id="createModal" tabindex="-1">
