@@ -53,8 +53,12 @@ class TahunAjaranController extends Controller
             'nama' => $request->nama,
             'tanggal_mulai' => $request->tanggal_mulai,
             'tanggal_selesai' => $request->tanggal_selesai,
-            'is_active' => $request->is_active,
+             'is_active' => $request->is_active,
         ]);
+
+        return redirect()->route('admin.pengaturan.tahun-ajaran.index')
+            ->with('success', 'Tahun Ajaran berhasil ditambahkan');
+    }
 
     // NOTE: Because of Route::domain('{subdomain}...') group, the first argument is ALWAYS subdomain.
     public function update(Request $request, $subdomain, $id)
