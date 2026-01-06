@@ -310,6 +310,10 @@ Route::domain('{subdomain}.' . $mainDomain)->middleware([\App\Http\Middleware\Re
 
         // Laporan
         Route::get('/laporan', [App\Http\Controllers\SekretarisController::class, 'laporan'])->name('laporan');
+        Route::get('/laporan/export-santri', [App\Http\Controllers\SekretarisController::class, 'exportLaporanSantri'])->name('laporan.export-santri');
+        Route::get('/laporan/export-mutasi', [App\Http\Controllers\SekretarisController::class, 'exportLaporanMutasi'])->name('laporan.export-mutasi');
+        Route::get('/laporan/export-statistik-kelas', [App\Http\Controllers\SekretarisController::class, 'exportStatistikKelas'])->name('laporan.export-statistik-kelas');
+        Route::get('/laporan/export-statistik-asrama', [App\Http\Controllers\SekretarisController::class, 'exportStatistikAsrama'])->name('laporan.export-statistik-asrama');
     });
 
     // Bendahara Dashboard Routes

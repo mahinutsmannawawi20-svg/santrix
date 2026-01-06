@@ -9,6 +9,7 @@ use App\Models\Kobong;
 use App\Models\MutasiSantri;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class SekretarisController extends Controller
