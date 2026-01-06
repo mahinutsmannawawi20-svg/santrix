@@ -68,18 +68,21 @@ class DemoController extends Controller
             // 6. Auto Login & Redirect
             Auth::login($user);
 
-            // Redirect based on requested type
-            switch ($type) {
-                case 'bendahara':
-                    return redirect()->route('bendahara.dashboard')->with('success', 'Selamat datang di Mode Demo Bendahara! Data akan di-reset dalam 1 jam.');
-                case 'pendidikan':
-                    return redirect()->route('pendidikan.dashboard')->with('success', 'Selamat datang di Mode Demo Pendidikan! Data akan di-reset dalam 1 jam.');
-                case 'admin':
-                    return redirect()->route('admin.dashboard')->with('success', 'Selamat datang di Mode Demo Admin! Data akan di-reset dalam 1 jam.');
-                case 'sekretaris':
-                default:
-                    return redirect()->route('sekretaris.dashboard')->with('success', 'Selamat datang di Mode Demo Sekretaris! Data akan di-reset dalam 1 jam.');
-            }
+            // Fix Cross-Domain Redirect for Demo
+            // Because Demo Controller runs on Central Domain, but Dashboard is on Tenant Subdomain
+            $mainDomain = config('tenancy.central_domains')[0] ?? 'santrix.my.id';
+            $tenantUrl = 'https://' . $subdomain . '.' . $mainDomain;
+
+            $path = match ($type) {
+                'bendahara' => '/bendahara', // Redirect to /bendahara (dashboard)
+                'pendidikan' => '/pendidikan', // Redirect to /pendidikan (dashboard)
+                'admin' => '/admin',
+                'sekretaris' => '/sekretaris',
+                default => '/sekretaris',
+            };
+
+            // Use absolute URL to ensure we jump to the new subdomain
+            return redirect()->to($tenantUrl . $path)->with('success', 'Selamat datang di Mode Demo! Data akan di-reset dalam 1 jam.');
 
         } catch (\Exception $e) {
             DB::rollBack();

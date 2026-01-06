@@ -30,10 +30,21 @@ class RegisterTenantController extends Controller
         // Validate package parameter
         $packageSlug = $request->query('package');
         
+        if (!$packageSlug) {
+             // Fallback: Default to the first available package (usually Basic/Starter)
+             // or redirect to pricing section
+             $defaultPlan = \App\Models\Package::orderBy('price', 'asc')->first();
+             if ($defaultPlan) {
+                 return redirect()->route('register.tenant', ['package' => $defaultPlan->slug]);
+             }
+             return redirect('/#pricing');
+        }
+
         $selectedPlan = \App\Models\Package::where('slug', $packageSlug)->first();
 
         if (!$selectedPlan) {
-            return redirect()->route('landing')->with('error', 'Silakan pilih paket yang valid terlebih dahulu.');
+            // If slug invalid, redirect to pricing
+            return redirect('/#pricing')->with('error', 'Silakan pilih paket yang valid.');
         }
 
         $package = $packageSlug; // Keep variable name consistent for view

@@ -280,7 +280,7 @@
                             @endif
                         </ul>
 
-                        <a href="{{ route('register.tenant') }}" class="block w-full py-3 text-center font-bold rounded-xl transition-all {{ $index === 1 ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg shadow-cyan-500/25' : 'bg-white/5 text-white hover:bg-white/10 border border-white/10' }}">
+                        <a href="{{ route('register.tenant', ['package' => $pkg->slug]) }}" class="block w-full py-3 text-center font-bold rounded-xl transition-all {{ $index === 1 ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg shadow-cyan-500/25' : 'bg-white/5 text-white hover:bg-white/10 border border-white/10' }}">
                             Pilih Paket
                         </a>
                     </div>
@@ -346,7 +346,7 @@
                 Bergabung dengan ratusan pesantren yang telah merasakan kemudahan mengelola administrasi dengan SANTRIX.
             </p>
             <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="{{ route('register.tenant') }}" class="px-10 py-4 bg-white text-slate-900 font-bold rounded-xl shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-1 inline-flex items-center gap-2">
+                <a href="#pricing" class="px-10 py-4 bg-white text-slate-900 font-bold rounded-xl shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-1 inline-flex items-center gap-2">
                     Daftar Sekarang
                     <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                 </a>
