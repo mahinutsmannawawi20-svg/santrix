@@ -166,7 +166,7 @@ class LoginController extends Controller
             $currentHost = request()->getHost();
             $expectedHostStart = $pesantren->subdomain . '.';
             
-            if (!\Illuminate\Support\Str::startsWith($currentHost, $expectedHostStart)) {
+            if (!Str::startsWith($currentHost, $expectedHostStart)) {
                  // Force Absolute Redirect to Tenant Domain to avoid missing 'subdomain' param error
                 $path = match($user->role) {
                     'admin' => '/admin',
