@@ -214,12 +214,37 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Pilihan Metode Mulai -->
+                    <div class="bg-indigo-50 border-2 border-indigo-100 rounded-xl p-6">
+                        <label class="block text-sm font-semibold text-slate-700 mb-4">Mulai Dengan:</label>
+                        
+                        <div class="space-y-3">
+                            <!-- Option 1: Trial (Recommended) -->
+                            <label class="flex items-center p-4 border rounded-lg cursor-pointer transition-all bg-white border-indigo-200 hover:border-indigo-400 relative">
+                                <input type="radio" name="payment_method" value="trial" class="w-5 h-5 text-indigo-600 focus:ring-indigo-500" checked>
+                                <div class="ml-3 flex-1">
+                                    <span class="block text-sm font-bold text-slate-900">Coba Gratis {{ $trialDays }} Hari (Rekomendasi)</span>
+                                    <span class="block text-xs text-slate-500">Nikmati fitur lengkap tanpa bayar dulu.</span>
+                                </div>
+                                <span class="absolute top-2 right-2 bg-indigo-100 text-indigo-700 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Paling Aman</span>
+                            </label>
+
+                            <!-- Option 2: Direct Payment -->
+                            <label class="flex items-center p-4 border rounded-lg cursor-pointer transition-all bg-white border-slate-200 hover:border-indigo-400">
+                                <input type="radio" name="payment_method" value="transfer" class="w-5 h-5 text-indigo-600 focus:ring-indigo-500">
+                                <div class="ml-3 flex-1">
+                                    <span class="block text-sm font-bold text-slate-900">Langsung Bayar / Langganan</span>
+                                    <span class="block text-xs text-slate-500">Lewati masa trial, langsung aktifkan langganan.</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
                     @endif
 
                     <!-- Submit -->
                     <button type="submit" class="w-full bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2">
                         <i data-feather="check-circle" class="w-5 h-5"></i>
-                        Buat Akun & Mulai Trial {{ $trialDays }} Hari
+                        Buat Akun Pesantren
                     </button>
 
                     <p class="text-center text-sm text-slate-600">

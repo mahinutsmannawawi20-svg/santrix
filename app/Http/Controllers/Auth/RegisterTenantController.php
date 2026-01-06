@@ -94,20 +94,35 @@ class RegisterTenantController extends Controller
         try {
             DB::beginTransaction();
 
-            // 1. Create Pesantren
-            // Determine trial duration based on package duration
+            // 1. Determine Status based on Payment Method
+            $paymentMethod = $request->input('payment_method', 'trial');
+            $isDirectPayment = ($paymentMethod === 'transfer');
+
+            // Trial Logic
             $durationMonths = $packageConfig->duration_months;
-            $trialDays = ($durationMonths == 3) ? 2 : 4; // 3-month = 2 days, 6-month = 4 days
-            $graceDays = 3; // Grace period after trial
+            $trialDays = ($durationMonths == 3) ? 2 : 4; 
             
-            $trialEndsAt = now()->addDays($trialDays);
-            $deleteAt = $trialEndsAt->copy()->addDays($graceDays); // Delete after grace period
+            if ($isDirectPayment) {
+                // If direct payment, no trial period (active immediately after payment)
+                // But we set expired_at to NOW so they are forced to pay to access? 
+                // Or we give them minimal grace period (e.g. 1 day) to pay?
+                // Let's set trial_ends_at to NOW.
+                $trialEndsAt = now(); 
+                $status = 'pending_payment';
+            } else {
+                // Normal Trial
+                $trialEndsAt = now()->addDays($trialDays);
+                $status = 'trial';
+            }
+            
+            $graceDays = 3;
+            $deleteAt = $trialEndsAt->copy()->addDays($graceDays);
 
             $pesantrenData = [
                 'nama' => $request->nama_pesantren,
                 'subdomain' => $request->subdomain,
                 'domain' => $request->subdomain . '.' . config('app.url_base', 'santrix.my.id'),
-                'status' => 'trial',
+                'status' => $status,
                 'package' => $package,
                 'expired_at' => $trialEndsAt,
                 'trial_ends_at' => $trialEndsAt,
@@ -115,7 +130,7 @@ class RegisterTenantController extends Controller
                 'telepon' => $request->phone,
             ];
 
-            // Add bank details if advance package
+            // ... (Bank details logic) ...
             if (str_starts_with($package, 'advance')) {
                 $pesantrenData['bank_name'] = $request->bank_name;
                 $pesantrenData['bank_account_number'] = $request->bank_account_number;
@@ -124,51 +139,60 @@ class RegisterTenantController extends Controller
 
             $pesantren = Pesantren::create($pesantrenData);
 
-            // 2. Create Admin User (Tenant Admin, NOT Platform Owner)
-            // 2. Create Admin User (Tenant Admin, NOT Platform Owner)
-            // Use explicit instantiation to bypass guarded 'role' and 'pesantren_id'
+            // 2. Create User
             $user = new User();
             $user->name = $request->name;
             $user->email = $request->email;
             $user->password = Hash::make($request->password);
-            $user->role = 'admin'; // SECURITY: Tenant admin, not platform owner
+            $user->role = 'admin'; 
             $user->pesantren_id = $pesantren->id;
             $user->save();
 
-            // 3. Create Trial Subscription Record (7 days)
+            // 3. Create Subscription
             $packageName = $packageConfig->name . ' ' . $packageConfig->duration_months . ' Bulan';
             $subscription = Subscription::create([
                 'pesantren_id' => $pesantren->id,
-                'package_name' => $packageName . ' (Trial)',
-                'price' => 0,
+                'package_name' => $packageName . ($isDirectPayment ? '' : ' (Trial)'),
+                'price' => $isDirectPayment ? $packageConfig->price : 0, // 0 for trial record? Or just log the potential price?
+                // Actually Subscription table usually tracks *active* subscription. 
+                // For direct payment, we create a "pending" subscription logic in Invoice loop.
+                // Let's keep it consistent: always create an initial record.
                 'started_at' => now(),
                 'expired_at' => $trialEndsAt,
-                'status' => 'trial',
+                'status' => $status,
             ]);
 
-            // 4. Create Pending Invoice (due after trial)
+            // 4. Create Invoice
             $amount = (float) $packageConfig->price;
-            $durationMonths = $packageConfig->duration_months;
-            
             $invoice = $this->invoiceService->createInvoice(
                 $pesantren,
                 $package,
                 $amount,
-                $trialEndsAt,
-                $trialEndsAt->copy()->addMonths(6)
+                $trialEndsAt, // Due date
+                $trialEndsAt->copy()->addMonths($durationMonths) // Period end
             );
 
             DB::commit();
 
-            // 5. Send Notifications
+            // Notify
             try {
                 $this->telegramService->notifyNewTenantRegistration($pesantren, $user);
             } catch (\Exception $e) {
-                // Ignore telegram errors to not block registration
                 \Illuminate\Support\Facades\Log::error('Telegram notification failed: ' . $e->getMessage());
             }
 
-            // 5. Return Success Page (avoid cross-domain redirect issues)
+            // 5. Redirect based on choice
+            if ($isDirectPayment) {
+                 // If direct payment, maybe redirect to Invoice Payment Page directly?
+                 // Or customized success page.
+                 return view('auth.register-success-payment', [
+                    'subdomain' => $pesantren->subdomain,
+                    'invoiceUrl' => route('invoice.show', ['uuid' => $invoice->uuid]), // Assuming public invoice view exists or tenant needs login
+                    'amount' => number_format($amount, 0, ',', '.'),
+                    'bank' => 'BCA 1234567890 a.n PT Santrix', // Hardcoded or config
+                ]);
+            }
+
             return view('auth.register-success', [
                 'subdomain' => $pesantren->subdomain,
                 'email' => $user->email,
