@@ -142,6 +142,23 @@ class SekretarisBulkController extends Controller
                 $shouldPromote = in_array($santri->id, $idsToPromote);
 
                 if ($shouldPromote) {
+                    // 1. Snapshot Riwayat Kelas (History)
+                    // We assume Active Year is the year currently ending (being archived)
+                    $activeYearId = \App\Helpers\AcademicHelper::activeYearId();
+                    
+                    if ($activeYearId) {
+                        \App\Models\RiwayatKelas::firstOrCreate([
+                            'pesantren_id' => $santri->pesantren_id ?? 1, // Default or from user
+                            'santri_id' => $santri->id,
+                            'kelas_id' => $santri->kelas_id,
+                            'tahun_ajaran_id' => $activeYearId,
+                        ], [
+                            'semester' => '2', // Assuming promotion happens after Sem 2
+                            'catatan' => 'Kenaikan Kelas',
+                            'status' => 'promoted',
+                        ]);
+                    }
+
                     if ($isLulus) {
                         // Santri lulus
                         $santri->is_active = false;
@@ -149,6 +166,7 @@ class SekretarisBulkController extends Controller
 
                         MutasiSantri::create([
                             'santri_id' => $santri->id,
+                            'tahun_ajaran_id' => $activeYearId,
                             'jenis_mutasi' => 'keluar',
                             'tanggal_mutasi' => now(),
                             'dari' => $kelasAsal->nama_kelas,
@@ -163,6 +181,7 @@ class SekretarisBulkController extends Controller
 
                         MutasiSantri::create([
                             'santri_id' => $santri->id,
+                            'tahun_ajaran_id' => $activeYearId,
                             'jenis_mutasi' => 'pindah_kelas',
                             'tanggal_mutasi' => now(),
                             'dari' => $kelasAsal->nama_kelas,
@@ -173,11 +192,24 @@ class SekretarisBulkController extends Controller
                     }
                 } else {
                     // Santri tidak naik kelas (tinggal kelas)
-                    // Optional: Check if we want to record mutation for "Stay" every time?
-                    // "yang gak di centang gakk naik" -> stays in class.
-                    // Recording "Tinggal Kelas" mutation is good for history.
+                    $activeYearId = \App\Helpers\AcademicHelper::activeYearId();
+                    
+                    if ($activeYearId) {
+                         \App\Models\RiwayatKelas::firstOrCreate([
+                            'pesantren_id' => $santri->pesantren_id ?? 1,
+                            'santri_id' => $santri->id,
+                            'kelas_id' => $santri->kelas_id,
+                            'tahun_ajaran_id' => $activeYearId,
+                        ], [
+                            'semester' => '2',
+                            'catatan' => 'Tinggal Kelas',
+                            'status' => 'retained',
+                        ]);
+                    }
+
                     MutasiSantri::create([
                         'santri_id' => $santri->id,
+                        'tahun_ajaran_id' => $activeYearId,
                         'jenis_mutasi' => 'pindah_kelas',
                         'tanggal_mutasi' => now(),
                         'dari' => $kelasAsal->nama_kelas,
@@ -338,6 +370,7 @@ class SekretarisBulkController extends Controller
                 // Create mutation record
                 MutasiSantri::create([
                     'santri_id' => $santri->id,
+                    'tahun_ajaran_id' => \App\Helpers\AcademicHelper::activeYearId(),
                     'jenis_mutasi' => 'pindah_asrama',
                     'tanggal_mutasi' => now(),
                     'dari' => $oldLocation,
@@ -407,6 +440,7 @@ class SekretarisBulkController extends Controller
 
                     MutasiSantri::create([
                         'santri_id' => $santri->id,
+                        'tahun_ajaran_id' => \App\Helpers\AcademicHelper::activeYearId(),
                         'jenis_mutasi' => 'pindah_asrama',
                         'tanggal_mutasi' => now(),
                         'dari' => $asramaAsal->nama_asrama . ' (Kobong ' . ($kobongAsal->nomor_kobong ?? '-') . ')',
@@ -486,6 +520,7 @@ class SekretarisBulkController extends Controller
 
                     MutasiSantri::create([
                         'santri_id' => $santri->id,
+                        'tahun_ajaran_id' => \App\Helpers\AcademicHelper::activeYearId(),
                         'jenis_mutasi' => 'pindah_asrama',
                         'tanggal_mutasi' => now(),
                         'dari' => $kobongAsal->asrama->nama_asrama . ' - Kobong ' . $kobongAsal->nomor_kobong,

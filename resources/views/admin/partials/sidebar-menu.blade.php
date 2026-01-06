@@ -17,6 +17,12 @@
     </a>
 </li>
 <li class="sidebar-menu-item">
+    <a href="{{ route('admin.pengaturan.tahun-ajaran.index') }}" class="sidebar-menu-link {{ request()->routeIs('admin.pengaturan.tahun-ajaran*') ? 'active' : '' }}">
+        <i data-feather="calendar" class="sidebar-menu-icon"></i>
+        <span>Tahun Ajaran</span>
+    </a>
+</li>
+<li class="sidebar-menu-item">
     <a href="{{ route('admin.billing.index') }}" class="sidebar-menu-link {{ request()->routeIs('admin.billing*') ? 'active' : '' }}">
         <i data-feather="credit-card" class="sidebar-menu-icon"></i>
         <span>Billing & Paket</span>

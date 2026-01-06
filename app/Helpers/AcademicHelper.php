@@ -2,32 +2,40 @@
 
 namespace App\Helpers;
 
+use App\Models\TahunAjaran;
+use Illuminate\Support\Facades\Cache;
+
 class AcademicHelper
 {
     /**
-     * Generate list of academic years.
-     * Range: Current year - 3 to Current year + 3.
-     * Format: YYYY/YYYY+1
-     * 
-     * @return array
+     * Get the currently active Academic Year ID.
      */
-    public static function getAcademicYears()
+    public static function activeYearId()
     {
-        $currentYear = date('Y');
-        $years = [];
-        
-        // Range -3 to +3
-        $start = $currentYear - 3;
-        $end = $currentYear + 3;
+        return Cache::remember('active_tahun_ajaran_id', 3600, function () {
+            $active = TahunAjaran::where('is_active', true)->first();
+            return $active ? $active->id : null;
+        });
+    }
 
-        for ($y = $start; $y <= $end; $y++) {
-            $next = $y + 1;
-            $years[] = "{$y}/{$next}";
-        }
+    /**
+     * Get the currently active Academic Year Name (e.g. "2024/2025").
+     */
+    public static function activeYearName()
+    {
+        return Cache::remember('active_tahun_ajaran_name', 3600, function () {
+            $active = TahunAjaran::where('is_active', true)->first();
+            return $active ? $active->nama : date('Y') . '/' . (date('Y') + 1);
+        });
+    }
 
-        // Sort descending so current/upcoming years are on top usually
-        rsort($years);
-
-        return $years;
+    /**
+     * Get the currently active Academic Year Object.
+     */
+    public static function activeYear()
+    {
+        return Cache::remember('active_tahun_ajaran', 3600, function () {
+            return TahunAjaran::where('is_active', true)->first();
+        });
     }
 }

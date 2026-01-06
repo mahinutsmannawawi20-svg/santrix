@@ -198,6 +198,14 @@ Route::domain('{subdomain}.' . $mainDomain)->middleware([\App\Http\Middleware\Re
         Route::post('/asrama/{id}/kobong', [App\Http\Controllers\AdminController::class, 'storeKobong'])->name('kobong.store');
         Route::delete('/kobong/{id}', [App\Http\Controllers\AdminController::class, 'deleteKobong'])->name('kobong.destroy');
 
+        // Tahun Ajaran Settings
+        Route::prefix('pengaturan/tahun-ajaran')->name('pengaturan.tahun-ajaran.')->group(function () {
+             Route::get('/', [App\Http\Controllers\Admin\TahunAjaranController::class, 'index'])->name('index');
+             Route::post('/', [App\Http\Controllers\Admin\TahunAjaranController::class, 'store'])->name('store');
+             Route::put('/{id}', [App\Http\Controllers\Admin\TahunAjaranController::class, 'update'])->name('update');
+             Route::delete('/{id}', [App\Http\Controllers\Admin\TahunAjaranController::class, 'destroy'])->name('destroy');
+        });
+
         // Billing & Subscription
         Route::prefix('billing')->name('billing.')->group(function () {
             Route::get('/', [App\Http\Controllers\BillingController::class, 'index'])->name('index'); // Changed controller to tenant BillingController

@@ -13,12 +13,18 @@ class MutasiSantri extends Model
     
     protected $fillable = [
         'santri_id',
+        'tahun_ajaran_id',
         'jenis_mutasi',
         'tanggal_mutasi',
         'keterangan',
         'dari',
         'ke',
     ];
+
+    public function tahunAjaran()
+    {
+        return $this->belongsTo(TahunAjaran::class);
+    }
     
     protected $casts = [
         'tanggal_mutasi' => 'date',

@@ -194,6 +194,21 @@
     <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 16px; padding: 20px 24px; margin-bottom: 24px; box-shadow: 0 8px 24px rgba(102, 126, 234, 0.25);">
         <form method="GET" action="{{ route('sekretaris.data-santri') }}">
             <div style="display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap;">
+                <!-- Tahun Ajaran -->
+                <div style="flex: 1; min-width: 140px;">
+                    <label style="font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.9); text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 4px; margin-bottom: 6px;">
+                        <i data-feather="calendar" style="width: 12px; height: 12px;"></i>
+                        Tahun Ajaran
+                    </label>
+                    <select name="tahun_ajaran_id" onchange="this.form.submit()" style="width: 100%; height: 40px; border: 1px solid rgba(255,255,255,0.3); border-radius: 8px; padding: 0 12px; font-size: 13px; background: rgba(255,255,255,0.95); color: #1f2937; cursor: pointer;">
+                        @foreach($tahunAjaranList as $ta)
+                            <option value="{{ $ta->id }}" {{ (isset($selectedYearId) && $selectedYearId == $ta->id) ? 'selected' : '' }}>
+                                {{ $ta->nama }} {{ $ta->is_active ? '(Aktif)' : '' }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
                 <!-- Search -->
                 <div style="flex: 1.5; min-width: 180px;">
                     <label style="font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.9); text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 4px; margin-bottom: 6px;">
@@ -276,7 +291,13 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse($santri as $index => $s)
+                @forelse($santri as $index => $row)
+                    @php
+                        // Determine if row is Santri or RiwayatKelas wrapper
+                        $s = (isset($isHistory) && $isHistory && isset($row->santri)) ? $row->santri : $row;
+                        // Use history class if available
+                        $kelasNama = (isset($isHistory) && $isHistory && isset($row->kelas)) ? $row->kelas->nama_kelas : ($s->kelas->nama_kelas ?? '-');
+                    @endphp
                     <tr style="border-bottom: 1px solid #f3f4f6; transition: background 0.2s;" onmouseover="this.style.background='#f9fafb';" onmouseout="this.style.background='white';">
                         <td style="padding: 12px 16px; font-size: 13px; color: #6b7280; font-weight: 600;">{{ ($santri->currentPage() - 1) * $santri->perPage() + $index + 1 }}</td>
                         <td style="padding: 12px 16px; font-size: 13px; color: #374151; font-weight: 500;">{{ $s->nis }}</td>
@@ -286,7 +307,7 @@
                                 {{ ucfirst($s->gender) }}
                             </span>
                         </td>
-                        <td style="padding: 12px 16px; font-size: 13px; color: #374151;">{{ $s->kelas->nama_kelas ?? '-' }}</td>
+                        <td style="padding: 12px 16px; font-size: 13px; color: #374151;">{{ $kelasNama ?? '-' }}</td>
                         <td style="padding: 12px 16px; font-size: 13px; color: #374151;">{{ $s->asrama->nama_asrama ?? '-' }}</td>
                         <td style="padding: 12px 16px; font-size: 13px; color: #374151;">Kobong {{ $s->kobong->nomor_kobong ?? '-' }}</td>
                         <td style="padding: 12px 16px;">

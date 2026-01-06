@@ -55,36 +55,100 @@ class SekretarisController extends Controller
     // Data Santri - Index
     public function dataSantri(Request $request)
     {
-        $query = Santri::with(['kelas', 'asrama', 'kobong']);
-        
-        // Search
-        if ($request->filled('search')) {
-            $search = $request->search;
-            $query->where(function($q) use ($search) {
-                $q->where('nis', 'like', "%{$search}%")
-                  ->orWhere('nama_santri', 'like', "%{$search}%");
-            });
+        $activeYearId = \App\Helpers\AcademicHelper::activeYearId();
+        $selectedYearId = $request->tahun_ajaran_id ?? $activeYearId;
+        $isHistory = $selectedYearId && $activeYearId && $selectedYearId != $activeYearId;
+
+        if ($isHistory) {
+            // Query History (RiwayatKelas)
+            // We need to fetch Santri data but use the Class from Riwayat
+            $query = \App\Models\RiwayatKelas::with(['santri', 'kelas', 'santri.asrama', 'santri.kobong'])
+                ->where('tahun_ajaran_id', $selectedYearId);
+
+            // Search
+            if ($request->filled('search')) {
+                $search = $request->search;
+                $query->whereHas('santri', function($q) use ($search) {
+                    $q->where('nis', 'like', "%{$search}%")
+                      ->orWhere('nama_santri', 'like', "%{$search}%");
+                });
+            }
+
+            // Filters
+            if ($request->filled('gender')) {
+                $query->whereHas('santri', function($q) use ($request) {
+                    $q->where('gender', $request->gender);
+                });
+            }
+            if ($request->filled('kelas_id')) {
+                $query->where('kelas_id', $request->kelas_id);
+            }
+            // Asrama/Kobong is current, history doesn't store Asrama snapshot (usually).
+            // Unless we add asrama_id to RiwayatKelas (which we assume we didn't yet, checking schema... no we didn't).
+            // So we can only filter by current Asrama? Or ignore Asrama filter in history?
+            // Let's allow filtering by CURRENT asrama effectively.
+             if ($request->filled('asrama_id')) {
+                $query->whereHas('santri', function($q) use ($request) {
+                    $q->where('asrama_id', $request->asrama_id);
+                });
+            }
+
+            $riwayat = $query->latest()->paginate(35);
+            
+            // Transform to match Santri structure for View
+            $santri = $riwayat->map(function($item) {
+                $s = $item->santri;
+                if ($s) {
+                     $s->kelas = $item->kelas; // Override class with history class
+                     // Note: Status might be 'promoted' or 'retained' in $item->status
+                     // We could attach it: $s->history_status = $item->status;
+                }
+                return $s;
+            })->filter(); // remove nulls
+            
+            // Pagination is on $riwayat, but we return a Collection mapped.
+            // View expects a Paginator.
+            // Simple hack: Pass $riwayat to view, view expects $santri items.
+            // If we just pass $riwayat, the view loop needs to change: $row->santri
+            // BETTER: Modifiy View to handle both, OR just return $riwayat and update View.
+            // Updating View is safer.
+            $santri = $riwayat; 
+
+        } else {
+            // Query Current Active Data
+            $query = Santri::with(['kelas', 'asrama', 'kobong']);
+            
+            // Search
+            if ($request->filled('search')) {
+                $search = $request->search;
+                $query->where(function($q) use ($search) {
+                    $q->where('nis', 'like', "%{$search}%")
+                      ->orWhere('nama_santri', 'like', "%{$search}%");
+                });
+            }
+            
+            // Filters
+            if ($request->filled('gender')) {
+                $query->where('gender', $request->gender);
+            }
+            if ($request->filled('kelas_id')) {
+                $query->where('kelas_id', $request->kelas_id);
+            }
+            if ($request->filled('asrama_id')) {
+                $query->where('asrama_id', $request->asrama_id);
+            }
+            if ($request->filled('is_active')) {
+                $query->where('is_active', $request->is_active);
+            }
+            
+            $santri = $query->latest()->paginate(35);
         }
-        
-        // Filters
-        if ($request->filled('gender')) {
-            $query->where('gender', $request->gender);
-        }
-        if ($request->filled('kelas_id')) {
-            $query->where('kelas_id', $request->kelas_id);
-        }
-        if ($request->filled('asrama_id')) {
-            $query->where('asrama_id', $request->asrama_id);
-        }
-        if ($request->filled('is_active')) {
-            $query->where('is_active', $request->is_active);
-        }
-        
-        $santri = $query->latest()->paginate(35);
+
         $kelasList = Kelas::all();
         $asramaList = Asrama::all();
+        $tahunAjaranList = \App\Models\TahunAjaran::orderBy('nama', 'desc')->get();
         
-        return view('sekretaris.data-santri.index', compact('santri', 'kelasList', 'asramaList'));
+        return view('sekretaris.data-santri.index', compact('santri', 'kelasList', 'asramaList', 'tahunAjaranList', 'selectedYearId', 'isHistory'));
     }
     
     // Data Santri - Create Form
@@ -130,6 +194,7 @@ class SekretarisController extends Controller
         // Create mutasi record
         MutasiSantri::create([
             'santri_id' => $santri->id,
+            'tahun_ajaran_id' => \App\Helpers\AcademicHelper::activeYearId(),
             'jenis_mutasi' => 'masuk',
             'tanggal_mutasi' => now(),
             'keterangan' => 'Santri baru masuk',
@@ -203,6 +268,7 @@ class SekretarisController extends Controller
         // Create mutasi record
         MutasiSantri::create([
             'santri_id' => $id,
+            'tahun_ajaran_id' => \App\Helpers\AcademicHelper::activeYearId(),
             'jenis_mutasi' => 'keluar',
             'tanggal_mutasi' => now(),
             'keterangan' => 'Santri dinonaktifkan',
@@ -299,6 +365,7 @@ class SekretarisController extends Controller
             'ke' => 'nullable|string',
         ]);
         
+        $validated['tahun_ajaran_id'] = \App\Helpers\AcademicHelper::activeYearId();
         $mutasi = MutasiSantri::create($validated);
         
         // Update santri status if keluar
