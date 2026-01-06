@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('invoices', function (Blueprint $table) {
-            $table->string('idempotency_key', 64)->nullable()->unique()->after('uuid');
+            $table->string('idempotency_key', 64)->nullable()->unique()->after('id');
             $table->index('idempotency_key');
         });
     }
