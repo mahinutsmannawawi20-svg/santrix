@@ -328,212 +328,250 @@
         <div class="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-96 h-96 bg-violet-50 rounded-full blur-3xl opacity-50"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center max-w-3xl mx-auto mb-24 md:mb-32" data-aos="fade-up">
-                <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50 text-indigo-700 text-xs font-bold uppercase tracking-wide mb-6 ring-1 ring-indigo-100">
-                    <i data-feather="grid" class="w-3 h-3"></i> Fitur Lengkap
-                </span>
-                <h2 class="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-8 text-slate-900 leading-tight tracking-tight">
-                    Satu Platform, <br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-600">Empat Dashboard Sakti</span>
+            <div class="text-center max-w-4xl mx-auto mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-extrabold mb-4 text-slate-900 tracking-tight">
+                    Dashboard Profesional
                 </h2>
-                <p class="text-slate-500 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
-                    Santrix membagi akses berdasarkan peran (Role-Based), memberikan pengalaman kerja yang fokus, aman, dan profesional untuk setiap bagian pesantren.
+                <p class="text-slate-600 text-lg">
+                    Akses terpisah untuk setiap divisi. Lebih fokus, lebih aman.
                 </p>
             </div>
 
-            <div class="grid md:grid-cols-2 gap-8 lg:gap-12">
+            <div class="grid md:grid-cols-2 gap-6 lg:gap-8">
                 
-                <!-- 1. Dashboard Sekretaris (Tata Usaha) -->
-                <div class="group relative bg-white rounded-[2.5rem] p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 hover:shadow-[0_20px_50px_rgb(79,70,229,0.1)] hover:border-indigo-100 transition-all duration-300" data-aos="fade-right" data-aos-delay="100">
-                    <div class="absolute top-0 right-0 p-10 opacity-5 group-hover:opacity-10 transition-opacity">
-                         <i data-feather="users" class="w-32 h-32 text-indigo-600"></i>
-                    </div>
-                    <div class="relative z-10 h-full flex flex-col">
-                        <div class="mb-10">
-                            <div class="w-16 h-16 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0 mb-6 group-hover:scale-110 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300 shadow-sm">
-                                <i data-feather="users" class="w-8 h-8"></i>
+                <!-- 1. Dashboard Sekretaris (Tata Usaha) - Theme: Indigo -->
+                <div class="bg-white rounded-2xl border border-indigo-100 shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden group" data-aos="fade-up" data-aos-delay="100">
+                    <div class="bg-indigo-50/50 p-6 border-b border-indigo-100 flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-indigo-600 text-white flex items-center justify-center shadow-lg shadow-indigo-200">
+                                <i data-feather="users" class="w-6 h-6"></i>
                             </div>
                             <div>
-                                <h3 class="text-3xl font-bold text-slate-900 mb-2">Sekretaris & TU</h3>
-                                <p class="text-slate-500 text-lg">Pusat Data & Administrasi Santri</p>
+                                <h3 class="text-xl font-bold text-slate-900">Sekretaris & TU</h3>
+                                <p class="text-indigo-700 text-sm font-medium">Administrasi & Data Santri</p>
                             </div>
                         </div>
-                        
-                        <div class="flex-1 bg-slate-50 rounded-3xl p-8 border border-slate-100 group-hover:bg-indigo-50/30 group-hover:border-indigo-100 transition-colors">
-                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6">Menu & Fitur Unggulan</h4>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-6">
-                                <div class="flex items-center gap-3 text-slate-700 font-medium">
-                                    <div class="w-1.5 h-1.5 rounded-full bg-indigo-500"></div> Dashboard Statistik
-                                </div>
-                                <div class="flex items-center gap-3 text-slate-700 font-medium">
-                                    <div class="w-1.5 h-1.5 rounded-full bg-indigo-500"></div> Data Induk Santri
-                                </div>
-                                <div class="flex items-center gap-3 text-slate-700 font-medium">
-                                    <div class="w-1.5 h-1.5 rounded-full bg-indigo-500"></div> Manajemen Asrama
-                                </div>
-                                <div class="flex items-center gap-3 text-slate-700 font-medium">
-                                    <div class="w-1.5 h-1.5 rounded-full bg-indigo-500"></div> Kartu Digital
-                                </div>
-                                <div class="flex items-center gap-3 text-slate-700 font-medium">
-                                    <div class="w-1.5 h-1.5 rounded-full bg-indigo-500"></div> Mutasi (Pindah)
-                                </div>
-                                <div class="flex items-center gap-3 text-slate-700 font-medium">
-                                    <div class="w-1.5 h-1.5 rounded-full bg-indigo-500"></div> Kenaikan Kelas
-                                </div>
-                                <div class="flex items-center gap-3 text-slate-700 font-medium">
-                                    <div class="w-1.5 h-1.5 rounded-full bg-indigo-500"></div> Data Alumni
-                                </div>
-                                <div class="flex items-center gap-3 text-slate-700 font-medium">
-                                    <div class="w-1.5 h-1.5 rounded-full bg-indigo-500"></div> Rekap Laporan
-                                </div>
+                        <a href="{{ route('login') }}" class="hidden sm:flex items-center gap-2 px-4 py-2 bg-white text-indigo-700 text-sm font-bold rounded-lg border border-indigo-200 hover:bg-indigo-50 transition-colors">
+                            Masuk
+                            <i data-feather="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="p-6">
+                        <div class="grid grid-cols-2 gap-y-3 gap-x-4">
+                            <!-- Items -->
+                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-indigo-700 transition-colors">
+                                <i data-feather="monitor" class="w-4 h-4 text-slate-400 group-hover/item:text-indigo-600"></i>
+                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Statistik</span>
                             </div>
+                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-indigo-700 transition-colors">
+                                <i data-feather="database" class="w-4 h-4 text-slate-400 group-hover/item:text-indigo-600"></i>
+                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Data Induk</span>
+                            </div>
+                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-indigo-700 transition-colors">
+                                <i data-feather="home" class="w-4 h-4 text-slate-400 group-hover/item:text-indigo-600"></i>
+                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Asrama</span>
+                            </div>
+                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-indigo-700 transition-colors">
+                                <i data-feather="credit-card" class="w-4 h-4 text-slate-400 group-hover/item:text-indigo-600"></i>
+                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Kartu Digital</span>
+                            </div>
+                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-indigo-700 transition-colors">
+                                <i data-feather="repeat" class="w-4 h-4 text-slate-400 group-hover/item:text-indigo-600"></i>
+                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Mutasi</span>
+                            </div>
+                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-indigo-700 transition-colors">
+                                <i data-feather="trending-up" class="w-4 h-4 text-slate-400 group-hover/item:text-indigo-600"></i>
+                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Kenaikan Kelas</span>
+                            </div>
+                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-indigo-700 transition-colors">
+                                <i data-feather="user-check" class="w-4 h-4 text-slate-400 group-hover/item:text-indigo-600"></i>
+                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Alumni</span>
+                            </div>
+                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-indigo-700 transition-colors">
+                                <i data-feather="file-text" class="w-4 h-4 text-slate-400 group-hover/item:text-indigo-600"></i>
+                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Laporan</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 pt-4 border-t border-slate-100 flex gap-3">
+                            <a href="#" class="flex-1 py-2 text-center text-xs font-bold uppercase tracking-wider bg-indigo-50 text-indigo-700 rounded hover:bg-indigo-100 transition-colors">Input Santri</a>
+                            <a href="#" class="flex-1 py-2 text-center text-xs font-bold uppercase tracking-wider bg-indigo-50 text-indigo-700 rounded hover:bg-indigo-100 transition-colors">Cek Kamar</a>
                         </div>
                     </div>
                 </div>
 
-                <!-- 2. Dashboard Bendahara (Keuangan) -->
-                <div class="group relative bg-white rounded-[2.5rem] p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 hover:shadow-[0_20px_50px_rgb(245,158,11,0.1)] hover:border-amber-100 transition-all duration-300" data-aos="fade-left" data-aos-delay="200">
-                    <div class="absolute top-0 right-0 p-10 opacity-5 group-hover:opacity-10 transition-opacity">
-                         <i data-feather="dollar-sign" class="w-32 h-32 text-amber-500"></i>
-                    </div>
-                    <div class="relative z-10 h-full flex flex-col">
-                         <div class="mb-10">
-                            <div class="w-16 h-16 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0 mb-6 group-hover:scale-110 group-hover:bg-amber-500 group-hover:text-white transition-all duration-300 shadow-sm">
-                                <i data-feather="dollar-sign" class="w-8 h-8"></i>
+                <!-- 2. Dashboard Bendahara (Keuangan) - Theme: Emerald (Green) -->
+                <div class="bg-white rounded-2xl border border-emerald-100 shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden group" data-aos="fade-up" data-aos-delay="200">
+                    <div class="bg-emerald-50/50 p-6 border-b border-emerald-100 flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-emerald-600 text-white flex items-center justify-center shadow-lg shadow-emerald-200">
+                                <i data-feather="dollar-sign" class="w-6 h-6"></i>
                             </div>
                             <div>
-                                <h3 class="text-3xl font-bold text-slate-900 mb-2">Bendahara</h3>
-                                <p class="text-slate-500 text-lg">Kelola Cashflow & SPP Syahriah</p>
+                                <h3 class="text-xl font-bold text-slate-900">Bendahara</h3>
+                                <p class="text-emerald-700 text-sm font-medium">Cashflow & SPP</p>
                             </div>
                         </div>
-                        
-                        <div class="flex-1 bg-slate-50 rounded-3xl p-8 border border-slate-100 group-hover:bg-amber-50/30 group-hover:border-amber-100 transition-colors">
-                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6">Menu & Fitur Unggulan</h4>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-6">
-                                <div class="flex items-center gap-3 text-slate-700 font-medium">
-                                    <div class="w-1.5 h-1.5 rounded-full bg-amber-500"></div> Ringkasan Keuangan
-                                </div>
-                                <div class="flex items-center gap-3 text-slate-700 font-medium">
-                                    <div class="w-1.5 h-1.5 rounded-full bg-amber-500"></div> Tagihan Syahriah
-                                </div>
-                                <div class="flex items-center gap-3 text-slate-700 font-medium">
-                                    <div class="w-1.5 h-1.5 rounded-full bg-amber-500"></div> Pemasukan Umum
-                                </div>
-                                <div class="flex items-center gap-3 text-slate-700 font-medium">
-                                    <div class="w-1.5 h-1.5 rounded-full bg-amber-500"></div> Pengeluaran Op.
-                                </div>
-                                <div class="flex items-center gap-3 text-slate-700 font-medium">
-                                    <div class="w-1.5 h-1.5 rounded-full bg-amber-500"></div> Cek Tunggakan
-                                </div>
-                                <div class="flex items-center gap-3 text-slate-700 font-medium">
-                                    <div class="w-1.5 h-1.5 rounded-full bg-amber-500"></div> Gaji Pegawai
-                                </div>
-                                <div class="flex items-center gap-3 text-slate-700 font-medium">
-                                    <div class="w-1.5 h-1.5 rounded-full bg-amber-500"></div> Kirim Tagihan WA
-                                </div>
-                                <div class="flex items-center gap-3 text-slate-700 font-medium">
-                                    <div class="w-1.5 h-1.5 rounded-full bg-amber-500"></div> Laporan Arus Kas
-                                </div>
+                        <a href="{{ route('login') }}" class="hidden sm:flex items-center gap-2 px-4 py-2 bg-white text-emerald-700 text-sm font-bold rounded-lg border border-emerald-200 hover:bg-emerald-50 transition-colors">
+                            Masuk
+                            <i data-feather="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="p-6">
+                        <div class="grid grid-cols-2 gap-y-3 gap-x-4">
+                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-emerald-700 transition-colors">
+                                <i data-feather="pie-chart" class="w-4 h-4 text-slate-400 group-hover/item:text-emerald-600"></i>
+                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Ringkasan</span>
                             </div>
+                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-emerald-700 transition-colors">
+                                <i data-feather="file-minus" class="w-4 h-4 text-slate-400 group-hover/item:text-emerald-600"></i>
+                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Tagihan SPP</span>
+                            </div>
+                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-emerald-700 transition-colors">
+                                <i data-feather="arrow-down-circle" class="w-4 h-4 text-slate-400 group-hover/item:text-emerald-600"></i>
+                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Pemasukan</span>
+                            </div>
+                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-emerald-700 transition-colors">
+                                <i data-feather="arrow-up-circle" class="w-4 h-4 text-slate-400 group-hover/item:text-emerald-600"></i>
+                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Pengeluaran</span>
+                            </div>
+                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-emerald-700 transition-colors">
+                                <i data-feather="alert-circle" class="w-4 h-4 text-slate-400 group-hover/item:text-emerald-600"></i>
+                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Cek Tunggakan</span>
+                            </div>
+                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-emerald-700 transition-colors">
+                                <i data-feather="briefcase" class="w-4 h-4 text-slate-400 group-hover/item:text-emerald-600"></i>
+                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Gaji Pegawai</span>
+                            </div>
+                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-emerald-700 transition-colors">
+                                <i data-feather="message-circle" class="w-4 h-4 text-slate-400 group-hover/item:text-emerald-600"></i>
+                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Kirim WA</span>
+                            </div>
+                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-emerald-700 transition-colors">
+                                <i data-feather="activity" class="w-4 h-4 text-slate-400 group-hover/item:text-emerald-600"></i>
+                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Arus Kas</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 pt-4 border-t border-slate-100 flex gap-3">
+                            <a href="#" class="flex-1 py-2 text-center text-xs font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700 rounded hover:bg-emerald-100 transition-colors">Buat Tagihan</a>
+                            <a href="#" class="flex-1 py-2 text-center text-xs font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700 rounded hover:bg-emerald-100 transition-colors">Catat Bayar</a>
                         </div>
                     </div>
                 </div>
 
-                <!-- 3. Dashboard Pendidikan (Akademik) -->
-                <div class="group relative bg-white rounded-[2.5rem] p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 hover:shadow-[0_20px_50px_rgb(59,130,246,0.1)] hover:border-blue-100 transition-all duration-300" data-aos="fade-right" data-aos-delay="300">
-                    <div class="absolute top-0 right-0 p-10 opacity-5 group-hover:opacity-10 transition-opacity">
-                         <i data-feather="book-open" class="w-32 h-32 text-blue-500"></i>
-                    </div>
-                    <div class="relative z-10 h-full flex flex-col">
-                        <div class="mb-10">
-                            <div class="w-16 h-16 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 mb-6 group-hover:scale-110 group-hover:bg-blue-500 group-hover:text-white transition-all duration-300 shadow-sm">
-                                <i data-feather="book-open" class="w-8 h-8"></i>
+                <!-- 3. Dashboard Pendidikan (Akademik) - Theme: Blue -->
+                <div class="bg-white rounded-2xl border border-blue-100 shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden group" data-aos="fade-up" data-aos-delay="300">
+                    <div class="bg-blue-50/50 p-6 border-b border-blue-100 flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-lg shadow-blue-200">
+                                <i data-feather="book-open" class="w-6 h-6"></i>
                             </div>
                             <div>
-                                <h3 class="text-3xl font-bold text-slate-900 mb-2">Pendidikan</h3>
-                                <p class="text-slate-500 text-lg">Kurikulum, Nilai & Rapor Santri</p>
+                                <h3 class="text-xl font-bold text-slate-900">Pendidikan</h3>
+                                <p class="text-blue-700 text-sm font-medium">Kurikulum & Rapor</p>
                             </div>
                         </div>
-                        
-                        <div class="flex-1 bg-slate-50 rounded-3xl p-8 border border-slate-100 group-hover:bg-blue-50/30 group-hover:border-blue-100 transition-colors">
-                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6">Menu & Fitur Unggulan</h4>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-6">
-                                <div class="flex items-center gap-3 text-slate-700 font-medium">
-                                    <div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div> Data Kelas
-                                </div>
-                                <div class="flex items-center gap-3 text-slate-700 font-medium">
-                                    <div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div> Jadwal Pelajaran
-                                </div>
-                                <div class="flex items-center gap-3 text-slate-700 font-medium">
-                                    <div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div> Absensi Santri
-                                </div>
-                                <div class="flex items-center gap-3 text-slate-700 font-medium">
-                                    <div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div> Absensi Guru
-                                </div>
-                                <div class="flex items-center gap-3 text-slate-700 font-medium">
-                                    <div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div> Jurnal KBM
-                                </div>
-                                <div class="flex items-center gap-3 text-slate-700 font-medium">
-                                    <div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div> Setoran Hafalan
-                                </div>
-                                <div class="flex items-center gap-3 text-slate-700 font-medium">
-                                    <div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div> Nilai & Ujian
-                                </div>
-                                <div class="flex items-center gap-3 text-slate-700 font-medium">
-                                    <div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div> Cetak E-Rapor
-                                </div>
+                        <a href="{{ route('login') }}" class="hidden sm:flex items-center gap-2 px-4 py-2 bg-white text-blue-700 text-sm font-bold rounded-lg border border-blue-200 hover:bg-blue-50 transition-colors">
+                            Masuk
+                            <i data-feather="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="p-6">
+                        <div class="grid grid-cols-2 gap-y-3 gap-x-4">
+                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-blue-700 transition-colors">
+                                <i data-feather="grid" class="w-4 h-4 text-slate-400 group-hover/item:text-blue-600"></i>
+                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Kelas</span>
                             </div>
+                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-blue-700 transition-colors">
+                                <i data-feather="calendar" class="w-4 h-4 text-slate-400 group-hover/item:text-blue-600"></i>
+                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Jadwal</span>
+                            </div>
+                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-blue-700 transition-colors">
+                                <i data-feather="check-circle" class="w-4 h-4 text-slate-400 group-hover/item:text-blue-600"></i>
+                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Absensi Santri</span>
+                            </div>
+                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-blue-700 transition-colors">
+                                <i data-feather="user-check" class="w-4 h-4 text-slate-400 group-hover/item:text-blue-600"></i>
+                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Absensi Guru</span>
+                            </div>
+                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-blue-700 transition-colors">
+                                <i data-feather="edit-3" class="w-4 h-4 text-slate-400 group-hover/item:text-blue-600"></i>
+                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Jurnal KBM</span>
+                            </div>
+                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-blue-700 transition-colors">
+                                <i data-feather="mic" class="w-4 h-4 text-slate-400 group-hover/item:text-blue-600"></i>
+                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Hafalan</span>
+                            </div>
+                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-blue-700 transition-colors">
+                                <i data-feather="award" class="w-4 h-4 text-slate-400 group-hover/item:text-blue-600"></i>
+                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Nilai & Ujian</span>
+                            </div>
+                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-blue-700 transition-colors">
+                                <i data-feather="printer" class="w-4 h-4 text-slate-400 group-hover/item:text-blue-600"></i>
+                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Cetak Rapor</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 pt-4 border-t border-slate-100 flex gap-3">
+                            <a href="#" class="flex-1 py-2 text-center text-xs font-bold uppercase tracking-wider bg-blue-50 text-blue-700 rounded hover:bg-blue-100 transition-colors">Input Nilai</a>
+                            <a href="#" class="flex-1 py-2 text-center text-xs font-bold uppercase tracking-wider bg-blue-50 text-blue-700 rounded hover:bg-blue-100 transition-colors">Cetak Rapor</a>
                         </div>
                     </div>
                 </div>
 
-                <!-- 4. Dashboard Admin/Yayasan -->
-                <div class="group relative bg-white rounded-[2.5rem] p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 hover:shadow-[0_20px_50px_rgb(71,85,105,0.1)] hover:border-slate-300 transition-all duration-300" data-aos="fade-left" data-aos-delay="400">
-                    <div class="absolute top-0 right-0 p-10 opacity-5 group-hover:opacity-10 transition-opacity">
-                         <i data-feather="shield" class="w-32 h-32 text-slate-600"></i>
-                    </div>
-                    <div class="relative z-10 h-full flex flex-col">
-                        <div class="mb-10">
-                            <div class="w-16 h-16 rounded-2xl bg-slate-100 text-slate-700 flex items-center justify-center shrink-0 mb-6 group-hover:scale-110 group-hover:bg-slate-800 group-hover:text-white transition-all duration-300 shadow-sm">
-                                <i data-feather="shield" class="w-8 h-8"></i>
+                <!-- 4. Dashboard Admin/Yayasan - Theme: Slate -->
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden group" data-aos="fade-up" data-aos-delay="400">
+                    <div class="bg-slate-50 p-6 border-b border-slate-200 flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-slate-800 text-white flex items-center justify-center shadow-lg shadow-slate-200">
+                                <i data-feather="shield" class="w-6 h-6"></i>
                             </div>
                             <div>
-                                <h3 class="text-3xl font-bold text-slate-900 mb-2">Admin & Yayasan</h3>
-                                <p class="text-slate-500 text-lg">Kontrol Penuh & Backup Data</p>
+                                <h3 class="text-xl font-bold text-slate-900">Admin & Yayasan</h3>
+                                <p class="text-slate-600 text-sm font-medium">Kontrol & Backup Data</p>
                             </div>
                         </div>
-                        
-                        <div class="flex-1 bg-slate-50 rounded-3xl p-8 border border-slate-100 group-hover:bg-slate-100/50 group-hover:border-slate-200 transition-colors">
-                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6">Menu & Fitur Unggulan</h4>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-6">
-                                <div class="flex items-center gap-3 text-slate-700 font-medium">
-                                    <div class="w-1.5 h-1.5 rounded-full bg-slate-600"></div> Monitoring Log
-                                </div>
-                                <div class="flex items-center gap-3 text-slate-700 font-medium">
-                                    <div class="w-1.5 h-1.5 rounded-full bg-slate-600"></div> Manajemen User
-                                </div>
-                                <div class="flex items-center gap-3 text-slate-700 font-medium">
-                                    <div class="w-1.5 h-1.5 rounded-full bg-slate-600"></div> Branding Sekolah
-                                </div>
-                                <div class="flex items-center gap-3 text-slate-700 font-medium">
-                                    <div class="w-1.5 h-1.5 rounded-full bg-slate-600"></div> Backup Database
-                                </div>
-                                <div class="flex items-center gap-3 text-slate-700 font-medium">
-                                    <div class="w-1.5 h-1.5 rounded-full bg-slate-600"></div> Setting Th. Ajaran
-                                </div>
-                                <div class="flex items-center gap-3 text-slate-700 font-medium">
-                                    <div class="w-1.5 h-1.5 rounded-full bg-slate-600"></div> Koneksi WhatsApp
-                                </div>
+                        <a href="{{ route('login') }}" class="hidden sm:flex items-center gap-2 px-4 py-2 bg-white text-slate-700 text-sm font-bold rounded-lg border border-slate-200 hover:bg-slate-50 transition-colors">
+                            Masuk
+                            <i data-feather="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="p-6">
+                        <div class="grid grid-cols-2 gap-y-3 gap-x-4">
+                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-slate-900 transition-colors">
+                                <i data-feather="activity" class="w-4 h-4 text-slate-400 group-hover/item:text-slate-700"></i>
+                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Monitoring</span>
                             </div>
-                            
-                            <div class="mt-8 pt-6 border-t border-slate-200/50">
-                                <div class="flex items-center gap-3 p-4 bg-white rounded-xl shadow-sm border border-slate-100">
-                                    <i data-feather="lock" class="w-5 h-5 text-slate-400"></i>
-                                    <p class="text-xs text-slate-500 leading-relaxed">
-                                        Data pesantren Anda aman dengan sistem Auto-Backup harian kami.
-                                    </p>
-                                </div>
+                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-slate-900 transition-colors">
+                                <i data-feather="users" class="w-4 h-4 text-slate-400 group-hover/item:text-slate-700"></i>
+                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Manajemen User</span>
                             </div>
+                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-slate-900 transition-colors">
+                                <i data-feather="image" class="w-4 h-4 text-slate-400 group-hover/item:text-slate-700"></i>
+                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Branding</span>
+                            </div>
+                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-slate-900 transition-colors">
+                                <i data-feather="download-cloud" class="w-4 h-4 text-slate-400 group-hover/item:text-slate-700"></i>
+                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Backup Data</span>
+                            </div>
+                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-slate-900 transition-colors">
+                                <i data-feather="calendar" class="w-4 h-4 text-slate-400 group-hover/item:text-slate-700"></i>
+                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Tahun Ajaran</span>
+                            </div>
+                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-slate-900 transition-colors">
+                                <i data-feather="smartphone" class="w-4 h-4 text-slate-400 group-hover/item:text-slate-700"></i>
+                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Koneksi WA</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 pt-4 border-t border-slate-100 flex gap-3">
+                            <a href="#" class="flex-1 py-2 text-center text-xs font-bold uppercase tracking-wider bg-slate-100 text-slate-700 rounded hover:bg-slate-200 transition-colors">Download Backup</a>
+                            <a href="#" class="flex-1 py-2 text-center text-xs font-bold uppercase tracking-wider bg-slate-100 text-slate-700 rounded hover:bg-slate-200 transition-colors">Tambah User</a>
                         </div>
                     </div>
                 </div>
