@@ -161,6 +161,24 @@ Route::domain('{subdomain}.' . $mainDomain)->middleware([\App\Http\Middleware\Re
             Route::delete('/logo-pendidikan', [App\Http\Controllers\Admin\PesantrenSettingsController::class, 'deleteLogoPendidikan'])->name('logo-pendidikan.delete');
         });
 
+        // Pengaturan sub-routes (Kelas, Asrama, User CRUD, App settings)
+        Route::prefix('pengaturan')->name('pengaturan.')->group(function () {
+            // Kelas CRUD
+            Route::post('/kelas', [App\Http\Controllers\AdminController::class, 'storeKelas'])->name('kelas.store');
+            Route::put('/kelas/{id}', [App\Http\Controllers\AdminController::class, 'updateKelas'])->name('kelas.update');
+            Route::delete('/kelas/{id}', [App\Http\Controllers\AdminController::class, 'deleteKelas'])->name('kelas.delete');
+            // Asrama CRUD
+            Route::post('/asrama', [App\Http\Controllers\AdminController::class, 'storeAsrama'])->name('asrama.store');
+            Route::put('/asrama/{id}', [App\Http\Controllers\AdminController::class, 'updateAsrama'])->name('asrama.update');
+            Route::delete('/asrama/{id}', [App\Http\Controllers\AdminController::class, 'deleteAsrama'])->name('asrama.delete');
+            // User CRUD
+            Route::post('/user', [App\Http\Controllers\AdminController::class, 'createUser'])->name('user.create');
+            Route::put('/user/{id}', [App\Http\Controllers\AdminController::class, 'updateUser'])->name('user.update');
+            Route::delete('/user/{id}', [App\Http\Controllers\BackupController::class, 'destroyUser'])->name('user.delete');
+            // App settings
+            Route::post('/app', [App\Http\Controllers\AdminController::class, 'updateAppSettings'])->name('app');
+        });
+
         // Activity Logs
         Route::get('/activity-log', [App\Http\Controllers\ActivityLogController::class, 'index'])->name('activity-log');
 
