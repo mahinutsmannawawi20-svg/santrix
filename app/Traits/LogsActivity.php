@@ -9,11 +9,20 @@ trait LogsActivity
     /**
      * Boot the trait
      */
+    /**
+     * Flag to enable/disable logging
+     */
+    public static $logEnabled = true;
+
+    /**
+     * Boot the trait
+     */
     public static function bootLogsActivity(): void
     {
         // Log when model is created
-        // Log when model is created
         static::created(function ($model) {
+            if (!static::$logEnabled) return;
+
             ActivityLog::logActivity(
                 'Data ' . class_basename($model) . ' dibuat',
                 $model,
@@ -24,6 +33,8 @@ trait LogsActivity
 
         // Log when model is updated
         static::updated(function ($model) {
+            if (!static::$logEnabled) return;
+
             $changes = $model->getChanges();
             $original = [];
             
@@ -51,6 +62,8 @@ trait LogsActivity
 
         // Log when model is deleted
         static::deleted(function ($model) {
+            if (!static::$logEnabled) return;
+
             ActivityLog::logActivity(
                 'Data ' . class_basename($model) . ' dihapus',
                 $model,

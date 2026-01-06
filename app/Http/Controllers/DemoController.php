@@ -18,6 +18,9 @@ class DemoController extends Controller
 {
     public function start(Request $request, $type = 'sekretaris')
     {
+        // Disable Activity Logging for Demo Generation to prevent errors and overhead
+        \App\Traits\LogsActivity::$logEnabled = false;
+
         // 1. Generate Unique ID for this Demo Session
         $demoId = strtolower(Str::random(6));
         $subdomain = 'demo-' . $demoId;
