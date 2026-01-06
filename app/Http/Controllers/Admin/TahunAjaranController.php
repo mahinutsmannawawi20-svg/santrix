@@ -65,15 +65,6 @@ class TahunAjaranController extends Controller
         
         \Illuminate\Support\Facades\Log::info("DEBUG UPDATE TAHUN AJARAN: Subdomain=$subdomain, ID=$id, PesantrenID=$pesantrenId");
         
-        // Return DD debug logic if needed, but for now we fix the flow
-        // ...
-    {
-        /** @var \App\Models\User $user */
-        $user = Auth::user();
-        $pesantrenId = $user->pesantren_id;
-        
-        \Illuminate\Support\Facades\Log::info("DEBUG UPDATE TAHUN AJARAN: ID=$id, PesantrenID=$pesantrenId, User=" . $user->id);
-        
         // Debug: check existence before fail
         $check = TahunAjaran::where('id', $id)->first();
         if ($check) {
@@ -82,19 +73,20 @@ class TahunAjaranController extends Controller
              \Illuminate\Support\Facades\Log::info("Record NOT Found globally");
         }
 
-        $tahun = TahunAjaran::where('pesantren_id', $pesantrenId)->find($id);
-
-        if (!$tahun) {
-             \Illuminate\Support\Facades\Log::error("UPDATE FAILED: Record not found for this tenant.");
-             abort(404, 'Data Tahun Ajaran tidak ditemukan atau bukan milik Anda.');
-        }
-        
+        // Validate first to ensure clean input
         $request->validate([
             'nama' => 'required|string|max:20',
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'required|date',
             'is_active' => 'required|boolean',
         ]);
+        
+        $tahun = TahunAjaran::where('pesantren_id', $pesantrenId)->find($id);
+
+        if (!$tahun) {
+             \Illuminate\Support\Facades\Log::error("UPDATE FAILED: Record not found for this tenant.");
+             abort(404, 'Data Tahun Ajaran tidak ditemukan atau bukan milik Anda.');
+        }
         
         // Check duplicate name on other rows
         $exists = TahunAjaran::where('pesantren_id', $pesantrenId)
