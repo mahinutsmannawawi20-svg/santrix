@@ -12,6 +12,7 @@ class Kobong extends Model
     
     protected $fillable = [
         'pesantren_id',
+        'asrama_id',
         'nama_kobong',
         'nomor_kobong',
     ];
