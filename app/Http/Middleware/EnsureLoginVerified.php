@@ -23,8 +23,15 @@ class EnsureLoginVerified
 
         $user = Auth::user();
 
-        // Hanya cek untuk role Owner/Admin (Sesuaikan dengan logic role di project Anda)
-        // Misal: if ($user->role !== 'admin' && $user->role !== 'owner') return $next($request);
+        // BYPASS: If Pesantren is Demo, skip verification
+        if ($user->pesantren && ($user->pesantren->is_demo || $user->pesantren->package === 'demo')) {
+            return $next($request);
+        }
+
+        // Only enforce for Owner and Admin
+        if (!in_array($user->role, ['owner', 'admin'])) {
+            return $next($request);
+        }
         
         // JIKA sudah verified di session, lanjut
         if ($request->session()->has('auth.verified')) {
