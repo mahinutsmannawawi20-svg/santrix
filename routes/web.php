@@ -246,6 +246,7 @@ Route::domain('{subdomain}.' . $mainDomain)->middleware([\App\Http\Middleware\Re
 
         // Ijazah
         Route::get('/ijazah', [App\Http\Controllers\PendidikanController::class, 'ijazah'])->name('ijazah');
+        Route::post('/ijazah/settings', [App\Http\Controllers\PendidikanController::class, 'updateIjazahSettings'])->name('ijazah.settings');
         Route::get('/ijazah/cetak/{type}/{kelasId}', [App\Http\Controllers\PendidikanController::class, 'cetakIjazah'])->name('ijazah.cetak');
         
         // Absensi
