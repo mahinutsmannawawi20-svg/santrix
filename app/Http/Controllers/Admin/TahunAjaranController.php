@@ -56,11 +56,17 @@ class TahunAjaranController extends Controller
             'is_active' => $request->is_active,
         ]);
 
-        return redirect()->route('admin.pengaturan.tahun-ajaran.index')
-            ->with('success', 'Tahun Ajaran berhasil ditambahkan');
-    }
-
-    public function update(Request $request, $id)
+    // NOTE: Because of Route::domain('{subdomain}...') group, the first argument is ALWAYS subdomain.
+    public function update(Request $request, $subdomain, $id)
+    {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        $pesantrenId = $user->pesantren_id;
+        
+        \Illuminate\Support\Facades\Log::info("DEBUG UPDATE TAHUN AJARAN: Subdomain=$subdomain, ID=$id, PesantrenID=$pesantrenId");
+        
+        // Return DD debug logic if needed, but for now we fix the flow
+        // ...
     {
         /** @var \App\Models\User $user */
         $user = Auth::user();
@@ -79,18 +85,8 @@ class TahunAjaranController extends Controller
         $tahun = TahunAjaran::where('pesantren_id', $pesantrenId)->find($id);
 
         if (!$tahun) {
-            \Illuminate\Support\Facades\Log::error("UPDATE FAILED: Record not found for this tenant.");
-            // DEBUG SCREEN
-            $debugCheck = TahunAjaran::where('id', $id)->first();
-            dd([
-                'STATUS' => 'UPDATE FAILED - RECORD NOT FOUND SCOPED',
-                'User ID' => $user->id,
-                'Pesantren ID User' => $pesantrenId,
-                'Requested ID' => $id,
-                'Global Record' => $debugCheck ? $debugCheck->toArray() : 'NULL (Not found globally)',
-                'Tenant Mismatch?' => $debugCheck ? ($debugCheck->pesantren_id != $pesantrenId) : 'N/A'
-            ]);
-            // abort(404, 'Data Tahun Ajaran tidak ditemukan atau bukan milik Anda.');
+             \Illuminate\Support\Facades\Log::error("UPDATE FAILED: Record not found for this tenant.");
+             abort(404, 'Data Tahun Ajaran tidak ditemukan atau bukan milik Anda.');
         }
         
         $request->validate([
@@ -125,7 +121,7 @@ class TahunAjaranController extends Controller
             ->with('success', 'Tahun Ajaran berhasil diperbarui');
     }
 
-    public function destroy($id)
+    public function destroy($subdomain, $id)
     {
         /** @var \App\Models\User $user */
         $user = Auth::user();
