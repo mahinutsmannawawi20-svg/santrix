@@ -11,6 +11,7 @@ class TahunAjaran extends Model
     protected $fillable = [
         'pesantren_id',
         'nama', // 2024/2025
+        'semester',
         'tanggal_mulai',
         'tanggal_selesai',
         'is_active',

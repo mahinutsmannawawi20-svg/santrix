@@ -24,6 +24,7 @@ class TahunAjaranController extends Controller
     {
         $request->validate([
             'nama' => 'required|string|max:20', 
+            'semester' => 'required|in:Ganjil,Genap',
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'required|date',
             'is_active' => 'required|boolean',
@@ -33,9 +34,12 @@ class TahunAjaranController extends Controller
         $user = Auth::user();
         $pesantrenId = $user->pesantren_id;
 
-        // Check if name exists for this pesantren
-        if (TahunAjaran::where('pesantren_id', $pesantrenId)->where('nama', $request->nama)->exists()) {
-             return back()->withErrors(['nama' => 'Nama tahun ajaran sudah ada.'])->withInput();
+        // Check if name AND semester exists for this pesantren
+        if (TahunAjaran::where('pesantren_id', $pesantrenId)
+                ->where('nama', $request->nama)
+                ->where('semester', $request->semester)
+                ->exists()) {
+             return back()->withErrors(['nama' => 'Tahun ajaran dengan semester tersebut sudah ada.'])->withInput();
         }
 
         if ($request->is_active) {
@@ -51,9 +55,10 @@ class TahunAjaranController extends Controller
         TahunAjaran::create([
             'pesantren_id' => $pesantrenId,
             'nama' => $request->nama,
+            'semester' => $request->semester,
             'tanggal_mulai' => $request->tanggal_mulai,
             'tanggal_selesai' => $request->tanggal_selesai,
-             'is_active' => $request->is_active,
+            'is_active' => $request->is_active,
         ]);
 
         return redirect()->route('admin.pengaturan.tahun-ajaran.index')
@@ -80,6 +85,7 @@ class TahunAjaranController extends Controller
         // Validate first to ensure clean input
         $request->validate([
             'nama' => 'required|string|max:20',
+            'semester' => 'required|in:Ganjil,Genap',
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'required|date',
             'is_active' => 'required|boolean',
@@ -95,11 +101,12 @@ class TahunAjaranController extends Controller
         // Check duplicate name on other rows
         $exists = TahunAjaran::where('pesantren_id', $pesantrenId)
                     ->where('nama', $request->nama)
+                    ->where('semester', $request->semester)
                     ->where('id', '!=', $id)
                     ->exists();
 
         if ($exists) {
-            return back()->withErrors(['nama' => 'Nama tahun ajaran sudah digunakan.'])->withInput();
+            return back()->withErrors(['nama' => 'Nama tahun ajaran dengan semester tersebut sudah digunakan.'])->withInput();
         }
 
         if ($request->is_active && !$tahun->is_active) {
@@ -111,7 +118,7 @@ class TahunAjaranController extends Controller
              \Illuminate\Support\Facades\Cache::forget('active_tahun_ajaran_' . $pesantrenId);
         }
 
-        $tahun->update($request->only(['nama', 'tanggal_mulai', 'tanggal_selesai', 'is_active']));
+        $tahun->update($request->only(['nama', 'semester', 'tanggal_mulai', 'tanggal_selesai', 'is_active']));
 
         return redirect()->route('admin.pengaturan.tahun-ajaran.index')
             ->with('success', 'Tahun Ajaran berhasil diperbarui');

@@ -52,6 +52,7 @@
                 <thead>
                     <tr style="background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); border-bottom: 2px solid #e2e8f0;">
                         <th style="padding: 16px; text-align: left; font-weight: 700; color: #1e293b;">Tahun Ajaran</th>
+                        <th style="padding: 16px; text-align: left; font-weight: 700; color: #1e293b;">Semester</th>
                         <th style="padding: 16px; text-align: left; font-weight: 700; color: #1e293b;">Periode</th>
                         <th style="padding: 16px; text-align: left; font-weight: 700; color: #1e293b;">Status</th>
                         <th style="padding: 16px; text-align: center; font-weight: 700; color: #1e293b;">Aksi</th>
@@ -61,6 +62,7 @@
                     @forelse($tahunAjaran as $tahun)
                     <tr style="border-bottom: 1px solid #f1f5f9; transition: background 0.2s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='white'">
                         <td style="padding: 16px; font-weight: 600; color: #1f2937;">{{ $tahun->nama }}</td>
+                        <td style="padding: 16px; color: #4b5563;">{{ $tahun->semester }}</td>
                         <td style="padding: 16px; color: #6b7280;">
                             {{ $tahun->tanggal_mulai ? date('d M Y', strtotime($tahun->tanggal_mulai)) : '-' }} - 
                             {{ $tahun->tanggal_selesai ? date('d M Y', strtotime($tahun->tanggal_selesai)) : '-' }}
@@ -123,6 +125,13 @@
                         <input type="text" name="nama" class="form-control" value="{{ $tahun->nama }}" required placeholder="Contoh: 2024/2025" style="width: 100%; padding: 12px 16px; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 1rem;">
                     </div>
                     <div>
+                        <label style="display: block; font-weight: 600; color: #374151; margin-bottom: 8px;">Semester</label>
+                        <select name="semester" class="form-select" required style="width: 100%; padding: 12px 16px; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 1rem;">
+                            <option value="Ganjil" {{ $tahun->semester == 'Ganjil' ? 'selected' : '' }}>Ganjil</option>
+                            <option value="Genap" {{ $tahun->semester == 'Genap' ? 'selected' : '' }}>Genap</option>
+                        </select>
+                    </div>
+                    <div>
                         <label style="display: block; font-weight: 600; color: #374151; margin-bottom: 8px;">Tanggal Mulai</label>
                         <input type="date" name="tanggal_mulai" class="form-control" value="{{ $tahun->tanggal_mulai ? $tahun->tanggal_mulai->format('Y-m-d') : '' }}" required style="width: 100%; padding: 12px 16px; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 1rem;">
                     </div>
@@ -165,6 +174,13 @@
                     <div>
                         <label style="display: block; font-weight: 600; color: #374151; margin-bottom: 8px;">Nama Tahun Ajaran</label>
                         <input type="text" name="nama" class="form-control" required placeholder="Contoh: 2025/2026" style="width: 100%; padding: 12px 16px; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 1rem;">
+                    </div>
+                    <div>
+                        <label style="display: block; font-weight: 600; color: #374151; margin-bottom: 8px;">Semester</label>
+                        <select name="semester" class="form-select" required style="width: 100%; padding: 12px 16px; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 1rem;">
+                            <option value="Ganjil" selected>Ganjil</option>
+                            <option value="Genap">Genap</option>
+                        </select>
                     </div>
                     <div>
                         <label style="display: block; font-weight: 600; color: #374151; margin-bottom: 8px;">Tanggal Mulai</label>
