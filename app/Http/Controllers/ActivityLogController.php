@@ -9,7 +9,16 @@ class ActivityLogController extends Controller
 {
     public function index(Request $request)
     {
-        $query = ActivityLog::with('user')->latest();
+        // Get current tenant pesantren_id
+        $pesantren = app('tenant');
+        
+        // Get activity logs only from this tenant's users (exclude owner activities)
+        $query = ActivityLog::with('user')
+            ->whereHas('user', function($q) use ($pesantren) {
+                $q->where('pesantren_id', $pesantren->id);
+            })
+            ->where('log_name', '!=', 'owner') // Exclude owner activities
+            ->latest();
 
         // Filter by log name (model type)
         if ($request->has('model') && $request->model) {
