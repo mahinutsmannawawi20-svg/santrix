@@ -337,246 +337,160 @@
                 </p>
             </div>
 
-            <div class="grid md:grid-cols-2 gap-6 lg:gap-8">
+            <div class="grid md:grid-cols-2 gap-8">
                 
-                <!-- 1. Dashboard Sekretaris (Tata Usaha) - Theme: Indigo -->
-                <div class="bg-white rounded-2xl border border-indigo-100 shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden group" data-aos="fade-up" data-aos-delay="100">
-                    <div class="bg-indigo-50/50 p-6 border-b border-indigo-100 flex items-center justify-between">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-xl bg-indigo-600 text-white flex items-center justify-center shadow-lg shadow-indigo-200">
-                                <i data-feather="users" class="w-6 h-6"></i>
+                <!-- 1. Sekretaris & TU -->
+                <a href="{{ route('demo.start', ['type' => 'sekretaris']) }}" class="group block">
+                    <div class="relative bg-gradient-to-br from-violet-50 via-white to-indigo-50 rounded-3xl border border-violet-100/50 shadow-sm hover:shadow-xl hover:shadow-violet-100/50 transition-all duration-500 overflow-hidden p-8">
+                        <!-- Decorative Pattern -->
+                        <div class="absolute top-0 right-0 w-32 h-32 opacity-5">
+                            <svg viewBox="0 0 100 100" class="w-full h-full fill-violet-900">
+                                <pattern id="islamic1" patternUnits="userSpaceOnUse" width="20" height="20">
+                                    <circle cx="10" cy="10" r="2"/>
+                                </pattern>
+                                <rect width="100" height="100" fill="url(#islamic1)"/>
+                            </svg>
+                        </div>
+                        
+                        <div class="flex items-start gap-5">
+                            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-violet-200 group-hover:scale-110 transition-transform duration-300">
+                                <span class="text-3xl">👥</span>
                             </div>
-                            <div>
-                                <h3 class="text-xl font-bold text-slate-900">Sekretaris & TU</h3>
-                                <p class="text-indigo-700 text-sm font-medium">Administrasi & Data Santri</p>
+                            <div class="flex-1">
+                                <h3 class="text-xl font-bold text-slate-800 mb-1 group-hover:text-violet-700 transition-colors">Sekretaris & TU</h3>
+                                <p class="text-violet-600/80 text-sm font-medium mb-4">Administrasi & Data Santri</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-3 py-1 bg-white/80 text-xs font-medium text-slate-600 rounded-full border border-violet-100">Data Santri</span>
+                                    <span class="px-3 py-1 bg-white/80 text-xs font-medium text-slate-600 rounded-full border border-violet-100">Asrama</span>
+                                    <span class="px-3 py-1 bg-white/80 text-xs font-medium text-slate-600 rounded-full border border-violet-100">Mutasi</span>
+                                    <span class="px-3 py-1 bg-white/80 text-xs font-medium text-slate-600 rounded-full border border-violet-100">Alumni</span>
+                                </div>
                             </div>
                         </div>
-                        <a href="{{ route('demo.start', ['type' => 'sekretaris']) }}" class="hidden sm:flex items-center gap-2 px-4 py-2 bg-white text-indigo-700 text-sm font-bold rounded-lg border border-indigo-200 hover:bg-indigo-50 transition-colors">
-                            Masuk
-                            <i data-feather="arrow-right" class="w-4 h-4"></i>
-                        </a>
+                        
+                        <div class="mt-6 pt-5 border-t border-violet-100/50 flex items-center justify-between">
+                            <span class="text-sm text-slate-500">Klik untuk mencoba demo</span>
+                            <div class="flex items-center gap-2 text-violet-600 font-semibold group-hover:translate-x-1 transition-transform">
+                                Masuk <span class="text-lg">→</span>
+                            </div>
+                        </div>
                     </div>
-                    
-                    <div class="p-6">
-                        <div class="grid grid-cols-2 gap-y-3 gap-x-4">
-                            <!-- Items -->
-                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-indigo-700 transition-colors">
-                                <i data-feather="monitor" class="w-4 h-4 text-slate-400 group-hover/item:text-indigo-600"></i>
-                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Statistik</span>
-                            </div>
-                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-indigo-700 transition-colors">
-                                <i data-feather="database" class="w-4 h-4 text-slate-400 group-hover/item:text-indigo-600"></i>
-                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Data Induk</span>
-                            </div>
-                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-indigo-700 transition-colors">
-                                <i data-feather="home" class="w-4 h-4 text-slate-400 group-hover/item:text-indigo-600"></i>
-                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Asrama</span>
-                            </div>
-                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-indigo-700 transition-colors">
-                                <i data-feather="credit-card" class="w-4 h-4 text-slate-400 group-hover/item:text-indigo-600"></i>
-                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Kartu Digital</span>
-                            </div>
-                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-indigo-700 transition-colors">
-                                <i data-feather="repeat" class="w-4 h-4 text-slate-400 group-hover/item:text-indigo-600"></i>
-                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Mutasi</span>
-                            </div>
-                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-indigo-700 transition-colors">
-                                <i data-feather="trending-up" class="w-4 h-4 text-slate-400 group-hover/item:text-indigo-600"></i>
-                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Kenaikan Kelas</span>
-                            </div>
-                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-indigo-700 transition-colors">
-                                <i data-feather="user-check" class="w-4 h-4 text-slate-400 group-hover/item:text-indigo-600"></i>
-                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Alumni</span>
-                            </div>
-                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-indigo-700 transition-colors">
-                                <i data-feather="file-text" class="w-4 h-4 text-slate-400 group-hover/item:text-indigo-600"></i>
-                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Laporan</span>
-                            </div>
-                        </div>
+                </a>
 
-                        <div class="mt-6 pt-4 border-t border-slate-100 flex gap-3">
-                            <a href="{{ route('demo.start', ['type' => 'sekretaris']) }}" class="flex-1 py-2 text-center text-xs font-bold uppercase tracking-wider bg-indigo-50 text-indigo-700 rounded hover:bg-indigo-100 transition-colors">Input Santri</a>
-                            <a href="{{ route('demo.start', ['type' => 'sekretaris']) }}" class="flex-1 py-2 text-center text-xs font-bold uppercase tracking-wider bg-indigo-50 text-indigo-700 rounded hover:bg-indigo-100 transition-colors">Cek Kamar</a>
+                <!-- 2. Bendahara -->
+                <a href="{{ route('demo.start', ['type' => 'bendahara']) }}" class="group block">
+                    <div class="relative bg-gradient-to-br from-emerald-50 via-white to-teal-50 rounded-3xl border border-emerald-100/50 shadow-sm hover:shadow-xl hover:shadow-emerald-100/50 transition-all duration-500 overflow-hidden p-8">
+                        <!-- Decorative Pattern -->
+                        <div class="absolute top-0 right-0 w-32 h-32 opacity-5">
+                            <svg viewBox="0 0 100 100" class="w-full h-full fill-emerald-900">
+                                <pattern id="islamic2" patternUnits="userSpaceOnUse" width="20" height="20">
+                                    <circle cx="10" cy="10" r="2"/>
+                                </pattern>
+                                <rect width="100" height="100" fill="url(#islamic2)"/>
+                            </svg>
+                        </div>
+                        
+                        <div class="flex items-start gap-5">
+                            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-lg shadow-emerald-200 group-hover:scale-110 transition-transform duration-300">
+                                <span class="text-3xl">💰</span>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-xl font-bold text-slate-800 mb-1 group-hover:text-emerald-700 transition-colors">Bendahara</h3>
+                                <p class="text-emerald-600/80 text-sm font-medium mb-4">Keuangan & Syahriah</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-3 py-1 bg-white/80 text-xs font-medium text-slate-600 rounded-full border border-emerald-100">SPP</span>
+                                    <span class="px-3 py-1 bg-white/80 text-xs font-medium text-slate-600 rounded-full border border-emerald-100">Pemasukan</span>
+                                    <span class="px-3 py-1 bg-white/80 text-xs font-medium text-slate-600 rounded-full border border-emerald-100">Pengeluaran</span>
+                                    <span class="px-3 py-1 bg-white/80 text-xs font-medium text-slate-600 rounded-full border border-emerald-100">Gaji</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6 pt-5 border-t border-emerald-100/50 flex items-center justify-between">
+                            <span class="text-sm text-slate-500">Klik untuk mencoba demo</span>
+                            <div class="flex items-center gap-2 text-emerald-600 font-semibold group-hover:translate-x-1 transition-transform">
+                                Masuk <span class="text-lg">→</span>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </a>
 
-                <!-- 2. Dashboard Bendahara (Keuangan) - Theme: Emerald (Green) -->
-                <div class="bg-white rounded-2xl border border-emerald-100 shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden group" data-aos="fade-up" data-aos-delay="200">
-                    <div class="bg-emerald-50/50 p-6 border-b border-emerald-100 flex items-center justify-between">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-xl bg-emerald-600 text-white flex items-center justify-center shadow-lg shadow-emerald-200">
-                                <i data-feather="dollar-sign" class="w-6 h-6"></i>
+                <!-- 3. Pendidikan -->
+                <a href="{{ route('demo.start', ['type' => 'pendidikan']) }}" class="group block">
+                    <div class="relative bg-gradient-to-br from-sky-50 via-white to-blue-50 rounded-3xl border border-sky-100/50 shadow-sm hover:shadow-xl hover:shadow-sky-100/50 transition-all duration-500 overflow-hidden p-8">
+                        <!-- Decorative Pattern -->
+                        <div class="absolute top-0 right-0 w-32 h-32 opacity-5">
+                            <svg viewBox="0 0 100 100" class="w-full h-full fill-sky-900">
+                                <pattern id="islamic3" patternUnits="userSpaceOnUse" width="20" height="20">
+                                    <circle cx="10" cy="10" r="2"/>
+                                </pattern>
+                                <rect width="100" height="100" fill="url(#islamic3)"/>
+                            </svg>
+                        </div>
+                        
+                        <div class="flex items-start gap-5">
+                            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-500 to-blue-600 flex items-center justify-center shadow-lg shadow-sky-200 group-hover:scale-110 transition-transform duration-300">
+                                <span class="text-3xl">📚</span>
                             </div>
-                            <div>
-                                <h3 class="text-xl font-bold text-slate-900">Bendahara</h3>
-                                <p class="text-emerald-700 text-sm font-medium">Cashflow & SPP</p>
+                            <div class="flex-1">
+                                <h3 class="text-xl font-bold text-slate-800 mb-1 group-hover:text-sky-700 transition-colors">Pendidikan</h3>
+                                <p class="text-sky-600/80 text-sm font-medium mb-4">Akademik & Tahfidz</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-3 py-1 bg-white/80 text-xs font-medium text-slate-600 rounded-full border border-sky-100">Nilai</span>
+                                    <span class="px-3 py-1 bg-white/80 text-xs font-medium text-slate-600 rounded-full border border-sky-100">Absensi</span>
+                                    <span class="px-3 py-1 bg-white/80 text-xs font-medium text-slate-600 rounded-full border border-sky-100">Hafalan</span>
+                                    <span class="px-3 py-1 bg-white/80 text-xs font-medium text-slate-600 rounded-full border border-sky-100">Rapor</span>
+                                </div>
                             </div>
                         </div>
-                        <a href="{{ route('demo.start', ['type' => 'bendahara']) }}" class="hidden sm:flex items-center gap-2 px-4 py-2 bg-white text-emerald-700 text-sm font-bold rounded-lg border border-emerald-200 hover:bg-emerald-50 transition-colors">
-                            Masuk
-                            <i data-feather="arrow-right" class="w-4 h-4"></i>
-                        </a>
+                        
+                        <div class="mt-6 pt-5 border-t border-sky-100/50 flex items-center justify-between">
+                            <span class="text-sm text-slate-500">Klik untuk mencoba demo</span>
+                            <div class="flex items-center gap-2 text-sky-600 font-semibold group-hover:translate-x-1 transition-transform">
+                                Masuk <span class="text-lg">→</span>
+                            </div>
+                        </div>
                     </div>
-                    
-                    <div class="p-6">
-                        <div class="grid grid-cols-2 gap-y-3 gap-x-4">
-                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-emerald-700 transition-colors">
-                                <i data-feather="pie-chart" class="w-4 h-4 text-slate-400 group-hover/item:text-emerald-600"></i>
-                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Ringkasan</span>
-                            </div>
-                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-emerald-700 transition-colors">
-                                <i data-feather="file-minus" class="w-4 h-4 text-slate-400 group-hover/item:text-emerald-600"></i>
-                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Tagihan SPP</span>
-                            </div>
-                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-emerald-700 transition-colors">
-                                <i data-feather="arrow-down-circle" class="w-4 h-4 text-slate-400 group-hover/item:text-emerald-600"></i>
-                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Pemasukan</span>
-                            </div>
-                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-emerald-700 transition-colors">
-                                <i data-feather="arrow-up-circle" class="w-4 h-4 text-slate-400 group-hover/item:text-emerald-600"></i>
-                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Pengeluaran</span>
-                            </div>
-                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-emerald-700 transition-colors">
-                                <i data-feather="alert-circle" class="w-4 h-4 text-slate-400 group-hover/item:text-emerald-600"></i>
-                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Cek Tunggakan</span>
-                            </div>
-                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-emerald-700 transition-colors">
-                                <i data-feather="briefcase" class="w-4 h-4 text-slate-400 group-hover/item:text-emerald-600"></i>
-                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Gaji Pegawai</span>
-                            </div>
-                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-emerald-700 transition-colors">
-                                <i data-feather="message-circle" class="w-4 h-4 text-slate-400 group-hover/item:text-emerald-600"></i>
-                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Kirim WA</span>
-                            </div>
-                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-emerald-700 transition-colors">
-                                <i data-feather="activity" class="w-4 h-4 text-slate-400 group-hover/item:text-emerald-600"></i>
-                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Arus Kas</span>
-                            </div>
-                        </div>
+                </a>
 
-                        <div class="mt-6 pt-4 border-t border-slate-100 flex gap-3">
-                            <a href="{{ route('demo.start', ['type' => 'bendahara']) }}" class="flex-1 py-2 text-center text-xs font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700 rounded hover:bg-emerald-100 transition-colors">Buat Tagihan</a>
-                            <a href="{{ route('demo.start', ['type' => 'bendahara']) }}" class="flex-1 py-2 text-center text-xs font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700 rounded hover:bg-emerald-100 transition-colors">Catat Bayar</a>
+                <!-- 4. Admin & Yayasan -->
+                <a href="{{ route('demo.start', ['type' => 'admin']) }}" class="group block">
+                    <div class="relative bg-gradient-to-br from-slate-50 via-white to-gray-50 rounded-3xl border border-slate-200/50 shadow-sm hover:shadow-xl hover:shadow-slate-100/50 transition-all duration-500 overflow-hidden p-8">
+                        <!-- Decorative Pattern -->
+                        <div class="absolute top-0 right-0 w-32 h-32 opacity-5">
+                            <svg viewBox="0 0 100 100" class="w-full h-full fill-slate-900">
+                                <pattern id="islamic4" patternUnits="userSpaceOnUse" width="20" height="20">
+                                    <circle cx="10" cy="10" r="2"/>
+                                </pattern>
+                                <rect width="100" height="100" fill="url(#islamic4)"/>
+                            </svg>
+                        </div>
+                        
+                        <div class="flex items-start gap-5">
+                            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-slate-600 to-slate-800 flex items-center justify-center shadow-lg shadow-slate-300 group-hover:scale-110 transition-transform duration-300">
+                                <span class="text-3xl">🛡️</span>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-xl font-bold text-slate-800 mb-1 group-hover:text-slate-900 transition-colors">Admin & Yayasan</h3>
+                                <p class="text-slate-500 text-sm font-medium mb-4">Kontrol & Pengaturan</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-3 py-1 bg-white/80 text-xs font-medium text-slate-600 rounded-full border border-slate-200">User</span>
+                                    <span class="px-3 py-1 bg-white/80 text-xs font-medium text-slate-600 rounded-full border border-slate-200">Backup</span>
+                                    <span class="px-3 py-1 bg-white/80 text-xs font-medium text-slate-600 rounded-full border border-slate-200">Branding</span>
+                                    <span class="px-3 py-1 bg-white/80 text-xs font-medium text-slate-600 rounded-full border border-slate-200">WhatsApp</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6 pt-5 border-t border-slate-100/50 flex items-center justify-between">
+                            <span class="text-sm text-slate-500">Klik untuk mencoba demo</span>
+                            <div class="flex items-center gap-2 text-slate-700 font-semibold group-hover:translate-x-1 transition-transform">
+                                Masuk <span class="text-lg">→</span>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </a>
 
-                <!-- 3. Dashboard Pendidikan (Akademik) - Theme: Blue -->
-                <div class="bg-white rounded-2xl border border-blue-100 shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden group" data-aos="fade-up" data-aos-delay="300">
-                    <div class="bg-blue-50/50 p-6 border-b border-blue-100 flex items-center justify-between">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-lg shadow-blue-200">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                                </svg>
-                            </div>
-                            <div>
-                                <h3 class="text-xl font-bold text-slate-900">Pendidikan</h3>
-                                <p class="text-blue-700 text-sm font-medium">Kurikulum & Rapor</p>
-                            </div>
-                        </div>
-                        <a href="{{ route('demo.start', ['type' => 'pendidikan']) }}" class="hidden sm:flex items-center gap-2 px-4 py-2 bg-white text-blue-700 text-sm font-bold rounded-lg border border-blue-200 hover:bg-blue-50 transition-colors">
-                            Masuk
-                            <i data-feather="arrow-right" class="w-4 h-4"></i>
-                        </a>
-                    </div>
-                    
-                    <div class="p-6">
-                        <div class="grid grid-cols-2 gap-y-3 gap-x-4">
-                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-blue-700 transition-colors">
-                                <i data-feather="grid" class="w-4 h-4 text-slate-400 group-hover/item:text-blue-600"></i>
-                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Kelas</span>
-                            </div>
-                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-blue-700 transition-colors">
-                                <i data-feather="calendar" class="w-4 h-4 text-slate-400 group-hover/item:text-blue-600"></i>
-                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Jadwal</span>
-                            </div>
-                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-blue-700 transition-colors">
-                                <i data-feather="check-circle" class="w-4 h-4 text-slate-400 group-hover/item:text-blue-600"></i>
-                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Absensi Santri</span>
-                            </div>
-                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-blue-700 transition-colors">
-                                <i data-feather="user-check" class="w-4 h-4 text-slate-400 group-hover/item:text-blue-600"></i>
-                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Absensi Guru</span>
-                            </div>
-                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-blue-700 transition-colors">
-                                <i data-feather="edit-3" class="w-4 h-4 text-slate-400 group-hover/item:text-blue-600"></i>
-                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Jurnal KBM</span>
-                            </div>
-                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-blue-700 transition-colors">
-                                <i data-feather="mic" class="w-4 h-4 text-slate-400 group-hover/item:text-blue-600"></i>
-                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Hafalan</span>
-                            </div>
-                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-blue-700 transition-colors">
-                                <i data-feather="award" class="w-4 h-4 text-slate-400 group-hover/item:text-blue-600"></i>
-                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Nilai & Ujian</span>
-                            </div>
-                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-blue-700 transition-colors">
-                                <i data-feather="printer" class="w-4 h-4 text-slate-400 group-hover/item:text-blue-600"></i>
-                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Cetak Rapor</span>
-                            </div>
-                        </div>
-
-                        <div class="mt-6 pt-4 border-t border-slate-100 flex gap-3">
-                            <a href="{{ route('demo.start', ['type' => 'pendidikan']) }}" class="flex-1 py-2 text-center text-xs font-bold uppercase tracking-wider bg-blue-50 text-blue-700 rounded hover:bg-blue-100 transition-colors">Input Nilai</a>
-                            <a href="{{ route('demo.start', ['type' => 'pendidikan']) }}" class="flex-1 py-2 text-center text-xs font-bold uppercase tracking-wider bg-blue-50 text-blue-700 rounded hover:bg-blue-100 transition-colors">Cetak Rapor</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 4. Dashboard Admin/Yayasan - Theme: Slate -->
-                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden group" data-aos="fade-up" data-aos-delay="400">
-                    <div class="bg-slate-50 p-6 border-b border-slate-200 flex items-center justify-between">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-xl bg-slate-800 text-white flex items-center justify-center shadow-lg shadow-slate-200">
-                                <i data-feather="shield" class="w-6 h-6"></i>
-                            </div>
-                            <div>
-                                <h3 class="text-xl font-bold text-slate-900">Admin & Yayasan</h3>
-                                <p class="text-slate-600 text-sm font-medium">Kontrol & Backup Data</p>
-                            </div>
-                        </div>
-                        <a href="{{ route('demo.start', ['type' => 'admin']) }}" class="hidden sm:flex items-center gap-2 px-4 py-2 bg-white text-slate-700 text-sm font-bold rounded-lg border border-slate-200 hover:bg-slate-50 transition-colors">
-                            Masuk
-                            <i data-feather="arrow-right" class="w-4 h-4"></i>
-                        </a>
-                    </div>
-                    
-                    <div class="p-6">
-                        <div class="grid grid-cols-2 gap-y-3 gap-x-4">
-                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-slate-900 transition-colors">
-                                <i data-feather="activity" class="w-4 h-4 text-slate-400 group-hover/item:text-slate-700"></i>
-                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Monitoring</span>
-                            </div>
-                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-slate-900 transition-colors">
-                                <i data-feather="users" class="w-4 h-4 text-slate-400 group-hover/item:text-slate-700"></i>
-                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Manajemen User</span>
-                            </div>
-                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-slate-900 transition-colors">
-                                <i data-feather="image" class="w-4 h-4 text-slate-400 group-hover/item:text-slate-700"></i>
-                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Branding</span>
-                            </div>
-                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-slate-900 transition-colors">
-                                <i data-feather="download-cloud" class="w-4 h-4 text-slate-400 group-hover/item:text-slate-700"></i>
-                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Backup Data</span>
-                            </div>
-                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-slate-900 transition-colors">
-                                <i data-feather="calendar" class="w-4 h-4 text-slate-400 group-hover/item:text-slate-700"></i>
-                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Tahun Ajaran</span>
-                            </div>
-                            <div class="flex items-center gap-2 group/item cursor-pointer hover:text-slate-900 transition-colors">
-                                <i data-feather="smartphone" class="w-4 h-4 text-slate-400 group-hover/item:text-slate-700"></i>
-                                <span class="text-sm font-semibold text-slate-700 group-hover/item:text-slate-900">Koneksi WA</span>
-                            </div>
-                        </div>
-
-                        <div class="mt-6 pt-4 border-t border-slate-100 flex gap-3">
-                            <a href="{{ route('demo.start', ['type' => 'admin']) }}" class="flex-1 py-2 text-center text-xs font-bold uppercase tracking-wider bg-slate-100 text-slate-700 rounded hover:bg-slate-200 transition-colors">Download Backup</a>
-                            <a href="{{ route('demo.start', ['type' => 'admin']) }}" class="flex-1 py-2 text-center text-xs font-bold uppercase tracking-wider bg-slate-100 text-slate-700 rounded hover:bg-slate-200 transition-colors">Tambah User</a>
-                        </div>
-                    </div>
-                </div>
 
             </div>
         </div>
