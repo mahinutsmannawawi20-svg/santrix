@@ -326,6 +326,7 @@ Route::domain('{subdomain}.' . $mainDomain)->middleware([\App\Http\Middleware\Re
     // Bendahara Dashboard Routes
     Route::prefix('bendahara')->middleware(['auth', 'role:bendahara'])->name('bendahara.')->group(function () {
         Route::get('/', [App\Http\Controllers\BendaharaController::class, 'dashboard'])->name('dashboard');
+        Route::get('/data-santri', [App\Http\Controllers\BendaharaController::class, 'dataSantri'])->name('data-santri');
         
         // Syahriah/SPP
         Route::get('/syahriah', [App\Http\Controllers\BendaharaController::class, 'syahriah'])->name('syahriah');
