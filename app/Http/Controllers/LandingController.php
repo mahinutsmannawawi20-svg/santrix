@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Pesantren;
 use App\Models\Santri;
+use Inertia\Inertia;
 
 class LandingController extends Controller
 {
@@ -13,16 +14,19 @@ class LandingController extends Controller
      */
     public function index()
     {
-        // Data Real from Database (Data2)
+        // Data Real from Database
         $stats = [
-            'pesantren' => Pesantren::count(),
-            'santri' => Santri::count(),
-            'users' => \App\Models\User::count(),
+            'totalPesantren' => Pesantren::count(),
+            'totalSantri' => Santri::count(),
+            'totalUsers' => \App\Models\User::count(),
         ];
 
         // Plans from Database (Dynamic Pricing)
-        $plans = \App\Models\Package::orderBy('sort_order')->orderBy('price')->get();
+        $packages = \App\Models\Package::orderBy('sort_order')->orderBy('price')->get();
 
-        return view('welcome', compact('stats', 'plans'));
+        return Inertia::render('Welcome', [
+            'stats' => $stats,
+            'packages' => $packages,
+        ]);
     }
 }
