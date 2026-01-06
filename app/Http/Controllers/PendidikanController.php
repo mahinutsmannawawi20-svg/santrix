@@ -1026,7 +1026,7 @@ class PendidikanController extends Controller
     }
     
     // Helper to Get Rapor Data (Single or Bulk)
-    private function getRaporData($santriId, $tahunAjaran, $semester)
+    private function getRaporData($santriId, $tahunAjaran, $semester, $kelasid = null)
     {
         $santri = Santri::with(['kelas', 'kobong'])->findOrFail($santriId);
         
@@ -1205,129 +1205,109 @@ class PendidikanController extends Controller
             $pdf = Pdf::loadView('pendidikan.laporan.rapor-pdf-v2', compact(
                 'dataRapor', 'settings', 'mapel_wajib', 'mapel_diniyah', 'mapel_ekstra', 'tahunAjaran', 'semester'
             ));
-            $pdf->setPaper([0, 0, 609.45, 935.43], 'portrait');
-            
-            // Sanitize filename properly - remove special characters
-            $cleanKelas = preg_replace('/[^A-Za-z0-9\-]/', '-', $kelas->nama_kelas);
-            $cleanTA = preg_replace('/[^A-Za-z0-9\-]/', '-', $tahunAjaran);
-            $fileName = sprintf('Rapor-Kelas-%s-%s.pdf', $cleanKelas, $cleanTA);
-            
-            // Use streamDownload with explicit headers for better browser compatibility
-            return response()->streamDownload(function() use ($pdf) {
-                echo $pdf->output();
-            }, $fileName, [
-                'Content-Type' => 'application/pdf',
-                'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
-            ]);
+            $dataRapor[] = $this->getRaporData($santri->id, $tahunAjaran, $semester, $kelasId);
         }
-
-        return view('pendidikan.laporan.rapor-pdf-v2', compact(
-            'dataRapor', 'settings', 'mapel_wajib', 'mapel_diniyah', 'mapel_ekstra', 'tahunAjaran', 'semester'
-        ));
+        
+        $pdf = Pdf::loadView('pendidikan.laporan.rapor-pdf-v2', compact('dataRapor', 'settings', 'mapel_wajib', 'mapel_diniyah', 'mapel_ekstra', 'tahunAjaran', 'semester'))
+                  ->setPaper('legal', 'portrait');
+        
+        if ($request->has('download')) {
+            return $pdf->download('Rapor-Kelas-'.$kelas->nama_kelas.'-'.$tahunAjaran.'.pdf');
+        }
+        return $pdf->stream();
     }
-
-    // Export Daftar Nilai
+    
+    // Export - Daftar Nilai
     public function exportDaftarNilai(Request $request)
     {
         $kelasId = $request->kelas_id;
         $tahunAjaran = $request->tahun_ajaran;
         $semester = $request->semester;
-        $gender = $request->gender; // L, P, or all
         
         $kelas = Kelas::findOrFail($kelasId);
+        $mapelList = MataPelajaran::where('kelas_id', $kelasId)->get();
+        $santriList = Santri::where('kelas_id', $kelasId)->where('is_active', true)->orderBy('nama_santri')->get();
         
-        $query = NilaiSantri::where('kelas_id', $kelasId)
-                        ->where('semester', $semester);
-
-        if ($tahunAjaran && $tahunAjaran !== 'all') {
-            $query->where('tahun_ajaran', $tahunAjaran);
-        }
-
-        if ($gender && $gender !== 'all') {
-            $query->whereHas('santri', function($q) use ($gender) {
-                $q->where('gender', $gender);
+        // Fetch values
+        $nilaiData = NilaiSantri::where('tahun_ajaran', $tahunAjaran)
+            ->where('semester', $semester)
+            ->whereHas('santri', function($q) use ($kelasId) {
+                $q->where('kelas_id', $kelasId);
+            })
+            ->get()
+            ->groupBy('santri_id')
+            ->map(function($items) {
+                return $items->keyBy('mapel_id');
             });
-        }
-                        
-        $dataNilai = $query->with(['santri', 'mataPelajaran'])
-                        ->get()
-                        ->groupBy('santri_id');
-                        
-        return view('pendidikan.laporan.daftar-nilai-pdf', compact('kelas', 'dataNilai', 'tahunAjaran', 'semester', 'gender'));
+        
+        $pdf = Pdf::loadView('pendidikan.laporan.daftar-nilai-pdf', compact('kelas', 'mapelList', 'santriList', 'nilaiData', 'tahunAjaran', 'semester'));
+        return $pdf->stream('Daftar-Nilai-'.$kelas->nama_kelas.'.pdf');
     }
 
-    // Export Statistik Prestasi
-    public function exportStatistikPrestasi(Request $request)
+    // Export - Statistik
+    public function exportStatistik(Request $request)
     {
-        // Top 20 All Classes or Specific Class
         $tahunAjaran = $request->tahun_ajaran;
         $semester = $request->semester;
-        $kelasId = $request->kelas_id;
-        $gender = $request->gender;
         
-        $query = NilaiSantri::where('semester', $semester);
+        // Top 20 by average score
+        $stats = NilaiSantri::where('tahun_ajaran', $tahunAjaran)
+            ->where('semester', $semester)
+            ->with('santri.kelas')
+            ->get()
+            ->groupBy('santri_id')
+            ->map(function ($items) {
+                return [
+                    'santri' => $items->first()->santri,
+                    'rata_rata' => $items->avg('nilai_akhir'),
+                    'total' => $items->sum('nilai_akhir')
+                ];
+            })
+            ->sortByDesc('rata_rata')
+            ->take(20)
+            ->values(); // Reset keys
         
-        if ($tahunAjaran && $tahunAjaran !== 'all') {
-            $query->where('tahun_ajaran', $tahunAjaran);
-        }
-                        
-        if ($kelasId) {
-            $query->where('kelas_id', $kelasId);
-        }
-        
-        if ($gender && $gender !== 'all') {
-            $query->whereHas('santri', function($q) use ($gender) {
-                $q->where('gender', $gender);
-            });
-        }
-        
-        $rankings = $query->with('santri.kelas')
-                        ->get()
-                        ->groupBy('santri_id')
-                        ->map(function ($items) {
-                            return [
-                                'santri' => $items->first()->santri,
-                                'rata_rata' => $items->avg('nilai_akhir'),
-                                'total_nilai' => $items->sum('nilai_akhir'),
-                            ];
-                        })
-                        ->sortByDesc('rata_rata')
-                        ->take(20);
-
-        return view('pendidikan.laporan.statistik-prestasi-pdf', compact('rankings', 'tahunAjaran', 'semester', 'kelasId', 'gender'));
+        $pdf = Pdf::loadView('pendidikan.laporan.statistik-prestasi-pdf', compact('stats', 'tahunAjaran', 'semester'));
+        return $pdf->stream('Statistik-Prestasi.pdf');
     }
 
-    // Export Rekapitulasi Kehadiran
-    public function exportRekapAbsensi(Request $request)
+    // Export - Rekap Absensi
+    public function exportAbsensi(Request $request)
     {
         $kelasId = $request->kelas_id;
         $tahun = $request->tahun;
-        $semester = $request->semester; // Added semester filter although table structure relies on year/week usually
+        $semester = $request->semester;
         $gender = $request->gender;
         
         $kelas = Kelas::findOrFail($kelasId);
         
-        // Absensi structure assumes yearly/weekly data. If semester is needed, we might need date filtering.
-        // For now, let's keep year as primary filter, but we can filter students by gender.
-        
-        $query = \App\Models\AbsensiSantri::where('kelas_id', $kelasId)
-                    ->where('tahun', $tahun);
-                    
-        if ($gender && $gender !== 'all') {
-            $query->whereHas('santri', function($q) use ($gender) {
-                $q->where('gender', $gender);
-            });
+        $query = Santri::where('kelas_id', $kelasId)->where('is_active', true);
+         if($gender && $gender != 'all') {
+            $query->where('gender', $gender);
         }
+        $santriList = $query->orderBy('nama_santri')->get();
         
-        $absensi = $query->with('santri')
-                    ->get()
-                    ->groupBy('santri_id');
-                    
-        return view('pendidikan.laporan.rekap-absensi-pdf', compact('kelas', 'absensi', 'tahun', 'gender'));
+        // Fetch absensi summary
+        $absensiData = \App\Models\AbsensiSantri::where('kelas_id', $kelasId)
+            ->where('tahun', $tahun)
+            ->get()
+            ->groupBy('santri_id')
+            ->map(function($items) {
+                return [
+                    's' => $items->sum('alfa_sorogan'),
+                    'm' => $items->sum('alfa_menghafal_malam'),
+                    'sb' => $items->sum('alfa_menghafal_subuh'),
+                    't' => $items->sum('alfa_tahajud'),
+                    'total' => $items->sum('alfa_sorogan') + $items->sum('alfa_menghafal_malam') + $items->sum('alfa_menghafal_subuh') + $items->sum('alfa_tahajud')
+                ];
+            });
+        
+        $pdf = Pdf::loadView('pendidikan.laporan.rekap-absensi-pdf', compact('kelas', 'santriList', 'absensiData', 'tahun', 'semester'));
+        return $pdf->stream('Rekap-Absensi-'.$kelas->nama_kelas.'.pdf');
     }
 
-    // Export Ranking Kelas
-    public function exportRankingKelas(Request $request)
+    // Export - Ranking
+    public function exportRanking(Request $request)
     {
         $kelasId = $request->kelas_id;
         $tahunAjaran = $request->tahun_ajaran;
@@ -1336,33 +1316,24 @@ class PendidikanController extends Controller
         
         $kelas = Kelas::findOrFail($kelasId);
         
-        $query = NilaiSantri::where('kelas_id', $kelasId)
-                        ->where('semester', $semester);
-
-        if ($tahunAjaran && $tahunAjaran !== 'all') {
-            $query->where('tahun_ajaran', $tahunAjaran);
-        }
-                        
-        if ($gender && $gender !== 'all') {
-            $query->whereHas('santri', function($q) use ($gender) {
-                $q->where('gender', $gender);
-            });
-        }
-        
-        $rankings = $query->with('santri')
-                        ->get()
-                        ->groupBy('santri_id')
-                        ->map(function ($items) {
-                            return [
-                                'santri' => $items->first()->santri,
-                                'rata_rata' => $items->avg('nilai_akhir'),
-                                'total_nilai' => $items->sum('nilai_akhir'),
-                            ];
-                        })
-                        ->sortByDesc('rata_rata')
-                        ->values();
-
-        return view('pendidikan.laporan.ranking-kelas-pdf', compact('kelas', 'rankings', 'tahunAjaran', 'semester', 'gender'));
+        $rankings = NilaiSantri::where('tahun_ajaran', $tahunAjaran)
+            ->where('semester', $semester)
+            ->whereHas('santri', function($q) use ($kelasId, $gender) {
+                $q->where('kelas_id', $kelasId);
+                if($gender && $gender != 'all') {
+                    $q->where('gender', $gender);
+                }
+            })
+            ->select('santri_id', DB::raw('SUM(nilai_akhir) as total_nilai'), DB::raw('AVG(nilai_akhir) as rata_rata'))
+            ->groupBy('santri_id')
+            ->orderByDesc('total_nilai')
+            ->with(['santri' => function($q) {
+                $q->select('id', 'nama_santri', 'nis', 'gender');
+            }])
+            ->get();
+            
+        $pdf = Pdf::loadView('pendidikan.laporan.ranking-kelas-pdf', compact('kelas', 'rankings', 'tahunAjaran', 'semester'));
+        return $pdf->stream('Ranking-Kelas-'.$kelas->nama_kelas.'.pdf');
     }
 
     
@@ -1627,12 +1598,12 @@ class PendidikanController extends Controller
     // Report Settings - Update
     public function updateSettings(Request $request)
     {
+        $settings = \App\Models\ReportSettings::firstOrCreate([]);
+        
         $validated = $request->validate([
             'nama_yayasan' => 'required|string|max:255',
             'nama_pondok' => 'required|string|max:255',
             'alamat' => 'nullable|string',
-            'telepon' => 'nullable|string',
-            'kota_terbit' => 'required|string',
             'pimpinan_nama' => 'required|string',
             'pimpinan_jabatan' => 'required|string',
             'logo_pondok' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',

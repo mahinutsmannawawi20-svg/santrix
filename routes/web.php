@@ -258,9 +258,21 @@ Route::domain('{subdomain}.' . $mainDomain)->middleware([\App\Http\Middleware\Re
         
         // Laporan (E-Rapor)
         Route::get('/laporan', [App\Http\Controllers\PendidikanController::class, 'laporan'])->name('laporan');
-        Route::get('/laporan/cetak/cover/{santriId}', [App\Http\Controllers\PendidikanController::class, 'cetakCover'])->name('laporan.cetak-cover');
-        Route::get('/laporan/cetak/rapor/{santriId}', [App\Http\Controllers\PendidikanController::class, 'cetakRapor'])->name('laporan.cetak-rapor');
-        Route::get('/laporan/cetak/rekap/{kelasId}', [App\Http\Controllers\PendidikanController::class, 'cetakRekap'])->name('laporan.cetak-rekap');
+        Route::get('/laporan/export-rapor', [App\Http\Controllers\PendidikanController::class, 'exportRapor'])->name('laporan.export-rapor');
+        Route::get('/laporan/export-rapor-kelas', [App\Http\Controllers\PendidikanController::class, 'exportRaporKelas'])->name('laporan.export-rapor-kelas');
+        Route::get('/laporan/export-daftar-nilai', [App\Http\Controllers\PendidikanController::class, 'exportDaftarNilai'])->name('laporan.export-daftar-nilai');
+        Route::get('/laporan/export-statistik', [App\Http\Controllers\PendidikanController::class, 'exportStatistik'])->name('laporan.export-statistik');
+        Route::get('/laporan/export-absensi', [App\Http\Controllers\PendidikanController::class, 'exportAbsensi'])->name('laporan.export-absensi');
+        Route::get('/laporan/export-ranking', [App\Http\Controllers\PendidikanController::class, 'exportRanking'])->name('laporan.export-ranking');
+        
+        // Additional Routes for Pendidikan
+        Route::get('/settings', [App\Http\Controllers\PendidikanController::class, 'settings'])->name('settings');
+        Route::post('/settings', [App\Http\Controllers\PendidikanController::class, 'updateSettings'])->name('settings.update');
+        Route::post('/tahun-ajaran', [App\Http\Controllers\PendidikanController::class, 'storeTahunAjaran'])->name('tahun-ajaran.store');
+        Route::delete('/tahun-ajaran/{id}', [App\Http\Controllers\PendidikanController::class, 'destroyTahunAjaran'])->name('tahun-ajaran.destroy');
+        Route::get('/laporan/cetak-cover', [App\Http\Controllers\PendidikanController::class, 'cetakCover'])->name('laporan.cetak-cover');
+        Route::get('/laporan/cetak-rapor', [App\Http\Controllers\PendidikanController::class, 'cetakRapor'])->name('laporan.cetak-rapor');
+        Route::get('/laporan/cetak-rekap', [App\Http\Controllers\PendidikanController::class, 'cetakRekap'])->name('laporan.cetak-rekap');
 
         // Ujian Mingguan
         Route::get('/ujian-mingguan', [App\Http\Controllers\UjianMingguanController::class, 'index'])->name('ujian-mingguan');
