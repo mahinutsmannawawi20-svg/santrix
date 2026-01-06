@@ -29,14 +29,16 @@ class DemoController extends Controller
         try {
             DB::beginTransaction();
 
+            $now = Carbon::now('Asia/Jakarta');
+            
             $pesantren = Pesantren::create([
                 'nama' => 'Pesantren Demo ' . strtoupper($demoId),
                 'subdomain' => $subdomain,
                 'domain' => $subdomain . '.' . config('app.url_base', 'santrix.my.id'),
                 'status' => 'active', // Demo is always active
                 'package' => 'demo',
-                'expired_at' => now()->addHours(2), // Expire in 2 hours
-                'trial_ends_at' => now()->addHours(2),
+                'expired_at' => $now->copy()->addHours(24), // Expire in 24 hours (WIB)
+                'trial_ends_at' => $now->copy()->addHours(24),
                 'telepon' => '081234567890',
                 'alamat' => 'Jl. Demo Virtual No. 1, Cloud City',
                 'is_demo' => true, // Flag for cleanup
@@ -56,8 +58,8 @@ class DemoController extends Controller
                 'pesantren_id' => $pesantren->id,
                 'package_name' => 'Demo Enterprise',
                 'price' => 0,
-                'started_at' => now(),
-                'expired_at' => now()->addHours(2),
+                'started_at' => $now,
+                'expired_at' => $now->copy()->addHours(24),
                 'status' => 'active',
             ]);
 
