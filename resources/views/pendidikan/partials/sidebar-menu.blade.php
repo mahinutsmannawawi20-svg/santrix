@@ -25,19 +25,19 @@
     </a>
 </li>
 <li class="sidebar-menu-item">
-    <a href="{{ route('pendidikan.mapel') }}" class="sidebar-menu-link {{ request()->routeIs('pendidikan.mapel*') ? 'active' : '' }}">
+    <a href="{{ route('pendidikan.mapel.index') }}" class="sidebar-menu-link {{ request()->routeIs('pendidikan.mapel*') ? 'active' : '' }}">
         <i data-feather="book-open" class="sidebar-menu-icon"></i>
         <span>Mata Pelajaran</span>
     </a>
 </li>
 <li class="sidebar-menu-item">
-    <a href="{{ route('pendidikan.jadwal') }}" class="sidebar-menu-link {{ request()->routeIs('pendidikan.jadwal*') ? 'active' : '' }}">
+    <a href="{{ route('pendidikan.jadwal.index') }}" class="sidebar-menu-link {{ request()->routeIs('pendidikan.jadwal*') ? 'active' : '' }}">
         <i data-feather="clock" class="sidebar-menu-icon"></i>
         <span>Jadwal Pelajaran</span>
     </a>
 </li>
 <li class="sidebar-menu-item">
-    <a href="{{ route('mata-pelajaran.index') }}" class="sidebar-menu-link {{ request()->routeIs('mata-pelajaran.*') ? 'active' : '' }}">
+    <a href="{{ route('pendidikan.mapel.index') }}" class="sidebar-menu-link {{ request()->routeIs('mata-pelajaran.*') ? 'active' : '' }}">
         <i data-feather="clipboard" class="sidebar-menu-icon"></i>
         <span>Data Mata Ujian</span>
     </a>

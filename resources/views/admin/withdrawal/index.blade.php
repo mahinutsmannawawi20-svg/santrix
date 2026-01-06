@@ -33,13 +33,13 @@
                     <div class="ml-auto">
                         <!-- Redirect to existing settings route, assuming it exists or handled by admin settings -->
                          <!-- Adjust route if needed, currently based on context -->
-                         <a href="{{ route('admin.settings.pesantren') }}" class="text-sm text-indigo-600 hover:text-indigo-700 font-medium">Ubah</a>
+                         <a href="{{ route('admin.pengaturan') }}" class="text-sm text-indigo-600 hover:text-indigo-700 font-medium">Ubah</a>
                     </div>
                 </div>
             @else
                 <div class="text-center py-2">
                     <p class="text-slate-500 mb-2">Belum ada rekening terdaftar.</p>
-                    <a href="{{ route('admin.settings.pesantren') }}" class="text-indigo-600 font-medium hover:underline">Tambahkan Rekening</a>
+                    <a href="{{ route('admin.pengaturan') }}" class="text-indigo-600 font-medium hover:underline">Tambahkan Rekening</a>
                 </div>
             @endif
         </div>

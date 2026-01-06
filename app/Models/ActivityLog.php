@@ -31,6 +31,11 @@ class ActivityLog extends Model
         return $this->belongsTo(User::class, 'causer_id');
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
     public function subject()
     {
         return $this->morphTo();

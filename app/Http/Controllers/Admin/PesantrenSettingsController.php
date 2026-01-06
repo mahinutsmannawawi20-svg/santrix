@@ -13,7 +13,7 @@ class PesantrenSettingsController extends Controller
     /**
      * Show pesantren settings form
      */
-    public function edit()
+    public function index()
     {
         $pesantren = app('tenant');
         
@@ -48,7 +48,7 @@ class PesantrenSettingsController extends Controller
 
         $pesantren->update($validated);
 
-        return redirect()->route('admin.settings.pesantren')
+        return redirect()->route('admin.pengaturan')
             ->with('success', 'Informasi pesantren berhasil diperbarui!');
     }
 
@@ -231,5 +231,31 @@ class PesantrenSettingsController extends Controller
                 'error' => 'Gagal menghapus logo: ' . $e->getMessage()
             ], 500);
         }
+    }
+
+    /**
+     * Show branding settings form
+     */
+    public function branding()
+    {
+        $pesantren = app('tenant');
+        return view('admin.settings.branding', compact('pesantren'));
+    }
+
+    /**
+     * Update branding settings
+     */
+    public function updateBranding(Request $request)
+    {
+        $pesantren = app('tenant');
+        
+        $validated = $request->validate([
+            'primary_color' => 'nullable|string|max:20',
+            'secondary_color' => 'nullable|string|max:20',
+        ]);
+
+        $pesantren->update($validated);
+
+        return back()->with('success', 'Branding berhasil diperbarui!');
     }
 }

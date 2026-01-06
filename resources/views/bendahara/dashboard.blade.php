@@ -363,7 +363,7 @@
         </div>
 
         <!-- Total Santri Aktif -->
-        <div style="background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); border-radius: 16px; padding: 16px; box-shadow: 0 10px 20px rgba(99, 102, 241, 0.2); transition: transform 0.3s ease; position: relative; overflow: hidden; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)';" onmouseout="this.style.transform='translateY(0)';" onclick="window.location.href='{{ route('bendahara.data-santri') }}'">
+        <div style="background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); border-radius: 16px; padding: 16px; box-shadow: 0 10px 20px rgba(99, 102, 241, 0.2); transition: transform 0.3s ease; position: relative; overflow: hidden; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)';" onmouseout="this.style.transform='translateY(0)';" onclick="window.location.href='{{ route('sekretaris.data-santri') }}'">
             <div style="position: absolute; top: -10px; right: -10px; width: 60px; height: 60px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
             <div style="display: flex; flex-direction: column; gap: 8px; position: relative; z-index: 1;">
                 <div style="width: 36px; height: 36px; background: rgba(255,255,255,0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.3);">

@@ -124,4 +124,37 @@ class BillingController extends Controller
             'message' => $status ? 'Terkirim' : 'Gagal Kirim'
         ]);
     }
+
+    /**
+     * Show billing overview for tenant admin
+     */
+    public function index()
+    {
+        $pesantren = app('tenant');
+        return view('admin.billing.index', compact('pesantren'));
+    }
+
+    /**
+     * Show available plans
+     */
+    public function plans()
+    {
+        return view('admin.billing.plans');
+    }
+
+    /**
+     * Show specific invoice/billing detail
+     */
+    public function show($id)
+    {
+        return view('admin.billing.show', compact('id'));
+    }
+
+    /**
+     * Process payment for billing
+     */
+    public function pay(Request $request, $id)
+    {
+        return back()->with('info', 'Sistem pembayaran sedang dalam pemeliharaan.');
+    }
 }

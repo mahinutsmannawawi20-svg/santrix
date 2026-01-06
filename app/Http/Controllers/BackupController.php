@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Santri;
 use App\Models\Syahriah;
@@ -77,6 +78,7 @@ class BackupController extends Controller
         }
 
         // Download and delete temp file
+        if (ob_get_level()) ob_end_clean();
         return response()->download($tempPath, $filename)->deleteFileAfterSend(true);
     }
 
@@ -196,7 +198,7 @@ class BackupController extends Controller
      */
     public function destroyUser(User $user)
     {
-        if ($user->id === auth()->id()) {
+        if ($user->id === Auth::id()) {
             return back()->with('error', 'Tidak dapat menghapus akun sendiri!');
         }
 
