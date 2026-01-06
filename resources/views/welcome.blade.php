@@ -6,695 +6,411 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- SEO Meta Tags -->
-    <title>Aplikasi Manajemen Pesantren Modern Terlengkap & Aman #1 | Santrix</title>
-    <meta name="description" content="Santrix adalah software manajemen pesantren berbasis web. Kelola data santri, SPP, keuangan, dan akademik secara otomatis. Aman, modern, dan terintegrasi WhatsApp Gateway. Coba Gratis!">
-    <meta name="keywords" content="aplikasi pesantren, sistem informasi pesantren, software administrasi pesantren, aplikasi keuangan pesantren, data santri online">
+    <title>SANTRIX - Sistem Manajemen Pesantren Modern | by Velora</title>
+    <meta name="description" content="Santrix adalah platform SaaS manajemen pesantren modern. Kelola data santri, SPP, keuangan, dan akademik secara otomatis. Aman, modern, dan terintegrasi.">
+    <meta name="keywords" content="aplikasi pesantren, sistem informasi pesantren, software administrasi pesantren, aplikasi keuangan pesantren">
     <meta name="author" content="Velora">
     <meta name="robots" content="index, follow">
 
-    <!-- Open Graph / Facebook -->
+    <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://santrix.my.id/">
-    <meta property="og:title" content="Aplikasi Manajemen Pesantren Modern Terlengkap | Santrix">
-    <meta property="og:description" content="Kelola pesantren jadi lebih mudah dengan Santrix. Sistem SPP, Tabungan, dan Akademik dalam satu aplikasi terintegrasi.">
-    <meta property="og:image" content="{{ asset('images/seo-og-image.jpg') }}">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://santrix.my.id/">
-    <meta property="twitter:title" content="Aplikasi Manajemen Pesantren Modern Terlengkap | Santrix">
-    <meta property="twitter:description" content="Kelola pesantren jadi lebih mudah dengan Santrix. Sistem SPP, Tabungan, dan Akademik dalam satu aplikasi terintegrasi.">
-    <meta property="twitter:image" content="{{ asset('images/seo-og-image.jpg') }}">
+    <meta property="og:title" content="SANTRIX - Sistem Manajemen Pesantren Modern">
+    <meta property="og:description" content="Platform SaaS untuk mengelola administrasi pesantren dengan mudah dan modern.">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://santrix.my.id/">
 
-    <!-- Fonts -->
+    <!-- Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Feather Icons -->
-    <script src="https://unpkg.com/feather-icons"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <!-- Schema Markup -->
-    <!-- JSON-LD Removed temporarily to fix build error -->
-
-    <!-- Tailwind CSS (Vite) -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    
     <!-- AOS Animation -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
+    <!-- Tailwind via Vite -->
+    @vite(['resources/css/app.css'])
+
     <style>
-        body { font-family: 'Outfit', sans-serif; overflow-x: hidden; }
+        * { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
         .gradient-text {
-            background: linear-gradient(135deg, #1e293b 0%, #4f46e5 100%);
+            background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        .blob {
-            position: absolute;
-            background: linear-gradient(180deg, rgba(79, 70, 229, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%);
-            filter: blur(80px);
-            z-index: -1;
-            border-radius: 50%;
+        .glass {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.1);
         }
     </style>
 </head>
-<body class="bg-white text-slate-800 antialiased">
+<body class="bg-slate-950 text-white antialiased" x-data="{ mobileMenu: false }">
 
     <!-- Navbar -->
-    <nav class="fixed w-full z-50 transition-all duration-300 bg-white/90 backdrop-blur-md border-b border-slate-100" id="navbar">
+    <nav class="fixed top-0 left-0 right-0 z-50 glass transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center py-4">
-                <!-- Logo Text -->
-                <a href="#" class="flex flex-col">
-                    <span class="text-2xl font-bold text-slate-900 tracking-tight leading-none">
-                        SANTRIX
-                    </span>
-                    <span class="text-[10px] font-medium text-slate-500 tracking-wider">
-                        by Velora
-                    </span>
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <a href="/" class="flex flex-col">
+                    <span class="text-2xl font-black text-white tracking-tight">SANTRIX</span>
+                    <span class="text-[10px] text-slate-400 tracking-widest">by Velora</span>
                 </a>
-                
-                <!-- Desktop Menu -->
+
+                <!-- Desktop Nav -->
                 <div class="hidden md:flex items-center gap-8">
-                    <a href="#home" class="text-sm font-medium text-slate-600 hover:text-indigo-600 transition-colors">Beranda</a>
-                    <a href="#features" class="text-sm font-medium text-slate-600 hover:text-indigo-600 transition-colors">Fitur</a>
-                    <a href="#pricing" class="text-sm font-medium text-slate-600 hover:text-indigo-600 transition-colors">Harga</a>
-                    <a href="#contact" class="text-sm font-medium text-slate-600 hover:text-indigo-600 transition-colors">Kontak</a>
+                    <a href="#features" class="text-sm font-medium text-slate-300 hover:text-cyan-400 transition-colors">Fitur</a>
+                    <a href="#pricing" class="text-sm font-medium text-slate-300 hover:text-cyan-400 transition-colors">Harga</a>
+                    <a href="#testimonials" class="text-sm font-medium text-slate-300 hover:text-cyan-400 transition-colors">Testimoni</a>
+                    <a href="#contact" class="text-sm font-medium text-slate-300 hover:text-cyan-400 transition-colors">Kontak</a>
                 </div>
 
-                <!-- CTA Button -->
+                <!-- CTA -->
                 <div class="hidden md:flex items-center gap-4">
-                    <a href="#pricing" class="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-full transition-all shadow-lg hover:shadow-indigo-500/30 transform hover:-translate-y-0.5">
-                        Daftar Sekarang
+                    <a href="{{ route('login') }}" class="text-sm text-slate-300 hover:text-white font-medium px-4 py-2">
+                        Login
+                    </a>
+                    <a href="{{ route('register.tenant') }}" class="px-6 py-2.5 bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-sm font-semibold rounded-lg shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 transition-all transform hover:-translate-y-0.5">
+                        Daftar Pesantren
                     </a>
                 </div>
 
                 <!-- Mobile Menu Button -->
-                <div class="md:hidden flex items-center">
-                    <button id="mobile-menu-btn" class="text-slate-600 hover:text-indigo-600 focus:outline-none">
-                        <i data-feather="menu" class="w-6 h-6"></i>
-                    </button>
-                </div>
+                <button @click="mobileMenu = !mobileMenu" class="md:hidden text-white p-2">
+                    <svg x-show="!mobileMenu" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                    <svg x-show="mobileMenu" x-cloak class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
             </div>
         </div>
 
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-slate-100 shadow-xl">
-            <div class="px-4 pt-2 pb-6 space-y-2">
-                <a href="#home" class="block px-3 py-2 text-base font-medium text-slate-600 hover:text-indigo-600 hover:bg-slate-50 rounded-md">Beranda</a>
-                <a href="#features" class="block px-3 py-2 text-base font-medium text-slate-600 hover:text-indigo-600 hover:bg-slate-50 rounded-md">Fitur</a>
-                <a href="#pricing" class="block px-3 py-2 text-base font-medium text-slate-600 hover:text-indigo-600 hover:bg-slate-50 rounded-md">Harga</a>
-                <a href="#contact" class="block px-3 py-2 text-base font-medium text-slate-600 hover:text-indigo-600 hover:bg-slate-50 rounded-md">Kontak</a>
-                <div class="pt-4 mt-4 border-t border-slate-100">
-                    <a href="#pricing" class="block w-full text-center px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700">
-                        Daftar Sekarang
-                    </a>
-                </div>
+        <div x-show="mobileMenu" x-cloak x-transition class="md:hidden glass border-t border-white/10">
+            <div class="px-4 py-6 space-y-3">
+                <a href="#features" @click="mobileMenu = false" class="block px-4 py-3 text-slate-300 hover:bg-white/5 rounded-lg font-medium">Fitur</a>
+                <a href="#pricing" @click="mobileMenu = false" class="block px-4 py-3 text-slate-300 hover:bg-white/5 rounded-lg font-medium">Harga</a>
+                <a href="#testimonials" @click="mobileMenu = false" class="block px-4 py-3 text-slate-300 hover:bg-white/5 rounded-lg font-medium">Testimoni</a>
+                <a href="#contact" @click="mobileMenu = false" class="block px-4 py-3 text-slate-300 hover:bg-white/5 rounded-lg font-medium">Kontak</a>
+                <hr class="border-white/10 my-4">
+                <a href="{{ route('login') }}" class="block px-4 py-3 text-slate-300 font-medium">Login</a>
+                <a href="{{ route('register.tenant') }}" class="block px-4 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-center font-semibold rounded-lg">
+                    Daftar Pesantren
+                </a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
-        <!-- Blobs -->
-        <div class="blob w-96 h-96 top-0 left-0 -translate-x-1/2 -translate-y-1/2 opacity-50"></div>
-        <div class="blob w-[500px] h-[500px] bottom-0 right-0 translate-x-1/3 translate-y-1/3 opacity-30 bg-pink-100"></div>
+    <section id="hero" class="relative min-h-screen flex items-center pt-20 overflow-hidden">
+        <!-- Background -->
+        <div class="absolute inset-0">
+            <div class="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900"></div>
+            <div class="absolute top-0 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-[128px]"></div>
+            <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-[128px]"></div>
+            <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0); background-size: 40px 40px;"></div>
+        </div>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-            <div data-aos="fade-up" data-aos-duration="1000">
-                <span class="inline-block py-1.5 px-4 rounded-full bg-indigo-50 text-indigo-600 text-xs font-bold tracking-wide uppercase mb-6 ring-1 ring-indigo-100">
-                    ✨ Solusi Pesantren Digital v2.0
-                </span>
-                <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-8 leading-tight text-slate-900">
-                    Sistem Manajemen <br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-600">Pesantren Modern</span>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div class="text-center max-w-4xl mx-auto">
+                <!-- Badge -->
+                <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full text-sm text-slate-300 mb-8" data-aos="fade-up">
+                    <span class="flex h-2 w-2 relative">
+                        <span class="animate-ping absolute h-2 w-2 rounded-full bg-cyan-400 opacity-75"></span>
+                        <span class="h-2 w-2 rounded-full bg-cyan-500"></span>
+                    </span>
+                    Dipercaya {{ number_format($stats['totalPesantren'] ?? 0) }}+ pesantren
+                </div>
+
+                <!-- Headline -->
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-tight mb-6" data-aos="fade-up" data-aos-delay="100">
+                    Sistem Manajemen Pesantren
+                    <span class="block gradient-text">Modern & Terintegrasi</span>
                 </h1>
-                <p class="mt-4 text-xl text-slate-500 max-w-2xl mx-auto mb-10 leading-relaxed">
-                    Platform all-in-one untuk manajemen Keuangan SPP, Akademik, dan Laporan Yayasan. Terintegrasi dengan Payment Gateway & WhatsApp Gateway.
+
+                <p class="text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed" data-aos="fade-up" data-aos-delay="200">
+                    Platform SaaS untuk mengelola administrasi santri, keuangan, dan pendidikan pesantren dalam satu sistem yang powerful.
                 </p>
-            </div>
-            
-            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">
-                <a href="https://wa.me/6281320442174?text=Halo%20Admin%20Santrix,%20saya%20ingin%20konsultasi%20tentang%20aplikasi%20pesantren." target="_blank" class="w-full sm:w-auto px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white text-lg font-bold rounded-full shadow-xl hover:shadow-indigo-500/40 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2">
-                    <i data-feather="message-circle" class="w-5 h-5"></i>
-                    Mulai Konsultasi
-                </a>
-                <a href="#features" class="w-full sm:w-auto px-8 py-4 bg-white hover:bg-slate-50 text-slate-700 text-lg font-bold rounded-full border border-slate-200 shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-2 group">
-                    <i data-feather="info" class="w-5 h-5 text-indigo-600 group-hover:scale-110 transition-transform"></i>
-                    Pelajari Dulu
-                </a>
-            </div>
 
-            <!-- Stats (Hardcoded) -->
-            <div class="mt-16 grid grid-cols-2 lg:grid-cols-3 gap-8 max-w-4xl mx-auto border-t border-slate-100 pt-10" data-aos="fade-up" data-aos-delay="400">
-                <div class="text-center">
-                    <div class="text-3xl font-bold text-slate-800">120+</div>
-                    <div class="text-sm text-slate-500 font-medium">Pesantren Bergabung</div>
+                <!-- CTA Buttons -->
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16" data-aos="fade-up" data-aos-delay="300">
+                    <a href="{{ route('register.tenant') }}" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-bold rounded-xl shadow-xl shadow-cyan-500/25 hover:shadow-cyan-500/40 transition-all transform hover:-translate-y-1">
+                        Daftar Pesantren
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                    </a>
+                    <a href="{{ route('login') }}" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/5 text-white font-bold rounded-xl border border-white/10 hover:bg-white/10 transition-colors">
+                        Login
+                    </a>
                 </div>
-                <div class="text-center">
-                    <div class="text-3xl font-bold text-slate-800">15.000+</div>
-                    <div class="text-sm text-slate-500 font-medium">Santri Dikelola</div>
-                </div>
-                <div class="text-center col-span-2 lg:col-span-1">
-                    <div class="text-3xl font-bold text-slate-800">99.9%</div>
-                    <div class="text-sm text-slate-500 font-medium">Uptime Server</div>
-                </div>
-            </div>
-            
-            <!-- Dashboard Preview Carousel -->
-            <div class="mt-20 relative max-w-6xl mx-auto" data-aos="zoom-in-up" data-aos-duration="1000" data-aos-delay="300">
-                <div style="position: absolute; inset: 0; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); filter: blur(60px); opacity: 0.15; z-index: -1; border-radius: 50%;"></div>
-                
-                <!-- Image Container -->
-                <div style="background: white; border-radius: 24px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); overflow: hidden; border: 4px solid rgba(241, 245, 249, 0.8);">
-                    
-                    <!-- Carousel Images -->
-                    <div id="carouselImages" style="position: relative; width: 100%; padding-bottom: 52%; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); overflow: hidden;">
-                        
-                        <!-- Slide 1: Admin -->
-                        <div class="slide-image" data-index="0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 1; transition: opacity 0.6s ease-in-out;">
-                            <img src="{{ asset('images/preview-admin.png') }}" alt="Dashboard Admin" style="width: 100%; height: 100%; object-fit: cover; object-position: top center;">
-                        </div>
-                        
-                        <!-- Slide 2: Bendahara -->
-                        <div class="slide-image" data-index="1" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.6s ease-in-out;">
-                            <img src="{{ asset('images/preview-bendahara.png') }}" alt="Dashboard Bendahara" style="width: 100%; height: 100%; object-fit: cover; object-position: top center;">
-                        </div>
-                        
-                        <!-- Slide 3: Sekretaris -->
-                        <div class="slide-image" data-index="2" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.6s ease-in-out;">
-                            <img src="{{ asset('images/preview-sekretaris.png') }}" alt="Dashboard Sekretaris" style="width: 100%; height: 100%; object-fit: cover; object-position: top center;">
-                        </div>
-                        
-                        <!-- Slide 4: Akademik -->
-                        <div class="slide-image" data-index="3" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.6s ease-in-out;">
-                            <img src="{{ asset('images/preview-akademik.png') }}" alt="Rekap Nilai" style="width: 100%; height: 100%; object-fit: cover; object-position: top center;">
-                        </div>
-                        
-                        <!-- Slide 5: Login -->
-                        <div class="slide-image" data-index="4" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.6s ease-in-out;">
-                            <img src="{{ asset('images/preview-login.png') }}" alt="Login Page" style="width: 100%; height: 100%; object-fit: cover; object-position: center center;">
-                        </div>
 
-                        <!-- Navigation Arrows -->
-                        <button id="prevBtn" style="position: absolute; top: 50%; left: 20px; transform: translateY(-50%); width: 56px; height: 56px; background: rgba(255,255,255,0.95); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: none; cursor: pointer; box-shadow: 0 10px 25px rgba(0,0,0,0.15); z-index: 10; transition: all 0.3s ease;">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                        </button>
-                        <button id="nextBtn" style="position: absolute; top: 50%; right: 20px; transform: translateY(-50%); width: 56px; height: 56px; background: rgba(255,255,255,0.95); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: none; cursor: pointer; box-shadow: 0 10px 25px rgba(0,0,0,0.15); z-index: 10; transition: all 0.3s ease;">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                        </button>
+                <!-- Stats -->
+                <div class="grid grid-cols-3 gap-6 max-w-lg mx-auto" data-aos="fade-up" data-aos-delay="400">
+                    <div class="text-center p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-colors">
+                        <div class="text-2xl sm:text-3xl font-black text-white">{{ number_format($stats['totalPesantren'] ?? 0) }}+</div>
+                        <div class="text-sm text-slate-400">Pesantren</div>
                     </div>
-
-                    <!-- Caption Card Below Image -->
-                    <div style="background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4338ca 100%); padding: 32px 40px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px;">
-                        
-                        <!-- Text Content -->
-                        <div style="flex: 1; min-width: 280px;">
-                            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
-                                <div id="captionIcon" style="width: 44px; height: 44px; background: rgba(255,255,255,0.15); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-                                </div>
-                                <h3 id="captionTitle" style="color: white; font-size: 1.5rem; font-weight: 700; margin: 0;">Dashboard Admin & Yayasan</h3>
-                            </div>
-                            <p id="captionDesc" style="color: rgba(199, 210, 254, 0.9); font-size: 1rem; margin: 0; line-height: 1.6; max-width: 600px;">Kontrol penuh sistem dengan manajemen user, backup data otomatis, dan monitoring aktivitas real-time.</p>
-                        </div>
-                        
-                        <!-- Indicators -->
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <button class="dot-indicator" data-slide="0" style="width: 40px; height: 8px; border-radius: 10px; background: white; border: none; cursor: pointer; transition: all 0.3s ease;"></button>
-                            <button class="dot-indicator" data-slide="1" style="width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.4); border: none; cursor: pointer; transition: all 0.3s ease;"></button>
-                            <button class="dot-indicator" data-slide="2" style="width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.4); border: none; cursor: pointer; transition: all 0.3s ease;"></button>
-                            <button class="dot-indicator" data-slide="3" style="width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.4); border: none; cursor: pointer; transition: all 0.3s ease;"></button>
-                            <button class="dot-indicator" data-slide="4" style="width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.4); border: none; cursor: pointer; transition: all 0.3s ease;"></button>
-                        </div>
+                    <div class="text-center p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-colors">
+                        <div class="text-2xl sm:text-3xl font-black text-white">{{ number_format($stats['totalSantri'] ?? 0) }}+</div>
+                        <div class="text-sm text-slate-400">Santri</div>
+                    </div>
+                    <div class="text-center p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-colors">
+                        <div class="text-2xl sm:text-3xl font-black text-white">{{ number_format($stats['totalUsers'] ?? 0) }}+</div>
+                        <div class="text-sm text-slate-400">Pengguna</div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <script>
-                (function() {
-                    const slideData = [
-                        { title: 'Dashboard Admin & Yayasan', desc: 'Kontrol penuh sistem dengan manajemen user, backup data otomatis, dan monitoring aktivitas real-time.' },
-                        { title: 'Keuangan & SPP', desc: 'Transparansi arus kas, pemasukan SPP Syahriah, dan monitoring tagihan santri yang akurat.' },
-                        { title: 'Database Santri Terpadu', desc: 'Kelola data diri, asrama, mutasi, dan administrasi kesantrian dalam satu pintu.' },
-                        { title: 'Akademik & E-Rapor Digital', desc: 'Input nilai ujian, hitung rata-rata otomatis, dan cetak rapor santri dengan mudah.' },
-                        { title: 'Sistem Akses Multi-Role', desc: 'Keamanan terjamin dengan pemisahan hak akses spesifik untuk setiap jabatan.' }
-                    ];
-                    
-                    let current = 0;
-                    let autoSlideTimer;
-                    const totalSlides = slideData.length;
-                    
-                    const images = document.querySelectorAll('.slide-image');
-                    const dots = document.querySelectorAll('.dot-indicator');
-                    const titleEl = document.getElementById('captionTitle');
-                    const descEl = document.getElementById('captionDesc');
-                    const prevBtn = document.getElementById('prevBtn');
-                    const nextBtn = document.getElementById('nextBtn');
-                    
-                    function updateCarousel() {
-                        // Update images
-                        images.forEach((img, i) => {
-                            img.style.opacity = (i === current) ? '1' : '0';
-                        });
-                        
-                        // Update dots
-                        dots.forEach((dot, i) => {
-                            if (i === current) {
-                                dot.style.width = '40px';
-                                dot.style.borderRadius = '10px';
-                                dot.style.background = 'white';
-                            } else {
-                                dot.style.width = '8px';
-                                dot.style.borderRadius = '50%';
-                                dot.style.background = 'rgba(255,255,255,0.4)';
-                            }
-                        });
-                        
-                        // Update caption
-                        titleEl.textContent = slideData[current].title;
-                        descEl.textContent = slideData[current].desc;
-                    }
-                    
-                    function goTo(index) {
-                        current = (index + totalSlides) % totalSlides;
-                        updateCarousel();
-                        resetAutoSlide();
-                    }
-                    
-                    function next() { goTo(current + 1); }
-                    function prev() { goTo(current - 1); }
-                    
-                    function startAutoSlide() {
-                        autoSlideTimer = setInterval(next, 5000);
-                    }
-                    
-                    function resetAutoSlide() {
-                        clearInterval(autoSlideTimer);
-                        startAutoSlide();
-                    }
-                    
-                    // Event listeners
-                    prevBtn.addEventListener('click', prev);
-                    nextBtn.addEventListener('click', next);
-                    dots.forEach((dot, i) => {
-                        dot.addEventListener('click', () => goTo(i));
-                    });
-                    
-                    // Hover effects
-                    prevBtn.addEventListener('mouseenter', () => { prevBtn.style.transform = 'translateY(-50%) scale(1.1)'; });
-                    prevBtn.addEventListener('mouseleave', () => { prevBtn.style.transform = 'translateY(-50%) scale(1)'; });
-                    nextBtn.addEventListener('mouseenter', () => { nextBtn.style.transform = 'translateY(-50%) scale(1.1)'; });
-                    nextBtn.addEventListener('mouseleave', () => { nextBtn.style.transform = 'translateY(-50%) scale(1)'; });
-                    
-                    // Initialize
-                    document.addEventListener('DOMContentLoaded', () => {
-                        updateCarousel();
-                        startAutoSlide();
-                    });
-                })();
-            </script>
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+            <div class="w-6 h-10 border-2 border-white/20 rounded-full flex justify-center pt-2">
+                <div class="w-1 h-2 bg-cyan-400 rounded-full"></div>
+            </div>
         </div>
     </section>
 
     <!-- Features Section -->
-    <section id="features" class="py-24 bg-white relative overflow-hidden">
-        <!-- Decoration -->
-        <div class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-96 h-96 bg-indigo-50 rounded-full blur-3xl opacity-50"></div>
-        <div class="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-96 h-96 bg-violet-50 rounded-full blur-3xl opacity-50"></div>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center max-w-4xl mx-auto mb-16" data-aos="fade-up">
-                <h2 class="text-3xl md:text-4xl font-extrabold mb-4 text-slate-900 tracking-tight">
-                    Dashboard Profesional
-                </h2>
-                <p class="text-slate-600 text-lg">
-                    Akses terpisah untuk setiap divisi. Lebih fokus, lebih aman.
-                </p>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-8">
-                
-                <!-- 1. Sekretaris & TU -->
-                <a href="{{ route('demo.start', ['type' => 'sekretaris']) }}" class="group block">
-                    <div class="relative bg-gradient-to-br from-violet-50 via-white to-indigo-50 rounded-3xl border border-violet-100/50 shadow-sm hover:shadow-xl hover:shadow-violet-100/50 transition-all duration-500 overflow-hidden p-8">
-                        <!-- Decorative Pattern -->
-                        <div class="absolute top-0 right-0 w-32 h-32 opacity-5">
-                            <svg viewBox="0 0 100 100" class="w-full h-full fill-violet-900">
-                                <pattern id="islamic1" patternUnits="userSpaceOnUse" width="20" height="20">
-                                    <circle cx="10" cy="10" r="2"/>
-                                </pattern>
-                                <rect width="100" height="100" fill="url(#islamic1)"/>
-                            </svg>
-                        </div>
-                        
-                        <div class="flex items-start gap-5">
-                            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-violet-200 group-hover:scale-110 transition-transform duration-300">
-                                <span class="text-3xl">👥</span>
-                            </div>
-                            <div class="flex-1">
-                                <h3 class="text-xl font-bold text-slate-800 mb-1 group-hover:text-violet-700 transition-colors">Sekretaris & TU</h3>
-                                <p class="text-violet-600/80 text-sm font-medium mb-4">Administrasi & Data Santri</p>
-                                <div class="flex flex-wrap gap-2">
-                                    <span class="px-3 py-1 bg-white/80 text-xs font-medium text-slate-600 rounded-full border border-violet-100">Data Santri</span>
-                                    <span class="px-3 py-1 bg-white/80 text-xs font-medium text-slate-600 rounded-full border border-violet-100">Asrama</span>
-                                    <span class="px-3 py-1 bg-white/80 text-xs font-medium text-slate-600 rounded-full border border-violet-100">Mutasi</span>
-                                    <span class="px-3 py-1 bg-white/80 text-xs font-medium text-slate-600 rounded-full border border-violet-100">Alumni</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="mt-6 pt-5 border-t border-violet-100/50 flex items-center justify-between">
-                            <span class="text-sm text-slate-500">Klik untuk mencoba demo</span>
-                            <div class="flex items-center gap-2 text-violet-600 font-semibold group-hover:translate-x-1 transition-transform">
-                                Masuk <span class="text-lg">→</span>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- 2. Bendahara -->
-                <a href="{{ route('demo.start', ['type' => 'bendahara']) }}" class="group block">
-                    <div class="relative bg-gradient-to-br from-emerald-50 via-white to-teal-50 rounded-3xl border border-emerald-100/50 shadow-sm hover:shadow-xl hover:shadow-emerald-100/50 transition-all duration-500 overflow-hidden p-8">
-                        <!-- Decorative Pattern -->
-                        <div class="absolute top-0 right-0 w-32 h-32 opacity-5">
-                            <svg viewBox="0 0 100 100" class="w-full h-full fill-emerald-900">
-                                <pattern id="islamic2" patternUnits="userSpaceOnUse" width="20" height="20">
-                                    <circle cx="10" cy="10" r="2"/>
-                                </pattern>
-                                <rect width="100" height="100" fill="url(#islamic2)"/>
-                            </svg>
-                        </div>
-                        
-                        <div class="flex items-start gap-5">
-                            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-lg shadow-emerald-200 group-hover:scale-110 transition-transform duration-300">
-                                <span class="text-3xl">💰</span>
-                            </div>
-                            <div class="flex-1">
-                                <h3 class="text-xl font-bold text-slate-800 mb-1 group-hover:text-emerald-700 transition-colors">Bendahara</h3>
-                                <p class="text-emerald-600/80 text-sm font-medium mb-4">Keuangan & Syahriah</p>
-                                <div class="flex flex-wrap gap-2">
-                                    <span class="px-3 py-1 bg-white/80 text-xs font-medium text-slate-600 rounded-full border border-emerald-100">SPP</span>
-                                    <span class="px-3 py-1 bg-white/80 text-xs font-medium text-slate-600 rounded-full border border-emerald-100">Pemasukan</span>
-                                    <span class="px-3 py-1 bg-white/80 text-xs font-medium text-slate-600 rounded-full border border-emerald-100">Pengeluaran</span>
-                                    <span class="px-3 py-1 bg-white/80 text-xs font-medium text-slate-600 rounded-full border border-emerald-100">Gaji</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="mt-6 pt-5 border-t border-emerald-100/50 flex items-center justify-between">
-                            <span class="text-sm text-slate-500">Klik untuk mencoba demo</span>
-                            <div class="flex items-center gap-2 text-emerald-600 font-semibold group-hover:translate-x-1 transition-transform">
-                                Masuk <span class="text-lg">→</span>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- 3. Pendidikan -->
-                <a href="{{ route('demo.start', ['type' => 'pendidikan']) }}" class="group block">
-                    <div class="relative bg-gradient-to-br from-sky-50 via-white to-blue-50 rounded-3xl border border-sky-100/50 shadow-sm hover:shadow-xl hover:shadow-sky-100/50 transition-all duration-500 overflow-hidden p-8">
-                        <!-- Decorative Pattern -->
-                        <div class="absolute top-0 right-0 w-32 h-32 opacity-5">
-                            <svg viewBox="0 0 100 100" class="w-full h-full fill-sky-900">
-                                <pattern id="islamic3" patternUnits="userSpaceOnUse" width="20" height="20">
-                                    <circle cx="10" cy="10" r="2"/>
-                                </pattern>
-                                <rect width="100" height="100" fill="url(#islamic3)"/>
-                            </svg>
-                        </div>
-                        
-                        <div class="flex items-start gap-5">
-                            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-500 to-blue-600 flex items-center justify-center shadow-lg shadow-sky-200 group-hover:scale-110 transition-transform duration-300">
-                                <span class="text-3xl">📚</span>
-                            </div>
-                            <div class="flex-1">
-                                <h3 class="text-xl font-bold text-slate-800 mb-1 group-hover:text-sky-700 transition-colors">Pendidikan</h3>
-                                <p class="text-sky-600/80 text-sm font-medium mb-4">Akademik & Tahfidz</p>
-                                <div class="flex flex-wrap gap-2">
-                                    <span class="px-3 py-1 bg-white/80 text-xs font-medium text-slate-600 rounded-full border border-sky-100">Nilai</span>
-                                    <span class="px-3 py-1 bg-white/80 text-xs font-medium text-slate-600 rounded-full border border-sky-100">Absensi</span>
-                                    <span class="px-3 py-1 bg-white/80 text-xs font-medium text-slate-600 rounded-full border border-sky-100">Hafalan</span>
-                                    <span class="px-3 py-1 bg-white/80 text-xs font-medium text-slate-600 rounded-full border border-sky-100">Rapor</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="mt-6 pt-5 border-t border-sky-100/50 flex items-center justify-between">
-                            <span class="text-sm text-slate-500">Klik untuk mencoba demo</span>
-                            <div class="flex items-center gap-2 text-sky-600 font-semibold group-hover:translate-x-1 transition-transform">
-                                Masuk <span class="text-lg">→</span>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- 4. Admin & Yayasan -->
-                <a href="{{ route('demo.start', ['type' => 'admin']) }}" class="group block">
-                    <div class="relative bg-gradient-to-br from-slate-50 via-white to-gray-50 rounded-3xl border border-slate-200/50 shadow-sm hover:shadow-xl hover:shadow-slate-100/50 transition-all duration-500 overflow-hidden p-8">
-                        <!-- Decorative Pattern -->
-                        <div class="absolute top-0 right-0 w-32 h-32 opacity-5">
-                            <svg viewBox="0 0 100 100" class="w-full h-full fill-slate-900">
-                                <pattern id="islamic4" patternUnits="userSpaceOnUse" width="20" height="20">
-                                    <circle cx="10" cy="10" r="2"/>
-                                </pattern>
-                                <rect width="100" height="100" fill="url(#islamic4)"/>
-                            </svg>
-                        </div>
-                        
-                        <div class="flex items-start gap-5">
-                            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-slate-600 to-slate-800 flex items-center justify-center shadow-lg shadow-slate-300 group-hover:scale-110 transition-transform duration-300">
-                                <span class="text-3xl">🛡️</span>
-                            </div>
-                            <div class="flex-1">
-                                <h3 class="text-xl font-bold text-slate-800 mb-1 group-hover:text-slate-900 transition-colors">Admin & Yayasan</h3>
-                                <p class="text-slate-500 text-sm font-medium mb-4">Kontrol & Pengaturan</p>
-                                <div class="flex flex-wrap gap-2">
-                                    <span class="px-3 py-1 bg-white/80 text-xs font-medium text-slate-600 rounded-full border border-slate-200">User</span>
-                                    <span class="px-3 py-1 bg-white/80 text-xs font-medium text-slate-600 rounded-full border border-slate-200">Backup</span>
-                                    <span class="px-3 py-1 bg-white/80 text-xs font-medium text-slate-600 rounded-full border border-slate-200">Branding</span>
-                                    <span class="px-3 py-1 bg-white/80 text-xs font-medium text-slate-600 rounded-full border border-slate-200">WhatsApp</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="mt-6 pt-5 border-t border-slate-100/50 flex items-center justify-between">
-                            <span class="text-sm text-slate-500">Klik untuk mencoba demo</span>
-                            <div class="flex items-center gap-2 text-slate-700 font-semibold group-hover:translate-x-1 transition-transform">
-                                Masuk <span class="text-lg">→</span>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-
-
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section id="testimonials" class="py-24 bg-slate-50 relative overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center max-w-3xl mx-auto mb-16" data-aos="fade-up">
-                <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-100 text-indigo-700 text-xs font-bold uppercase tracking-wide mb-4">
-                    <i data-feather="message-circle" class="w-3 h-3"></i> Kata Mereka
-                </span>
-                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-slate-900 leading-tight">
-                    Dipercaya oleh <span class="text-indigo-600">Pesantren Modern</span>
-                </h2>
-                <p class="text-slate-500 text-lg">
-                    Dengar langsung pengalaman para pengasuh dan pengelola pesantren yang telah beralih ke digital.
-                </p>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Testimoni 1 -->
-                <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-slate-100" data-aos="fade-up" data-aos-delay="100">
-                    <div class="flex items-center gap-4 mb-6">
-                        <div class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold text-xl">A</div>
-                        <div>
-                            <h4 class="font-bold text-slate-900">KH. Abdullah</h4>
-                            <p class="text-xs text-slate-500">Pimp. Ponpes Al-Hidayah</p>
-                        </div>
-                    </div>
-                    <p class="text-slate-600 italic">
-                        "Alhamdulillah, sejak pakai Santrix, laporan keuangan jadi transparan. Wali santri juga senang ada notifikasi WA otomatis saat terima pembayaran."
-                    </p>
-                    <div class="flex text-amber-400 mt-4 gap-1">
-                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                    </div>
-                </div>
-
-                <!-- Testimoni 2 -->
-                <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-slate-100" data-aos="fade-up" data-aos-delay="200">
-                    <div class="flex items-center gap-4 mb-6">
-                        <div class="w-12 h-12 rounded-full bg-violet-100 flex items-center justify-center text-violet-600 font-bold text-xl">S</div>
-                        <div>
-                            <h4 class="font-bold text-slate-900">Ust. Syamsul</h4>
-                            <p class="text-xs text-slate-500">Kepala Bag. Kesantrian</p>
-                        </div>
-                    </div>
-                    <p class="text-slate-600 italic">
-                        "Fitur setor hafalan (Talaran) sangat membantu ustadz memantau perkembangan santri. Data tersimpan rapi per tahun ajaran. Mantap!"
-                    </p>
-                    <div class="flex text-amber-400 mt-4 gap-1">
-                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                    </div>
-                </div>
-
-                <!-- Testimoni 3 -->
-                <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-slate-100" data-aos="fade-up" data-aos-delay="300">
-                    <div class="flex items-center gap-4 mb-6">
-                        <div class="w-12 h-12 rounded-full bg-pink-100 flex items-center justify-center text-pink-600 font-bold text-xl">L</div>
-                        <div>
-                            <h4 class="font-bold text-slate-900">Ibu Laila</h4>
-                            <p class="text-xs text-slate-500">Admin Tata Usaha</p>
-                        </div>
-                    </div>
-                    <p class="text-slate-600 italic">
-                        "Support tim-nya responsif banget. Awalnya bingung migrasi data dari Excel, tapi dibantu sampai tuntas. Sekarang kerjaan TU jadi lebih cepat."
-                    </p>
-                    <div class="flex text-amber-400 mt-4 gap-1">
-                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pricing Section (HARDCODED - NO BLADE LOGIC - PREVENTS 500 ERROR) -->
-    <section id="pricing" class="py-24 bg-white relative">
-        <div class="absolute inset-0 bg-slate-50 skew-y-3 transform origin-bottom-left -z-10 h-1/2 bottom-0"></div>
+    <section id="features" class="py-24 bg-slate-900">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16" data-aos="fade-up">
-                <span class="text-indigo-600 font-bold tracking-wide uppercase text-sm">Biaya Langganan</span>
-                <h2 class="text-3xl md:text-4xl font-bold mt-2 mb-4 text-slate-900">Investasi Terbaik untuk Pesantren</h2>
-                <p class="text-slate-500 text-lg">Harga transparan, sesuai dengan kebutuhan pesantren Anda.</p>
+                <span class="inline-block px-4 py-1.5 bg-cyan-500/10 text-cyan-400 text-sm font-medium rounded-full border border-cyan-500/20 mb-4">
+                    Fitur Modular
+                </span>
+                <h2 class="text-3xl sm:text-4xl font-black text-white mb-4">
+                    Tiga Modul Terintegrasi
+                </h2>
+                <p class="text-lg text-slate-400">
+                    Akses terpisah untuk setiap divisi. Lebih fokus, lebih aman, lebih produktif.
+                </p>
             </div>
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
-                @foreach($plans as $plan)
-                <div class="relative bg-white rounded-3xl p-8 border {{ $plan->is_featured ? 'border-2 border-indigo-600 shadow-2xl scale-105 z-10' : 'border-slate-100 shadow-lg' }} flex flex-col h-full transition-transform hover:-translate-y-2" data-aos="fade-up">
-                    
-                    @if($plan->is_featured)
-                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                        <span class="bg-indigo-600 text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wide shadow-lg">Paling Laris</span>
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- Sekretaris -->
+                <div class="group bg-slate-800/50 rounded-2xl p-8 border border-white/5 hover:border-cyan-500/30 transition-all" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center text-white mb-6 shadow-lg">
+                        <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Sekretaris</h3>
+                    <p class="text-slate-400 leading-relaxed mb-4">Kelola data santri, asrama, mutasi, perizinan, dan administrasi lengkap.</p>
+                    <a href="{{ route('demo.start', ['type' => 'sekretaris']) }}" class="inline-flex items-center gap-2 text-cyan-400 font-medium group-hover:gap-3 transition-all">
+                        Coba Demo <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                    </a>
+                </div>
+
+                <!-- Pendidikan -->
+                <div class="group bg-slate-800/50 rounded-2xl p-8 border border-white/5 hover:border-cyan-500/30 transition-all" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-14 h-14 bg-gradient-to-br from-cyan-500 to-teal-500 rounded-xl flex items-center justify-center text-white mb-6 shadow-lg">
+                        <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Pendidikan</h3>
+                    <p class="text-slate-400 leading-relaxed mb-4">Nilai, absensi, hafalan Al-Quran, rapor digital, dan jadwal pelajaran.</p>
+                    <a href="{{ route('demo.start', ['type' => 'pendidikan']) }}" class="inline-flex items-center gap-2 text-cyan-400 font-medium group-hover:gap-3 transition-all">
+                        Coba Demo <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                    </a>
+                </div>
+
+                <!-- Bendahara -->
+                <div class="group bg-slate-800/50 rounded-2xl p-8 border border-white/5 hover:border-cyan-500/30 transition-all" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-14 h-14 bg-gradient-to-br from-teal-500 to-emerald-500 rounded-xl flex items-center justify-center text-white mb-6 shadow-lg">
+                        <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Bendahara</h3>
+                    <p class="text-slate-400 leading-relaxed mb-4">Pembayaran SPP, pemasukan, pengeluaran, gaji, dan laporan keuangan.</p>
+                    <a href="{{ route('demo.start', ['type' => 'bendahara']) }}" class="inline-flex items-center gap-2 text-cyan-400 font-medium group-hover:gap-3 transition-all">
+                        Coba Demo <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-24 bg-slate-950">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16" data-aos="fade-up">
+                <span class="inline-block px-4 py-1.5 bg-emerald-500/10 text-emerald-400 text-sm font-medium rounded-full border border-emerald-500/20 mb-4">
+                    Harga Transparan
+                </span>
+                <h2 class="text-3xl sm:text-4xl font-black text-white mb-4">
+                    Pilih Paket Sesuai Kebutuhan
+                </h2>
+                <p class="text-lg text-slate-400">
+                    Investasi kecil untuk efisiensi besar dalam pengelolaan pesantren.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                @foreach($packages as $index => $pkg)
+                <div class="relative bg-slate-800/50 rounded-2xl overflow-hidden border {{ $index === 1 ? 'border-cyan-500 ring-1 ring-cyan-500/50' : 'border-white/10' }} hover:-translate-y-2 transition-all duration-300" data-aos="fade-up" data-aos-delay="{{ ($index + 1) * 100 }}">
+                    @if($index === 1)
+                    <div class="absolute top-0 left-0 right-0 bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-xs font-bold text-center py-1.5">
+                        REKOMENDASI
                     </div>
                     @endif
-
-                    <h3 class="text-xl font-bold text-slate-900 mb-2">{{ $plan->name }}</h3>
-                    
-                    <div class="flex flex-col mb-4">
-                         @if($plan->discount_price)
-                            <span class="text-sm text-red-500 line-through font-medium">{{ $plan->formatted_discount_price }}</span>
-                         @endif
-                         <div class="flex items-baseline gap-1">
-                            <span class="text-3xl font-extrabold text-slate-900">{{ $plan->formatted_price }}</span>
-                            <span class="text-slate-500 font-medium">/ {{ $plan->duration_months }} bulan</span>
+                    <div class="p-6 {{ $index === 1 ? 'pt-10' : '' }}">
+                        <h3 class="text-xl font-bold text-white mb-2">{{ $pkg->name }}</h3>
+                        <div class="text-3xl font-black text-cyan-400 mb-1">
+                            Rp {{ number_format($pkg->price, 0, ',', '.') }}
                         </div>
-                    </div>
+                        <div class="text-sm text-slate-400 mb-6">/ {{ $pkg->duration_months }} bulan</div>
 
-                    <p class="text-slate-500 mb-6 text-sm">{{ $plan->description }}</p>
-                    
-                    <ul class="space-y-3 mb-8 flex-1">
-                        @if(isset($plan->features) && is_array($plan->features))
-                            @foreach($plan->features as $feature)
-                                @if(isset($feature['included']) && $feature['included'])
-                                <li class="flex items-start gap-3 text-sm text-slate-700">
-                                    <i data-feather="check-circle" class="w-5 h-5 text-indigo-600 shrink-0"></i> {{ $feature['name'] }}
+                        <ul class="space-y-3 mb-6">
+                            <li class="flex items-center gap-2 text-slate-300 text-sm">
+                                <svg class="w-5 h-5 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                                Maks {{ number_format($pkg->max_santri) }} Santri
+                            </li>
+                            <li class="flex items-center gap-2 text-slate-300 text-sm">
+                                <svg class="w-5 h-5 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                                Maks {{ $pkg->max_users }} User
+                            </li>
+                            @php
+                                $features = is_string($pkg->features) ? json_decode($pkg->features, true) : $pkg->features;
+                            @endphp
+                            @if(is_array($features))
+                                @foreach(array_slice($features, 0, 3) as $feature)
+                                <li class="flex items-center gap-2 text-slate-300 text-sm">
+                                    <svg class="w-5 h-5 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                                    {{ is_array($feature) ? ($feature['name'] ?? '') : $feature }}
                                 </li>
-                                @endif
-                            @endforeach
-                        @endif
-                    </ul>
+                                @endforeach
+                            @endif
+                        </ul>
 
-                    <a href="{{ route('register.tenant', ['package' => $plan->slug]) }}" class="w-full py-4 rounded-xl font-bold text-center transition-all {{ $plan->is_featured ? 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg' : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200' }}">
-                        Pilih Paket
-                    </a>
+                        <a href="{{ route('register.tenant') }}" class="block w-full py-3 text-center font-bold rounded-xl transition-all {{ $index === 1 ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg shadow-cyan-500/25' : 'bg-white/5 text-white hover:bg-white/10 border border-white/10' }}">
+                            Pilih Paket
+                        </a>
+                    </div>
                 </div>
                 @endforeach
             </div>
         </div>
     </section>
 
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-24 bg-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16" data-aos="fade-up">
+                <span class="inline-block px-4 py-1.5 bg-amber-500/10 text-amber-400 text-sm font-medium rounded-full border border-amber-500/20 mb-4">
+                    Testimoni
+                </span>
+                <h2 class="text-3xl sm:text-4xl font-black text-white mb-4">
+                    Dipercaya Pesantren Nusantara
+                </h2>
+                <p class="text-lg text-slate-400">
+                    Cerita sukses dari pesantren yang telah menggunakan Santrix.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                @php
+                    $testimonials = [
+                        ['name' => 'Ust. Ahmad Fauzi', 'role' => 'Mudir PP. Riyadlul Huda', 'text' => 'Santrix sangat membantu mengelola data santri dan keuangan. Semuanya jadi lebih rapi.', 'avatar' => 'AF'],
+                        ['name' => 'Ust. Muhammad Rizki', 'role' => 'Kepala TU PP. Darul Ulum', 'text' => 'Fitur laporan otomatis menghemat waktu kami. Tidak perlu input manual setiap bulan.', 'avatar' => 'MR'],
+                        ['name' => 'Ustadzah Siti Aminah', 'role' => 'Bendahara PP. Nurul Hikmah', 'text' => 'Tracking pembayaran SPP jadi mudah. Wali santri bisa cek tagihan via WhatsApp.', 'avatar' => 'SA'],
+                    ];
+                @endphp
+                @foreach($testimonials as $index => $t)
+                <div class="bg-slate-800/50 rounded-2xl p-8 border border-white/5 hover:-translate-y-2 transition-all duration-300" data-aos="fade-up" data-aos-delay="{{ ($index + 1) * 100 }}">
+                    <div class="flex gap-1 mb-4">
+                        @for($i = 0; $i < 5; $i++)
+                        <svg class="w-5 h-5 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                        @endfor
+                    </div>
+                    <p class="text-slate-300 mb-6 leading-relaxed">"{{ $t['text'] }}"</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                            {{ $t['avatar'] }}
+                        </div>
+                        <div>
+                            <div class="font-semibold text-white text-sm">{{ $t['name'] }}</div>
+                            <div class="text-xs text-slate-400">{{ $t['role'] }}</div>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-24 bg-gradient-to-r from-cyan-600 to-blue-600">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center" data-aos="fade-up">
+            <h2 class="text-3xl sm:text-4xl font-black text-white mb-6">
+                Siap Modernisasi Pesantren Anda?
+            </h2>
+            <p class="text-xl text-white/90 mb-10 max-w-2xl mx-auto">
+                Bergabung dengan ratusan pesantren yang telah merasakan kemudahan mengelola administrasi dengan SANTRIX.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="{{ route('register.tenant') }}" class="px-10 py-4 bg-white text-slate-900 font-bold rounded-xl shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-1 inline-flex items-center gap-2">
+                    Daftar Sekarang
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                </a>
+                <a href="https://wa.me/6281234567890" target="_blank" class="px-10 py-4 bg-white/10 backdrop-blur text-white font-bold rounded-xl border-2 border-white/30 hover:bg-white/20 transition-all">
+                    Hubungi Sales
+                </a>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
-    <footer class="bg-slate-900 text-slate-300 py-16">
+    <footer id="contact" class="bg-slate-950 text-white pt-20 pb-8 border-t border-white/5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid md:grid-cols-4 gap-12 mb-12">
                 <div class="col-span-2">
-                    <a href="#" class="flex flex-col mb-6">
-                        <span class="text-2xl font-bold text-white tracking-tight leading-none">
-                            SANTRIX
-                        </span>
-                        <span class="text-[10px] font-medium text-slate-400 tracking-wider">
-                            by Velora
-                        </span>
-                    </a>
-                    <p class="text-slate-400 leading-relaxed max-w-sm">
-                        Platform manajemen pesantren modern yang membantu digitalisasi administrasi pendidikan Islam di Indonesia.
+                    <div class="flex flex-col mb-6">
+                        <span class="text-2xl font-black text-white">SANTRIX</span>
+                        <span class="text-xs text-slate-500 tracking-widest">by Velora</span>
+                    </div>
+                    <p class="text-slate-400 max-w-md mb-6 leading-relaxed">
+                        Platform SaaS manajemen pesantren modern yang membantu ribuan pesantren di Indonesia mengelola administrasi dengan lebih efisien.
                     </p>
                 </div>
-                
                 <div>
-                    <h4 class="text-white font-bold mb-6">Produk</h4>
-                    <ul class="space-y-3 text-sm">
-                        <li><a href="#features" class="hover:text-white transition-colors">Fitur</a></li>
-                        <li><a href="#pricing" class="hover:text-white transition-colors">Harga</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Tutorial</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Roadmap</a></li>
+                    <h4 class="font-bold mb-6 text-lg">Produk</h4>
+                    <ul class="space-y-3 text-slate-400">
+                        <li><a href="#features" class="hover:text-cyan-400 transition-colors">Fitur</a></li>
+                        <li><a href="#pricing" class="hover:text-cyan-400 transition-colors">Harga</a></li>
+                        <li><a href="{{ route('demo.start', ['type' => 'sekretaris']) }}" class="hover:text-cyan-400 transition-colors">Demo</a></li>
                     </ul>
                 </div>
-
                 <div>
-                    <h4 class="text-white font-bold mb-6">Legal</h4>
-                    <ul class="space-y-3 text-sm">
-                        <li><a href="#" class="hover:text-white transition-colors">Syarat & Ketentuan</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Kebijakan Privasi</a></li>
+                    <h4 class="font-bold mb-6 text-lg">Kontak</h4>
+                    <ul class="space-y-3 text-slate-400">
+                        <li>support@santrix.my.id</li>
+                        <li>+62 812-3456-7890</li>
+                        <li>Indonesia</li>
                     </ul>
                 </div>
             </div>
 
-            <div class="pt-8 border-t border-slate-800 text-center text-sm text-slate-500">
-                &copy; {{ date('Y') }} SANTRIX by Velora. All rights reserved. Made with ❤️ for Pesantren Indonesia & Umat.
+            <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-slate-500 text-sm">© {{ date('Y') }} SANTRIX by Velora. All rights reserved.</p>
+                <p class="text-slate-500 text-sm">Made with ❤️ for Pesantren Indonesia</p>
             </div>
         </div>
     </footer>
 
+    <!-- AlpineJS -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- AOS Init -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        feather.replace();
         AOS.init({
-            once: true,
-            offset: 100,
             duration: 800,
-            easing: 'ease-out-cubic',
+            easing: 'ease-out',
+            once: true,
+            offset: 100
         });
-
-        // Mobile Menu Toggle
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        if (mobileMenuBtn && mobileMenu) {
-            mobileMenuBtn.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
-        }
     </script>
+
+    <style>
+        [x-cloak] { display: none !important; }
+    </style>
 </body>
 </html>
