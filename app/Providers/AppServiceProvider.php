@@ -19,8 +19,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        if ($this->app->environment('production')) {
+        // Force HTTPS if NOT in local environment (covers production, staging, demo)
+        if (config('app.env') !== 'local') {
             \Illuminate\Support\Facades\URL::forceScheme('https');
         }
+        
+        // Paginator Style
+        \Illuminate\Pagination\Paginator::useBootstrap();
     }
 }
