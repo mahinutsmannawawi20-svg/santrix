@@ -92,6 +92,13 @@ const colorClasses: Record<string, { bg: string; border: string; text: string; h
 };
 
 export default function Welcome({ stats, packages }: WelcomeProps) {
+    // Default values if stats is undefined
+    const safeStats = {
+        totalPesantren: stats?.totalPesantren ?? 0,
+        totalSantri: stats?.totalSantri ?? 0,
+        totalUsers: stats?.totalUsers ?? 0,
+    };
+
     const formatNumber = (num: number) => {
         return new Intl.NumberFormat('id-ID').format(num);
     };
@@ -102,6 +109,21 @@ export default function Welcome({ stats, packages }: WelcomeProps) {
             currency: 'IDR',
             minimumFractionDigits: 0,
         }).format(price);
+    };
+
+    // Helper to safely get features array (handles JSON string or array)
+    const getFeatures = (features: unknown): string[] => {
+        if (!features) return [];
+        if (Array.isArray(features)) return features;
+        if (typeof features === 'string') {
+            try {
+                const parsed = JSON.parse(features);
+                return Array.isArray(parsed) ? parsed : [];
+            } catch {
+                return [];
+            }
+        }
+        return [];
     };
 
     return (
@@ -160,7 +182,7 @@ export default function Welcome({ stats, packages }: WelcomeProps) {
                         {/* Badge */}
                         <div className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-50 rounded-full text-indigo-700 font-medium text-sm mb-8">
                             <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                            Digunakan oleh {formatNumber(stats.totalPesantren)}+ Pesantren
+                            Digunakan oleh {formatNumber(safeStats.totalPesantren)}+ Pesantren
                         </div>
 
                         {/* Headline */}
@@ -195,15 +217,15 @@ export default function Welcome({ stats, packages }: WelcomeProps) {
                         {/* Stats */}
                         <div className="grid grid-cols-3 gap-8 max-w-lg mx-auto">
                             <div className="text-center">
-                                <div className="text-3xl sm:text-4xl font-extrabold text-indigo-600">{formatNumber(stats.totalPesantren)}+</div>
+                                <div className="text-3xl sm:text-4xl font-extrabold text-indigo-600">{formatNumber(safeStats.totalPesantren)}+</div>
                                 <div className="text-sm text-slate-500 font-medium">Pesantren</div>
                             </div>
                             <div className="text-center">
-                                <div className="text-3xl sm:text-4xl font-extrabold text-violet-600">{formatNumber(stats.totalSantri)}+</div>
+                                <div className="text-3xl sm:text-4xl font-extrabold text-violet-600">{formatNumber(safeStats.totalSantri)}+</div>
                                 <div className="text-sm text-slate-500 font-medium">Santri</div>
                             </div>
                             <div className="text-center">
-                                <div className="text-3xl sm:text-4xl font-extrabold text-purple-600">{formatNumber(stats.totalUsers)}+</div>
+                                <div className="text-3xl sm:text-4xl font-extrabold text-purple-600">{formatNumber(safeStats.totalUsers)}+</div>
                                 <div className="text-sm text-slate-500 font-medium">Pengguna</div>
                             </div>
                         </div>
@@ -314,7 +336,7 @@ export default function Welcome({ stats, packages }: WelcomeProps) {
                                         <span className="text-green-500">✓</span>
                                         Maks {pkg.max_users} User
                                     </li>
-                                    {pkg.features?.slice(0, 3).map((feature) => (
+                                    {getFeatures(pkg.features).slice(0, 3).map((feature) => (
                                         <li key={feature} className="flex items-center gap-2 text-slate-600">
                                             <span className="text-green-500">✓</span>
                                             {feature}
@@ -324,8 +346,8 @@ export default function Welcome({ stats, packages }: WelcomeProps) {
                                 <Link
                                     href="/register-pesantren"
                                     className={`block w-full py-3 text-center font-bold rounded-xl transition-all ${index === 1
-                                            ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white hover:shadow-lg'
-                                            : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                                        ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white hover:shadow-lg'
+                                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                                         }`}
                                 >
                                     Pilih Paket
