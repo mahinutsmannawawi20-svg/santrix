@@ -38,12 +38,21 @@ class TelegramService
         try {
             // SECURITY: SSL verification enabled for production
             /** @var \Illuminate\Http\Client\Response $response */
-            $response = Http::timeout(10)->post("{$this->apiUrl}/sendMessage", [
-                'chat_id' => $targetChatId,
-                'text' => $message,
-                'parse_mode' => 'HTML',
-                'disable_web_page_preview' => true,
-            ]);
+            $response = Http::retry(3, 100, function ($exception, $request) {
+                    // Only retry on network (connection) errors or HTTP 5xx server errors
+                    // Don't retry on 4xx client errors (bad token, invalid chat_id)
+                    return $exception instanceof \Illuminate\Http\Client\ConnectionException ||
+                           ($exception instanceof \Illuminate\Http\Client\RequestException && 
+                            $exception->response && 
+                            $exception->response->status() >= 500);
+                })
+                ->timeout(10)
+                ->post("{$this->apiUrl}/sendMessage", [
+                    'chat_id' => $targetChatId,
+                    'text' => $message,
+                    'parse_mode' => 'HTML',
+                    'disable_web_page_preview' => true,
+                ]);
 
             if ($response->successful()) {
                 Log::info('Telegram message sent successfully');

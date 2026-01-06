@@ -15,6 +15,21 @@ class InvoiceService
      */
     public function createInvoice(Pesantren $pesantren, string $package, float $amount, Carbon $periodStart, Carbon $periodEnd): Invoice
     {
+        // Generate idempotency key to prevent duplicate invoices
+        $idempotencyKey = hash('sha256', implode('|', [
+            $pesantren->id,
+            $package,
+            $amount,
+            $periodStart->timestamp,
+            $periodEnd->timestamp
+        ]));
+
+        // Check if invoice with same idempotency key already exists
+        $existingInvoice = Invoice::where('idempotency_key', $idempotencyKey)->first();
+        if ($existingInvoice) {
+            return $existingInvoice; // Return existing invoice (idempotency)
+        }
+
         // Generate Unique Invoice Number: INV-{YYYYMM}-{PESANTREN_ID}-{SEQ}
         $prefix = 'INV-' . now()->format('Ym') . '-' . $pesantren->id . '-';
         $latestInvoice = Invoice::where('invoice_number', 'like', $prefix . '%')
@@ -37,6 +52,7 @@ class InvoiceService
             'period_start' => $periodStart,
             'period_end' => $periodEnd,
             'status' => 'pending',
+            'idempotency_key' => $idempotencyKey, // Add idempotency key
             // subscription_id set later after payment/activation
         ]);
     }

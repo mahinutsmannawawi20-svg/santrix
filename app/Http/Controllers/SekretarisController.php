@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class SekretarisController extends Controller
@@ -202,19 +203,30 @@ class SekretarisController extends Controller
         ]);
         
         $validated['pesantren_id'] = Auth::user()->pesantren_id; // INJECT SCOPE
-        $santri = Santri::create($validated);
         
-        // Create mutasi record
-        MutasiSantri::create([
-            'pesantren_id' => $validated['pesantren_id'], // INJECT SCOPE
-            'santri_id' => $santri->id,
-            'tahun_ajaran_id' => \App\Helpers\AcademicHelper::activeYearId(),
-            'jenis_mutasi' => 'masuk',
-            'tanggal_mutasi' => now(),
-            'keterangan' => 'Santri baru masuk',
-        ]);
+        // Wrap in transaction for atomicity
+        DB::beginTransaction();
+        try {
+            $santri = Santri::create($validated);
+            
+            // Create mutasi record (must succeed or rollback both)
+            MutasiSantri::create([
+                'pesantren_id' => $validated['pesantren_id'], // INJECT SCOPE
+                'santri_id' => $santri->id,
+                'tahun_ajaran_id' => \App\Helpers\AcademicHelper::activeYearId(),
+                'jenis_mutasi' => 'masuk',
+                'tanggal_mutasi' => now(),
+                'keterangan' => 'Santri baru masuk',
+            ]);
+            
+            DB::commit();
+            
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error', 'Gagal menyimpan data santri: ' . $e->getMessage())->withInput();
+        }
         
-        // Send Telegram notification
+        // Send Telegram notification AFTER commit (non-blocking)
         try {
             $telegram = new \App\Services\TelegramService();
             $kelas = Kelas::find($validated['kelas_id']);
@@ -282,16 +294,28 @@ class SekretarisController extends Controller
     {
         $pesantrenId = Auth::user()->pesantren_id;
         $santri = Santri::where('pesantren_id', $pesantrenId)->findOrFail($id);
-        $santri->update(['is_active' => false]);
         
-        // Create mutasi record
-        MutasiSantri::create([
-            'santri_id' => $id,
-            'tahun_ajaran_id' => \App\Helpers\AcademicHelper::activeYearId(),
-            'jenis_mutasi' => 'keluar',
-            'tanggal_mutasi' => now(),
-            'keterangan' => 'Santri dinonaktifkan',
-        ]);
+        // Wrap in transaction for atomicity
+        DB::beginTransaction();
+        try {
+            $santri->update(['is_active' => false]);
+            
+            // Create mutasi record (must succeed or rollback both)
+            MutasiSantri::create([
+                'pesantren_id' => $pesantrenId, // INJECT SCOPE
+                'santri_id' => $id,
+                'tahun_ajaran_id' => \App\Helpers\AcademicHelper::activeYearId(),
+                'jenis_mutasi' => 'keluar',
+                'tanggal_mutasi' => now(),
+                'keterangan' => 'Santri dinonaktifkan',
+            ]);
+            
+            DB::commit();
+            
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error', 'Gagal menonaktifkan santri: ' . $e->getMessage());
+        }
         
         return redirect()->route('sekretaris.data-santri')
             ->with('success', 'Santri berhasil dinonaktifkan');

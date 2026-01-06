@@ -32,7 +32,15 @@ class FonnteService
         try {
             // SECURITY: SSL verification enabled for production
             /** @var \Illuminate\Http\Client\Response $response */
-            $response = Http::timeout(10)
+            $response = Http::retry(3, 100, function ($exception, $request) {
+                    // Only retry on network (connection) errors or HTTP 5xx server errors
+                    // Don't retry on 4xx client errors (bad auth, invalid params)
+                    return $exception instanceof \Illuminate\Http\Client\ConnectionException ||
+                           ($exception instanceof \Illuminate\Http\Client\RequestException && 
+                            $exception->response && 
+                            $exception->response->status() >= 500);
+                })
+                ->timeout(10)
                 ->withHeaders([
                     'Authorization' => $this->token,
                 ])

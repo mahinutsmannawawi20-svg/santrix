@@ -381,49 +381,50 @@ class BendaharaController extends Controller
         $validated['tahun_ajaran_id'] = \App\Helpers\AcademicHelper::activeYearId();
         $syahriah = Syahriah::create($validated);
         
-        // Send Telegram notification for payment
+        
+        // Send Telegram notification for payment (ASYNC via Event)
         if ($validated['is_lunas']) {
-            try {
-                $telegram = new \App\Services\TelegramService();
-                $santri = Santri::with(['kelas', 'asrama'])->find($validated['santri_id']);
-                $bulanNama = ['', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 
-                              'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-                
-                // Calculate remaining arrears (sisa tunggakan)
-                $biayaBulanan = 500000;
-                $startDate = $santri->tanggal_masuk ?? $santri->created_at;
-                $endDate = now();
-                $allMonths = [];
-                $current = $startDate->copy()->startOfMonth();
-                while ($current <= $endDate) {
-                    $allMonths[] = $current->month . '-' . $current->year;
-                    $current->addMonth();
-                }
-                $paidMonths = Syahriah::where('santri_id', $santri->id)
-                    ->where('is_lunas', true)
-                    ->get()
-                    ->map(fn($item) => $item->bulan . '-' . $item->tahun)
-                    ->toArray();
-                $unpaidCount = 0;
-                foreach ($allMonths as $monthKey) {
-                    if (!in_array($monthKey, $paidMonths)) {
-                        $unpaidCount++;
-                    }
-                }
-                $sisaTunggakan = $unpaidCount * $biayaBulanan;
-                
-                $telegram->notifyPaymentReceived([
-                    'nama_santri' => $santri->nama_santri ?? '-',
-                    'gender' => ucfirst($santri->gender ?? '-'),
-                    'kelas' => $santri->kelas->nama_kelas ?? '-',
-                    'asrama' => $santri->asrama->nama_asrama ?? '-',
-                    'jumlah' => $validated['nominal'],
-                    'keterangan' => "SPP {$bulanNama[$validated['bulan']]} {$validated['tahun']}",
-                    'sisa_tunggakan' => $sisaTunggakan,
-                ]);
-            } catch (\Exception $e) {
-                Log::warning('Telegram notification failed: ' . $e->getMessage());
+            $santri = Santri::with(['kelas', 'asrama'])->find($validated['santri_id']);
+            $bulanNama = ['', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 
+                          'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+            
+            // Calculate remaining arrears (sisa tunggakan)
+            $biayaBulanan = 500000;
+            $startDate = $santri->tanggal_masuk ?? $santri->created_at;
+            $endDate = now();
+            $allMonths = [];
+            $current = $startDate->copy()->startOfMonth();
+            while ($current <= $endDate) {
+                $allMonths[] = $current->month . '-' . $current->year;
+                $current->addMonth();
             }
+            $paidMonths = Syahriah::where('santri_id', $santri->id)
+                ->where('is_lunas', true)
+                ->get()
+                ->map(fn($item) => $item->bulan . '-' . $item->tahun)
+                ->toArray();
+            $unpaidCount = 0;
+            foreach ($allMonths as $monthKey) {
+                if (!in_array($monthKey, $paidMonths)) {
+                    $unpaidCount++;
+                }
+            }
+            $sisaTunggakan = $unpaidCount * $biayaBulanan;
+            
+            $formattedArrears = number_format($sisaTunggakan, 0, ',', '.');
+            $arrearsInfo = $unpaidCount > 0 
+                ? "⚠️ Masih ada tunggakan $unpaidCount bulan lagi (Rp $formattedArrears)."
+                : "✅ Alhamdulillah lunas, tidak ada tunggakan.";
+            
+            // Dispatch event (async, non-blocking)
+            \App\Events\PaymentReceived::dispatch(
+                $santri, 
+                $validated['nominal'], 
+                $bulanNama[$validated['bulan']], 
+                $validated['tahun'], 
+                $arrearsInfo, 
+                'manual'
+            );
         }
         
         return redirect()->route('bendahara.syahriah')
