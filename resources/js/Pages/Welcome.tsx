@@ -6,6 +6,11 @@ interface Stats {
     totalUsers: number;
 }
 
+interface FeatureItem {
+    name: string;
+    included: boolean;
+}
+
 interface Package {
     id: number;
     name: string;
@@ -13,7 +18,7 @@ interface Package {
     duration_months: number;
     max_users: number;
     max_santri: number;
-    features: string[];
+    features: FeatureItem[] | string;
 }
 
 interface WelcomeProps {
@@ -111,17 +116,30 @@ export default function Welcome({ stats, packages }: WelcomeProps) {
         }).format(price);
     };
 
-    // Helper to safely get features array (handles JSON string or array)
+    // Helper to safely get features array (handles objects with name property or strings)
     const getFeatures = (features: unknown): string[] => {
         if (!features) return [];
-        if (Array.isArray(features)) return features;
         if (typeof features === 'string') {
             try {
                 const parsed = JSON.parse(features);
-                return Array.isArray(parsed) ? parsed : [];
+                if (Array.isArray(parsed)) {
+                    return parsed.map((f: unknown) =>
+                        typeof f === 'object' && f !== null && 'name' in f
+                            ? String((f as { name: unknown }).name)
+                            : String(f)
+                    );
+                }
+                return [];
             } catch {
                 return [];
             }
+        }
+        if (Array.isArray(features)) {
+            return features.map((f: unknown) =>
+                typeof f === 'object' && f !== null && 'name' in f
+                    ? String((f as { name: unknown }).name)
+                    : String(f)
+            );
         }
         return [];
     };
