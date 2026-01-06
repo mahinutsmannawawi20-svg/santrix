@@ -234,12 +234,12 @@ class PesantrenSettingsController extends Controller
     }
 
     /**
-     * Show branding settings form
+     * Show branding settings form (logo, signature, colors)
      */
     public function branding()
     {
         $pesantren = app('tenant');
-        return view('admin.settings.branding', compact('pesantren'));
+        return view('admin.settings.pesantren', compact('pesantren'));
     }
 
     /**
