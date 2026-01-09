@@ -283,7 +283,7 @@
                 <div style="font-size: 11px; color: rgba(255,255,255,0.6);">{{ auth()->user()->email }}</div>
             </div>
             
-            <form method="POST" action="{{ Route::has('tenant.logout') ? route('tenant.logout') : route('logout') }}" style="margin-bottom: 20px;">
+            <form method="POST" action="{{ url('/logout') }}" style="margin-bottom: 20px;">
                 @csrf
                 <button type="submit" style="width: 100%; display: flex; align-items: center; gap: 10px; padding: 10px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 8px; color: #f87171; cursor: pointer; transition: all 0.2s;">
                     <i data-feather="log-out" style="width: 16px; height: 16px;"></i>
