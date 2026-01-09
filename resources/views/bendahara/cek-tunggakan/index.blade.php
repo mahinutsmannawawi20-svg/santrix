@@ -281,7 +281,7 @@
                                     WA
                                 </a>
                                 @endif
-                                <form action="{{ route('bendahara.cek-tunggakan.process') }}" method="POST" style="display: inline;" data-turbo="false" target="_blank">
+                                <form action="{{ route('bendahara.cek-tunggakan.proses') }}" method="POST" style="display: inline;" data-turbo="false" target="_blank">
                                     @csrf
                                     <input type="hidden" name="santri_id" value="{{ $item['santri']->id }}">
                                     <input type="hidden" name="biaya_bulanan" value="{{ $biayaBulanan }}">
