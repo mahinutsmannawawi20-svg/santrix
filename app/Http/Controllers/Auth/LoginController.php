@@ -80,56 +80,7 @@ class LoginController extends Controller
                 return back()->withErrors(['email' => 'Akun Owner harus login melalui portal Owner.']);
             }
 
-            // 2. CHECK SECURITY VERIFICATION (Owner & Admin Only)
-            if (in_array($user->role, ['owner', 'admin'])) {
-                // Check TrustedDevice
-                $deviceHash = hash_hmac('sha256', $request->ip() . $request->userAgent(), config('app.key'));
-                
-                $isTrusted = \App\Models\TrustedDevice::where('user_id', $user->id)
-                    ->where('device_hash', $deviceHash)
-                    ->where('expires_at', '>', now())
-                    ->exists();
-
-                if (!$isTrusted) {
-                    // Generate OTP
-                    $token = strtoupper(Str::random(6)); // Simple alnum or numeric
-                    
-                    // For better UX, let's use numeric 6 digit
-                    $token = (string) random_int(100000, 999999);
-
-                    \App\Models\LoginVerification::create([
-                        'user_id' => $user->id,
-                        'token' => $token,
-                        'ip_address' => $request->ip(),
-                        'user_agent' => $request->userAgent(),
-                        'expires_at' => now()->addMinutes(15),
-                    ]);
-
-                    // Send OTP via WhatsApp if phone number is available
-                    if ($user->no_hp) {
-                        try {
-                            $fonnte = new \App\Services\FonnteService();
-                            $message = "🔐 *KODE VERIFIKASI SANTRIX*\n\n" .
-                                      "Halo *{$user->name}*,\n" .
-                                      "Gunakan kode berikut untuk verifikasi login Anda:\n\n" .
-                                      "👉 *{$token}*\n\n" .
-                                      "Kode berlaku selama 15 menit. Jangan berikan kode ini kepada siapa pun.";
-                            
-                            $fonnte->sendMessage($user->no_hp, $message);
-                        } catch (\Exception $e) {
-                            \Illuminate\Support\Facades\Log::error("Fonnte OTP failed: " . $e->getMessage());
-                        }
-                    }
-
-                    // Fallback/Parallel: Send via Email
-                    \Illuminate\Support\Facades\Mail::to($user->email)->send(new \App\Mail\LoginVerificationMail($token));
-                    
-                    \Illuminate\Support\Facades\Log::info("Login OTP sent to {$user->email} " . ($user->no_hp ? "and WhatsApp" : ""));
-
-                    return redirect()->route('login.verify');
-                }
-            }
-
+            // OTP verification disabled for simplicity - direct login
             return $this->redirectToDashboard();
         }
 

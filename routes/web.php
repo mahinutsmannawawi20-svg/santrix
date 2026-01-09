@@ -48,7 +48,7 @@ Route::domain('owner.' . $mainDomain)->group(function () {
     });
 
     // Owner Dashboard Routes
-    Route::middleware(['auth', 'owner', \App\Http\Middleware\EnsureLoginVerified::class])
+    Route::middleware(['auth', 'owner'])
         ->prefix('owner') // Optional prefix, but good for clarity
         ->name('owner.')
         ->group(function () {
@@ -173,7 +173,7 @@ Route::domain('{subdomain}.' . $mainDomain)->middleware([\App\Http\Middleware\Re
         ->name('activity-logs.index');
 
     // Admin Dashboard Routes
-    Route::prefix('admin')->middleware(['auth', 'role:admin', \App\Http\Middleware\EnsureLoginVerified::class])->name('admin.')->group(function () {
+    Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->group(function () {
         Route::get('/', [App\Http\Controllers\AdminController::class, 'dashboard'])->name('dashboard');
         
         // Settings & User Management - Uses AdminController which has the comprehensive pengaturan view
