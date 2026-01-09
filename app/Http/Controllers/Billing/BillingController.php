@@ -76,13 +76,27 @@ class BillingController extends Controller
      */
     public function subscribe(Request $request)
     {
+        // Get all valid package IDs from config
+        $plans = config('subscription.plans');
+        $validPackageIds = collect($plans)->pluck('id')->toArray();
+        
         $request->validate([
-            'package' => 'required|in:basic,advance',
+            'package' => 'required|in:' . implode(',', $validPackageIds),
         ]);
 
         $pesantren = Pesantren::find(Auth::user()->pesantren_id);
-        $package = $request->package;
-        $amount = ($package === 'advance') ? 3000000 : 1500000;
+        $packageId = $request->package;
+        
+        // Find the selected plan from config
+        $selectedPlan = collect($plans)->firstWhere('id', $packageId);
+        
+        if (!$selectedPlan) {
+            return back()->with('error', 'Paket tidak valid.');
+        }
+        
+        $amount = $selectedPlan['price'];
+        $durationMonths = $selectedPlan['duration_months'];
+        $packageName = $selectedPlan['name'];
         
         // Calculate trial period or extension dates
         $sub = Subscription::where('pesantren_id', $pesantren->id)
@@ -90,9 +104,9 @@ class BillingController extends Controller
             ->first();
             
         $startDate = ($sub && !$sub->expired_at->isPast()) ? $sub->expired_at : now();
-        $endDate = $startDate->copy()->addMonths(6);
+        $endDate = $startDate->copy()->addMonths($durationMonths);
 
-        $invoice = $this->invoiceService->createInvoice($pesantren, $package, $amount, $startDate, $endDate);
+        $invoice = $this->invoiceService->createInvoice($pesantren, $packageName, $amount, $startDate, $endDate);
 
         return redirect()->route('admin.billing.show', $invoice->id);
     }
