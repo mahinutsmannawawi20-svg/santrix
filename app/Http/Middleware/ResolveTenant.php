@@ -22,12 +22,10 @@ class ResolveTenant
         
         $centralDomains = config('tenancy.central_domains', ['santrix.my.id', 'santrix.test', 'localhost']);
         // Also skip owner subdomain
-        $centralDomains[] = 'owner.santrix.my.id';
-        $centralDomains[] = 'owner.santrix.test';
-        $centralDomains[] = 'owner.localhost';
+        $isOwnerSubdomain = str_starts_with($normalizedHost, 'owner.');
         
-        // Skip resolution if request is for central domain
-        if (in_array($normalizedHost, $centralDomains)) {
+        // Skip resolution if request is for central domain or owner subdomain
+        if (in_array($normalizedHost, $centralDomains) || $isOwnerSubdomain) {
             \Illuminate\Support\Facades\URL::defaults(['central_domain' => $normalizedHost]);
             return $next($request);
         }
