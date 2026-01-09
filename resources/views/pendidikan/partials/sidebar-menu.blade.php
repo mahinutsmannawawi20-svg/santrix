@@ -48,12 +48,7 @@
         <span>Absensi Guru</span>
     </a>
 </li>
-<li class="sidebar-menu-item">
-    <a href="{{ route('pendidikan.mapel') }}" class="sidebar-menu-link {{ request()->routeIs('mata-pelajaran.*') ? 'active' : '' }}">
-        <i data-feather="clipboard" class="sidebar-menu-icon"></i>
-        <span>Data Mata Ujian</span>
-    </a>
-</li>
+
 <li class="sidebar-menu-item">
     <a href="{{ route('pendidikan.ujian-mingguan') }}" class="sidebar-menu-link {{ request()->routeIs('pendidikan.ujian-mingguan*') ? 'active' : '' }}">
         <i data-feather="calendar" class="sidebar-menu-icon"></i>
