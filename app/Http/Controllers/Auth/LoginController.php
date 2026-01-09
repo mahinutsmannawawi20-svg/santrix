@@ -105,10 +105,26 @@ class LoginController extends Controller
                         'expires_at' => now()->addMinutes(15),
                     ]);
 
-                    // Send Email Notification
+                    // Send OTP via WhatsApp if phone number is available
+                    if ($user->no_hp) {
+                        try {
+                            $fonnte = new \App\Services\FonnteService();
+                            $message = "🔐 *KODE VERIFIKASI SANTRIX*\n\n" .
+                                      "Halo *{$user->name}*,\n" .
+                                      "Gunakan kode berikut untuk verifikasi login Anda:\n\n" .
+                                      "👉 *{$token}*\n\n" .
+                                      "Kode berlaku selama 15 menit. Jangan berikan kode ini kepada siapa pun.";
+                            
+                            $fonnte->sendMessage($user->no_hp, $message);
+                        } catch (\Exception $e) {
+                            \Illuminate\Support\Facades\Log::error("Fonnte OTP failed: " . $e->getMessage());
+                        }
+                    }
+
+                    // Fallback/Parallel: Send via Email
                     \Illuminate\Support\Facades\Mail::to($user->email)->send(new \App\Mail\LoginVerificationMail($token));
                     
-                    \Illuminate\Support\Facades\Log::info("Login OTP sent to {$user->email}");
+                    \Illuminate\Support\Facades\Log::info("Login OTP sent to {$user->email} " . ($user->no_hp ? "and WhatsApp" : ""));
 
                     return redirect()->route('login.verify');
                 }
