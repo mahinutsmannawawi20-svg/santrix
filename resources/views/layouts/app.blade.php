@@ -714,9 +714,9 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-        // Global SweetAlert2 Helpers
+        // Global SweetAlert2 Helpers with Elegant Centered Design
         
-        // Use for Form Delete Confirmation (onsubmit="return confirmDelete(event)")
+        // Use for Form Delete Confirmation (onsubmit="return confirmDelete(event)" or onsubmit="return confirmDelete(event, 'Custom message')")
         function confirmDelete(event, message = 'Data yang dihapus tidak dapat dikembalikan!', title = 'Yakin ingin menghapus?') {
             event.preventDefault();
             const form = event.target;
@@ -725,12 +725,28 @@
                 title: title,
                 text: message,
                 icon: 'warning',
+                iconColor: '#ef4444',
                 showCancelButton: true,
-                confirmButtonColor: '#ef4444', // Red
-                cancelButtonColor: '#6b7280', // Gray
-                confirmButtonText: 'Ya, Hapus!',
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: '<i class="fa fa-trash"></i> Ya, Hapus!',
                 cancelButtonText: 'Batal',
-                reverseButtons: true
+                reverseButtons: true,
+                customClass: {
+                    popup: 'swal-elegant-popup',
+                    title: 'swal-elegant-title',
+                    htmlContainer: 'swal-elegant-text',
+                    confirmButton: 'swal-elegant-btn',
+                    cancelButton: 'swal-elegant-btn-cancel'
+                },
+                showClass: {
+                    popup: 'animate__animated animate__fadeIn animate__faster'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOut animate__faster'
+                },
+                backdrop: 'rgba(0, 0, 0, 0.6)',
+                allowOutsideClick: false
             }).then((result) => {
                 if (result.isConfirmed) {
                     form.submit();
@@ -745,19 +761,132 @@
                 title: title,
                 text: message,
                 icon: 'question',
+                iconColor: btnColor,
                 showCancelButton: true,
                 confirmButtonColor: btnColor,
                 cancelButtonColor: '#6b7280',
                 confirmButtonText: btnText,
                 cancelButtonText: 'Batal',
-                reverseButtons: true
+                reverseButtons: true,
+                customClass: {
+                    popup: 'swal-elegant-popup',
+                    title: 'swal-elegant-title',
+                    htmlContainer: 'swal-elegant-text',
+                    confirmButton: 'swal-elegant-btn',
+                    cancelButton: 'swal-elegant-btn-cancel'
+                },
+                showClass: {
+                    popup: 'animate__animated animate__fadeIn animate__faster'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOut animate__faster'
+                },
+                backdrop: 'rgba(0, 0, 0, 0.6)',
+                allowOutsideClick: false
             }).then((result) => {
                 if (result.isConfirmed) {
                     document.getElementById(formId).submit();
                 }
             });
         }
+
+        // Universal delete handler - automatically applies SweetAlert to forms with class 'delete-form'
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.delete-form, form[data-confirm]').forEach(function(form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const message = form.dataset.confirmMessage || 'Data yang dihapus tidak dapat dikembalikan!';
+                    const title = form.dataset.confirmTitle || 'Yakin ingin menghapus?';
+                    
+                    Swal.fire({
+                        title: title,
+                        text: message,
+                        icon: 'warning',
+                        iconColor: '#ef4444',
+                        showCancelButton: true,
+                        confirmButtonColor: '#ef4444',
+                        cancelButtonColor: '#6b7280',
+                        confirmButtonText: '<i class="fa fa-trash"></i> Ya, Hapus!',
+                        cancelButtonText: 'Batal',
+                        reverseButtons: true,
+                        customClass: {
+                            popup: 'swal-elegant-popup',
+                            title: 'swal-elegant-title',
+                            htmlContainer: 'swal-elegant-text',
+                            confirmButton: 'swal-elegant-btn',
+                            cancelButton: 'swal-elegant-btn-cancel'
+                        },
+                        showClass: {
+                            popup: 'animate__animated animate__fadeIn animate__faster'
+                        },
+                        hideClass: {
+                            popup: 'animate__animated animate__fadeOut animate__faster'
+                        },
+                        backdrop: 'rgba(0, 0, 0, 0.6)',
+                        allowOutsideClick: false
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form.submit();
+                        }
+                    });
+                });
+            });
+        });
     </script>
+    
+    <!-- SweetAlert2 Elegant Custom Styles -->
+    <style>
+        .swal-elegant-popup {
+            border-radius: 20px !important;
+            padding: 2rem !important;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+            border: 1px solid rgba(0, 0, 0, 0.05) !important;
+        }
+        .swal-elegant-title {
+            font-size: 1.5rem !important;
+            font-weight: 700 !important;
+            color: #1e293b !important;
+        }
+        .swal-elegant-text {
+            font-size: 1rem !important;
+            color: #64748b !important;
+            line-height: 1.6 !important;
+        }
+        .swal-elegant-btn {
+            padding: 12px 28px !important;
+            border-radius: 12px !important;
+            font-weight: 600 !important;
+            font-size: 0.9375rem !important;
+            box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.3) !important;
+            transition: all 0.2s ease !important;
+        }
+        .swal-elegant-btn:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 6px 12px -2px rgba(239, 68, 68, 0.4) !important;
+        }
+        .swal-elegant-btn-cancel {
+            padding: 12px 28px !important;
+            border-radius: 12px !important;
+            font-weight: 600 !important;
+            font-size: 0.9375rem !important;
+            background: #f1f5f9 !important;
+            color: #475569 !important;
+            border: none !important;
+        }
+        .swal-elegant-btn-cancel:hover {
+            background: #e2e8f0 !important;
+        }
+        .swal2-icon {
+            margin-bottom: 1rem !important;
+        }
+        .swal2-popup {
+            font-family: inherit !important;
+        }
+        .swal2-actions {
+            gap: 12px !important;
+            margin-top: 1.5rem !important;
+        }
+    </style>
 
     <!-- Sidebar Scroll Persistence & Feather Icons Fix -->
     <script>

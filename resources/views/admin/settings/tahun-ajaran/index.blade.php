@@ -84,7 +84,7 @@
                             </button>
                             
                             @if(!$tahun->is_active)
-                            <form action="{{ route('admin.pengaturan.tahun-ajaran.destroy', $tahun->id) }}" method="POST" style="display: inline;" onsubmit="return confirm('Yakin ingin menghapus tahun ajaran ini?')">
+                            <form action="{{ route('admin.pengaturan.tahun-ajaran.destroy', $tahun->id) }}" method="POST" style="display: inline;" onsubmit="return confirmDelete(event)">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" style="background: #ef4444; color: white; padding: 8px 12px; border: none; border-radius: 8px; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='#dc2626'" onmouseout="this.style.background='#ef4444'">

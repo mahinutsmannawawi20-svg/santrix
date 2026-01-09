@@ -136,7 +136,7 @@
                                 <button onclick="editKelas({{ $kelas->id }}, '{{ $kelas->nama_kelas }}', '{{ $kelas->tingkat }}', {{ $kelas->kapasitas }})" style="background: none; border: none; color: #3b82f6; cursor: pointer; margin-right: 8px;">
                                     <i data-feather="edit-2" style="width: 16px; height: 16px;"></i>
                                 </button>
-                                <form action="{{ route('admin.pengaturan.kelas.delete', $kelas->id) }}" method="POST" style="display: inline;" onsubmit="return confirm('Yakin hapus kelas ini?')">
+                                <form action="{{ route('admin.pengaturan.kelas.delete', $kelas->id) }}" method="POST" style="display: inline;" onsubmit="return confirmDelete(event)">
                                     @csrf @method('DELETE')
                                     <button type="submit" style="background: none; border: none; color: #ef4444; cursor: pointer;">
                                         <i data-feather="trash-2" style="width: 16px; height: 16px;"></i>
@@ -216,7 +216,7 @@
                                 <button onclick="editAsrama({{ $asrama->id }}, '{{ $asrama->nama_asrama }}', '{{ $asrama->gender }}')" style="background: none; border: none; color: #3b82f6; cursor: pointer; margin-right: 8px;">
                                     <i data-feather="edit-2" style="width: 16px; height: 16px;"></i>
                                 </button>
-                                <form action="{{ route('admin.pengaturan.asrama.delete', $asrama->id) }}" method="POST" style="display: inline;" onsubmit="return confirm('Yakin hapus asrama ini? Semua data kamar juga akan terhapus.')">
+                                <form action="{{ route('admin.pengaturan.asrama.delete', $asrama->id) }}" method="POST" style="display: inline;" onsubmit="return confirmDelete(event, 'Semua data kamar juga akan terhapus!')">
                                     @csrf @method('DELETE')
                                     <button type="submit" style="background: none; border: none; color: #ef4444; cursor: pointer;">
                                         <i data-feather="trash-2" style="width: 16px; height: 16px;"></i>
@@ -373,7 +373,7 @@
                                 </button>
                                 
                                 @if($user->id !== auth()->user()->id)
-                                <form method="POST" action="{{ route('admin.pengaturan.user.delete', $user->id) }}" style="display: inline;" onsubmit="return confirm('Yakin ingin menghapus user ini?')">
+                                <form method="POST" action="{{ route('admin.pengaturan.user.delete', $user->id) }}" style="display: inline;" onsubmit="return confirmDelete(event)">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; padding: 8px 16px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">

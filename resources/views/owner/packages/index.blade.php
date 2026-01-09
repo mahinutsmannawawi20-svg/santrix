@@ -57,7 +57,7 @@
                             <a href="{{ route('owner.packages.edit', $package->id) }}" style="padding: 6px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 0.75rem; font-weight: 600; color: #4f46e5; text-decoration: none; display: inline-block;">
                                 Edit
                             </a>
-                            <form action="{{ route('owner.packages.destroy', $package->id) }}" method="POST" onsubmit="return confirm('Hapus paket ini?');" style="display: inline;">
+                            <form action="{{ route('owner.packages.destroy', $package->id) }}" method="POST" onsubmit="return confirmDelete(event)" style="display: inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" style="padding: 6px 12px; background: white; border: 1px solid #fecaca; border-radius: 6px; font-size: 0.75rem; font-weight: 600; color: #b91c1c; cursor: pointer;" onmouseover="this.style.background='#fef2f2'" onmouseout="this.style.background='white'">

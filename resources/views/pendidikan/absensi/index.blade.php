@@ -304,7 +304,7 @@
                                 <i data-feather="edit" style="width: 14px; height: 14px;"></i>
                                 Edit
                             </button>
-                            <form method="POST" action="{{ route('pendidikan.absensi.destroy', $a->id) }}" style="display: inline;" onsubmit="return confirm('Yakin ingin menghapus?')">
+                            <form method="POST" action="{{ route('pendidikan.absensi.destroy', $a->id) }}" style="display: inline;" onsubmit="return confirmDelete(event)">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-secondary" style="padding: 4px 12px; font-size: 12px; background-color: #f44336;">

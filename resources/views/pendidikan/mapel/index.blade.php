@@ -263,7 +263,7 @@
                                         <i data-feather="edit" style="width: 12px; height: 12px;"></i>
                                         Edit
                                     </button>
-                                    <form method="POST" action="{{ route('pendidikan.mapel.destroy', $m->id) }}" style="display: inline;" onsubmit="return confirm('Yakin ingin menghapus?')">
+                                    <form method="POST" action="{{ route('pendidikan.mapel.destroy', $m->id) }}" style="display: inline;" onsubmit="return confirmDelete(event)">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" 

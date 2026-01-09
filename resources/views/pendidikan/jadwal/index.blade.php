@@ -262,7 +262,7 @@
                                                 <i data-feather="edit-2" style="width: 12px; height: 12px;"></i>
                                                 Edit
                                             </button>
-                                            <form method="POST" action="{{ route('pendidikan.jadwal.destroy', $j->id) }}" style="display: inline;" onsubmit="return confirm('Yakin ingin menghapus?')">
+                                            <form method="POST" action="{{ route('pendidikan.jadwal.destroy', $j->id) }}" style="display: inline;" onsubmit="return confirmDelete(event)">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" 

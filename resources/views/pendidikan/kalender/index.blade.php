@@ -165,7 +165,7 @@
                                     </a>
                                     
                                     <!-- Delete Button -->
-                                    <form action="{{ route('pendidikan.kalender.destroy', $event->id) }}" method="POST" onsubmit="return confirm('Hapus agenda ini?');">
+                                    <form action="{{ route('pendidikan.kalender.destroy', $event->id) }}" method="POST" onsubmit="return confirmDelete(event)">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" style="background: #fee2e2; color: #ef4444; border: none; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s;"
