@@ -102,6 +102,9 @@ Route::domain($mainDomain)->group(function () use ($mainDomain) {
     
     // Central Login (Portal Selection)
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [LoginController::class, 'login'])
+        ->middleware('throttle:6,1')
+        ->name('login.post');
     
     // Auth Routes for Central (Logout Only)
     Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout.redirect');

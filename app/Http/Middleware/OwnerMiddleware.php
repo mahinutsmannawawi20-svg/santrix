@@ -27,12 +27,12 @@ class OwnerMiddleware
         
         $centralDomains = config('tenancy.central_domains', []);
 
-        // allow exact match OR allow localhost variants if needed
-        $isCentral = in_array($normalizedHost, $centralDomains, true);
+        // allow exact match OR allow localhost variants OR any host starting with owner.
+        $isCentral = in_array($normalizedHost, $centralDomains, true) || str_starts_with($normalizedHost, 'owner.');
 
         if (!$isCentral) {
             // stealth: pretend route not found on tenant subdomain
-            abort(404);
+            abort(404, 'Host ' . $normalizedHost . ' not allowed in OwnerMiddleware');
         }
         
         // role check
