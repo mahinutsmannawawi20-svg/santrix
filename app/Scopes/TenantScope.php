@@ -18,18 +18,12 @@ class TenantScope implements Scope
      */
     public function apply(Builder $builder, Model $model)
     {
-        // Only apply if user is logged in
-        if (Auth::check()) {
-            $user = Auth::user();
-
-            // Only apply if user belongs to a pesantren (Tenant User)
-            // Owner and Admin Pusat might be exceptions depending on design, 
-            // but for now, we assume everyone using the models is scoped.
-            // If Owner needs to see all, we can add a check here.
-            
-            if ($user->pesantren_id) {
-                $builder->where($model->getTable() . '.pesantren_id', $user->pesantren_id);
-            }
+        // Use App('tenant') or session because Auth::user() inside a scope 
+        // that applies to the User model causes infinite recursion.
+        if (app()->has('tenant')) {
+            $builder->where($model->getTable() . '.pesantren_id', app('tenant')->id);
+        } elseif (session()->has('pesantren_id')) {
+            $builder->where($model->getTable() . '.pesantren_id', session('pesantren_id'));
         }
     }
 }
