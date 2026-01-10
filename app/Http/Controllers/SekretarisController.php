@@ -590,10 +590,10 @@ class SekretarisController extends Controller
         
         // Filter by date range
         if ($request->filled('tanggal_mulai')) {
-            $query->where('tanggal_mutasi', '>=', $request->tanggal_mulai);
+            $query->whereDate('tanggal_mutasi', '>=', $request->tanggal_mulai);
         }
         if ($request->filled('tanggal_selesai')) {
-            $query->where('tanggal_mutasi', '<=', $request->tanggal_selesai);
+            $query->whereDate('tanggal_mutasi', '<=', $request->tanggal_selesai);
         }
         
         // Filter by jenis mutasi
