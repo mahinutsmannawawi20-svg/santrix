@@ -330,6 +330,7 @@ Route::prefix('bendahara')->middleware(['auth', 'role:bendahara'])->name('bendah
     Route::get('/gaji', [App\Http\Controllers\BendaharaController::class, 'gaji'])->name('gaji');
     Route::post('/gaji', [App\Http\Controllers\BendaharaController::class, 'storeGaji'])->name('gaji.store');
     Route::match(['put', 'post'], '/gaji/{id}', [App\Http\Controllers\BendaharaController::class, 'updateGaji'])->name('gaji.update');
+    Route::delete('/gaji/{id}', [App\Http\Controllers\BendaharaController::class, 'destroyGaji'])->name('gaji.destroy');
 
     // Laporan
     Route::get('/laporan', [App\Http\Controllers\BendaharaController::class, 'laporan'])->name('laporan');
