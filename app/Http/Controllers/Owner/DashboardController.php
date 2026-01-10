@@ -29,6 +29,21 @@ class DashboardController extends Controller
                 ->whereMonth('paid_at', Carbon::now()->month)
                 ->whereYear('paid_at', Carbon::now()->year)
                 ->sum('amount');
+
+            // Growth Graph Data (Last 12 Months)
+            $growthData = [];
+            $labels = [];
+            
+            for ($i = 11; $i >= 0; $i--) {
+                $date = Carbon::now()->subMonths($i);
+                $monthName = $date->translatedFormat('F Y');
+                $count = Pesantren::whereYear('created_at', $date->year)
+                    ->whereMonth('created_at', $date->month)
+                    ->count();
+                
+                $growthData[] = $count;
+                $labels[] = $date->format('M Y');
+            }
         } catch (\Exception $e) {
             // Fallback if tables don't exist yet
             $total = $active = $expiring = $expired = 0;
@@ -36,6 +51,6 @@ class DashboardController extends Controller
             \Illuminate\Support\Facades\Log::error('Owner Dashboard Error: ' . $e->getMessage());
         }
 
-        return view('owner.dashboard.index', compact('total', 'active', 'expiring', 'expired', 'revenue'));
+        return view('owner.dashboard.index', compact('total', 'active', 'expiring', 'expired', 'revenue', 'growthData', 'labels'));
     }
 }

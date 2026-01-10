@@ -101,7 +101,7 @@ class AdminController extends Controller
     /**
      * Update existing user
      */
-    public function updateUser(Request $request, $id)
+    public function updateUser(Request $request, $tenant, $id)
     {
         $user = User::findOrFail($id);
 
@@ -132,7 +132,7 @@ class AdminController extends Controller
     /**
      * Delete user
      */
-    public function deleteUser($id)
+    public function deleteUser($tenant, $id)
     {
         $user = User::findOrFail($id);
         
@@ -173,7 +173,7 @@ class AdminController extends Controller
         return redirect()->route('admin.pengaturan')->with('success', 'Kelas berhasil ditambahkan!')->with('tab', 'kelas-asrama');
     }
 
-    public function updateKelas(Request $request, $id)
+    public function updateKelas(Request $request, $tenant, $id)
     {
         $kelas = \App\Models\Kelas::findOrFail($id);
 
@@ -196,7 +196,7 @@ class AdminController extends Controller
         return redirect()->route('admin.pengaturan')->with('success', 'Kelas berhasil diperbarui!')->with('tab', 'kelas-asrama');
     }
 
-    public function deleteKelas($id)
+    public function deleteKelas($tenant, $id)
     {
         $kelas = \App\Models\Kelas::findOrFail($id);
         
@@ -240,7 +240,7 @@ class AdminController extends Controller
         return redirect()->route('admin.pengaturan')->with('success', 'Asrama dan kamar berhasil dibuat!')->with('tab', 'kelas-asrama');
     }
 
-    public function updateAsrama(Request $request, $id)
+    public function updateAsrama(Request $request, $tenant, $id)
     {
         $asrama = \App\Models\Asrama::findOrFail($id);
 
@@ -261,7 +261,7 @@ class AdminController extends Controller
         return redirect()->route('admin.pengaturan')->with('success', 'Asrama berhasil diperbarui!')->with('tab', 'kelas-asrama');
     }
 
-    public function deleteAsrama($id)
+    public function deleteAsrama($tenant, $id)
     {
         $asrama = \App\Models\Asrama::findOrFail($id);
         
@@ -279,7 +279,7 @@ class AdminController extends Controller
         return redirect()->route('admin.pengaturan')->with('success', 'Asrama berhasil dihapus!')->with('tab', 'kelas-asrama');
     }
 
-    public function storeKobong(Request $request, $asrama_id)
+    public function storeKobong(Request $request, $tenant, $asrama_id)
     {
         $asrama = \App\Models\Asrama::findOrFail($asrama_id);
 
@@ -301,7 +301,7 @@ class AdminController extends Controller
         return redirect()->route('admin.pengaturan')->with('success', 'Kamar berhasil ditambahkan!')->with('tab', 'kelas-asrama');
     }
 
-    public function deleteKobong($id)
+    public function deleteKobong($tenant, $id)
     {
         $kobong = \App\Models\Kobong::findOrFail($id);
         

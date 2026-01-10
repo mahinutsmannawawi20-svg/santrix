@@ -954,7 +954,7 @@ class PendidikanController extends Controller
     }
 
     // Delete Kitab Talaran by Kelas (both semesters)
-    public function deleteKitabByKelas($kelasId)
+    public function deleteKitabByKelas($tenant, $kelasId)
     {
         try {
             \App\Models\KitabTalaran::where('kelas_id', $kelasId)->delete();
@@ -966,7 +966,7 @@ class PendidikanController extends Controller
 
 
     // Jadwal Pelajaran - Update Guru Badal
-    public function updateGuruBadalJadwal(Request $request, $id)
+    public function updateGuruBadalJadwal(Request $request, $tenant, $id)
     {
         try {
             $jadwal = JadwalPelajaran::findOrFail($id);
@@ -980,7 +980,7 @@ class PendidikanController extends Controller
     }
 
     // Kelas - Update Wali Kelas (Single)
-    public function updateWaliKelas(Request $request, $id)
+    public function updateWaliKelas(Request $request, $tenant, $id)
     {
         try {
             $kelas = Kelas::findOrFail($id);
@@ -994,7 +994,7 @@ class PendidikanController extends Controller
     }
 
     // Kelas - Update Wali Kelas DUAL (Putra & Putri)
-    public function updateWaliKelasDual(Request $request, $id)
+    public function updateWaliKelasDual(Request $request, $tenant, $id)
     {
         try {
             $kelas = Kelas::findOrFail($id);
@@ -1010,7 +1010,7 @@ class PendidikanController extends Controller
     }
 
     // Kelas - Upload Wali Kelas Signature (TTD)
-    public function uploadKelasSignature(Request $request, $id)
+    public function uploadKelasSignature(Request $request, $tenant, $id)
     {
         $request->validate([
             'ttd_file' => 'required|image|mimes:png|max:2048',
