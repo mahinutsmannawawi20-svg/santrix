@@ -179,6 +179,19 @@ class PesantrenController extends Controller
             'deleted'
         );
 
+        $this->deleteKbmData($pesantren);
+        $this->deleteSantriData($pesantren);
+        $this->deleteInfrastructureData($pesantren);
+        $this->deleteFinanceData($pesantren);
+        $this->deleteSettingsData($pesantren);
+        $this->deleteUserData($pesantren);
+
+        // 7. FINALLY DELETE THE TENANT
+        $pesantren->delete();
+    }
+
+    private function deleteKbmData(Pesantren $pesantren)
+    {
         // 1. DELETE KBM DATA (Jurnal, Absensi Guru)
         $jurnalIds = JurnalKbm::where('pesantren_id', $pesantren->id)->pluck('id');
         if ($jurnalIds->count() > 0) {
@@ -186,7 +199,10 @@ class PesantrenController extends Controller
             JurnalKbm::whereIn('id', $jurnalIds)->delete();
         }
         AbsensiGuru::where('pesantren_id', $pesantren->id)->delete();
+    }
 
+    private function deleteSantriData(Pesantren $pesantren)
+    {
         // 2. DELETE SANTRI DATA & ACADEMIC RECORDS
         $santriIds = $pesantren->santri()->pluck('id');
         if ($santriIds->count() > 0) {
@@ -204,7 +220,10 @@ class PesantrenController extends Controller
             
             $pesantren->santri()->delete();
         }
+    }
 
+    private function deleteInfrastructureData(Pesantren $pesantren)
+    {
         // 3. DELETE INFRASTRUCTURE (Asrama, Kelas)
         $asramaIds = $pesantren->asrama()->pluck('id');
         if ($asramaIds->count() > 0) {
@@ -219,7 +238,10 @@ class PesantrenController extends Controller
             JadwalPelajaran::whereIn('mapel_id', $mapelIds)->delete();
         }
         $pesantren->mataPelajaran()->delete();
-        
+    }
+
+    private function deleteFinanceData(Pesantren $pesantren)
+    {
         // 4. DELETE FINANCE & HR DATA
         GajiPegawai::where('pesantren_id', $pesantren->id)->delete();
         Pegawai::where('pesantren_id', $pesantren->id)->delete();
@@ -230,14 +252,20 @@ class PesantrenController extends Controller
 
         Pemasukan::where('pesantren_id', $pesantren->id)->delete();
         Pengeluaran::where('pesantren_id', $pesantren->id)->delete();
-        
+    }
+
+    private function deleteSettingsData(Pesantren $pesantren)
+    {
         // 5. DELETE SETTINGS & CONFIG
         TahunAjaran::where('pesantren_id', $pesantren->id)->delete();
         KalenderPendidikan::where('pesantren_id', $pesantren->id)->delete();
         IjazahSetting::where('pesantren_id', $pesantren->id)->delete();
         ReportSettings::where('pesantren_id', $pesantren->id)->delete();
         Setting::where('pesantren_id', $pesantren->id)->delete();
+    }
 
+    private function deleteUserData(Pesantren $pesantren)
+    {
         // 6. DELETE USERS & USER DATA
         $userIds = User::where('pesantren_id', $pesantren->id)->pluck('id');
         if ($userIds->count() > 0) {
@@ -248,8 +276,5 @@ class PesantrenController extends Controller
              
              User::whereIn('id', $userIds)->delete();
         }
-
-        // 7. FINALLY DELETE THE TENANT
-        $pesantren->delete();
     }
 }
