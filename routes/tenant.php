@@ -232,7 +232,16 @@ Route::prefix('pendidikan')->middleware(['auth', 'role:pendidikan'])->name('pend
 Route::prefix('sekretaris')->middleware(['auth', 'role:sekretaris'])->name('sekretaris.')->group(function () {
     Route::get('/', [App\Http\Controllers\SekretarisController::class, 'dashboard'])->name('dashboard');
     
-    // Santri Management
+    // Santri Template & Import (MOVED UP)
+    Route::get('/data-santri/template-excel', [App\Http\Controllers\SekretarisController::class, 'downloadTemplateExcel'])->name('data-santri.template-excel');
+    Route::get('/data-santri/template-csv', [App\Http\Controllers\SekretarisController::class, 'downloadTemplateCsv'])->name('data-santri.template-csv');
+    Route::post('/data-santri/import', [App\Http\Controllers\SekretarisController::class, 'importSantri'])->name('data-santri.import');
+    
+    // VA Bulk Operations (MOVED UP)
+    Route::post('/data-santri/generate-va-bulk', [App\Http\Controllers\SekretarisController::class, 'generateVaBulk'])->name('data-santri.generate-va-bulk');
+    Route::post('/data-santri/reset-va-bulk', [App\Http\Controllers\SekretarisController::class, 'resetVaBulk'])->name('data-santri.reset-va-bulk');
+
+    // Santri Management (Wildcards last)
     Route::get('/data-santri', [App\Http\Controllers\SekretarisController::class, 'dataSantri'])->name('data-santri');
     Route::get('/data-santri/create', [App\Http\Controllers\SekretarisController::class, 'createSantri'])->name('data-santri.create');
     Route::post('/data-santri', [App\Http\Controllers\SekretarisController::class, 'storeSantri'])->name('data-santri.store');
@@ -241,15 +250,6 @@ Route::prefix('sekretaris')->middleware(['auth', 'role:sekretaris'])->name('sekr
     Route::match(['put', 'post'], '/data-santri/{id}', [App\Http\Controllers\SekretarisController::class, 'updateSantri'])->name('data-santri.update');
     Route::delete('/data-santri/{id}', [App\Http\Controllers\SekretarisController::class, 'deactivateSantri'])->name('data-santri.destroy');
     Route::delete('/data-santri/{id}/deactivate', [App\Http\Controllers\SekretarisController::class, 'deactivateSantri'])->name('data-santri.deactivate');
-    
-    // Santri Template & Import
-    Route::get('/data-santri/template-excel', [App\Http\Controllers\SekretarisController::class, 'downloadTemplateExcel'])->name('data-santri.template-excel');
-    Route::get('/data-santri/template-csv', [App\Http\Controllers\SekretarisController::class, 'downloadTemplateCsv'])->name('data-santri.template-csv');
-    Route::post('/data-santri/import', [App\Http\Controllers\SekretarisController::class, 'importSantri'])->name('data-santri.import');
-    
-    // VA Bulk Operations (ADVANCE PACKAGE ONLY)
-    Route::post('/data-santri/generate-va-bulk', [App\Http\Controllers\SekretarisController::class, 'generateVaBulk'])->name('data-santri.generate-va-bulk');
-    Route::post('/data-santri/reset-va-bulk', [App\Http\Controllers\SekretarisController::class, 'resetVaBulk'])->name('data-santri.reset-va-bulk');
     
     // Kartu Digital (NEW)
     Route::get('/kartu-digital', [App\Http\Controllers\KartuDigitalController::class, 'index'])->name('kartu-digital');
