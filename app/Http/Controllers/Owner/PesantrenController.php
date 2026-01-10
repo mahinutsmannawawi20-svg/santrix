@@ -123,8 +123,32 @@ class PesantrenController extends Controller
     public function destroy($id)
     {
         $pesantren = Pesantren::findOrFail($id);
-        
-        // Log activity before deletion (so we have a record even if something fails midway, though standard transaction would be better)
+        $this->deletePesantrenData($pesantren);
+        return redirect()->route('owner.pesantren.index')->with('success', 'Tenant ' . $pesantren->nama . ' and ALL its data have been deleted successfully.');
+    }
+
+    public function bulkDestroy(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:pesantrens,id',
+        ]);
+
+        $count = 0;
+        foreach ($request->ids as $id) {
+            $pesantren = Pesantren::find($id);
+            if ($pesantren) {
+                $this->deletePesantrenData($pesantren);
+                $count++;
+            }
+        }
+
+        return redirect()->route('owner.pesantren.index')->with('success', $count . ' Tenants and their data have been deleted successfully.');
+    }
+
+    private function deletePesantrenData(Pesantren $pesantren)
+    {
+        // Log activity
         ActivityLog::logActivity(
             'Deleted tenant: ' . $pesantren->nama,
             $pesantren,
@@ -132,44 +156,33 @@ class PesantrenController extends Controller
             'deleted'
         );
 
-        // MANUAL CASCADING DELETE TO FIX FOREIGN KEY CONSTRAINTS
-        // We must delete child records first.
+        // MANUAL CASCADING DELETE
         
         // 1. Delete Santri and their relations
-        // Fetch santri IDs to delete their related data first if needed, 
-        // but simpler to use relational deletion if models are set up, 
-        // however for raw speed and certainty with foreign keys, direct queries or model loops are safer here.
-        
         $santriIds = $pesantren->santri()->pluck('id');
         
-        // Delete Santri related data
-        \App\Models\NilaiSantri::whereIn('santri_id', $santriIds)->delete();
-        \App\Models\MutasiSantri::whereIn('santri_id', $santriIds)->delete();
-        \App\Models\UjianMingguan::whereIn('santri_id', $santriIds)->delete();
-        \App\Models\AbsensiSantri::whereIn('santri_id', $santriIds)->delete();
-        // Syahriah (Payments linked to Santri)
-        \App\Models\Syahriah::whereIn('santri_id', $santriIds)->delete();
-        
-        // Delete Santri
-        $pesantren->santri()->delete();
+        if ($santriIds->count() > 0) {
+            \App\Models\NilaiSantri::whereIn('santri_id', $santriIds)->delete();
+            \App\Models\MutasiSantri::whereIn('santri_id', $santriIds)->delete();
+            \App\Models\UjianMingguan::whereIn('santri_id', $santriIds)->delete();
+            \App\Models\AbsensiSantri::whereIn('santri_id', $santriIds)->delete();
+            \App\Models\Syahriah::whereIn('santri_id', $santriIds)->delete();
+            $pesantren->santri()->delete();
+        }
 
         // 2. Delete Academic & Infrastructure Data
-        // Kobong (Rooms) - Kobong has Foreign Key to Asrama
-        // But need to be careful if Kobong refs are deleted.
-        // Let's delete Kobong then Asrama.
         $asramaIds = $pesantren->asrama()->pluck('id');
-        \App\Models\Kobong::whereIn('asrama_id', $asramaIds)->delete();
-        $pesantren->asrama()->delete();
+        if ($asramaIds->count() > 0) {
+            \App\Models\Kobong::whereIn('asrama_id', $asramaIds)->delete();
+            $pesantren->asrama()->delete();
+        }
 
-        // Kelas
         $pesantren->kelas()->delete();
 
-        // Mata Pelajaran, Jadwal
-        // MataPelajaran might have many relations too.
         $mapelIds = $pesantren->mataPelajaran()->pluck('id');
-        \App\Models\JadwalPelajaran::whereIn('mapel_id', $mapelIds)->delete();
-        // Also delete jadwal that might be linked to kelas but not mapel? (Jadwal usually requires mapel)
-        
+        if ($mapelIds->count() > 0) {
+            \App\Models\JadwalPelajaran::whereIn('mapel_id', $mapelIds)->delete();
+        }
         $pesantren->mataPelajaran()->delete();
         
         // 3. Delete Billing & Subscriptions
@@ -177,13 +190,19 @@ class PesantrenController extends Controller
         $pesantren->subscriptions()->delete();
         $pesantren->withdrawals()->delete();
 
-        // 4. Delete Users (Admin/Staff)
-        // Check users linked to this pesantren
+        // 4. Delete Financial & Operational Records
+        \App\Models\Pemasukan::where('pesantren_id', $pesantren->id)->delete();
+        \App\Models\Pengeluaran::where('pesantren_id', $pesantren->id)->delete();
+        \App\Models\Pegawai::where('pesantren_id', $pesantren->id)->delete();
+        \App\Models\TahunAjaran::where('pesantren_id', $pesantren->id)->delete();
+        \App\Models\KalenderPendidikan::where('pesantren_id', $pesantren->id)->delete();
+        \App\Models\IjazahSetting::where('pesantren_id', $pesantren->id)->delete();
+        \App\Models\ReportSettings::where('pesantren_id', $pesantren->id)->delete();
+
+        // 5. Delete Users (Admin/Staff)
         \App\Models\User::where('pesantren_id', $pesantren->id)->delete();
 
-        // 5. Finally, Delete the Tenant
+        // 6. Finally, Delete the Tenant
         $pesantren->delete();
-
-        return redirect()->route('owner.pesantren.index')->with('success', 'Tenant ' . $pesantren->nama . ' and ALL its data have been deleted successfully.');
     }
 }

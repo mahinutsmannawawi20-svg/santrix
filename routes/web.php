@@ -58,6 +58,7 @@ Route::domain('owner.' . $mainDomain)->group(function () {
             Route::get('/pesantren/{id}/edit', [App\Http\Controllers\Owner\PesantrenController::class, 'edit'])->name('pesantren.edit');
             Route::put('/pesantren/{id}', [App\Http\Controllers\Owner\PesantrenController::class, 'update'])->name('pesantren.update');
             Route::post('/pesantren/{id}/suspend', [App\Http\Controllers\Owner\PesantrenController::class, 'suspend'])->name('pesantren.suspend');
+            Route::post('/pesantrens/bulk-destroy', [App\Http\Controllers\Owner\PesantrenController::class, 'bulkDestroy'])->name('pesantren.bulk-destroy');
             Route::delete('/pesantren/{id}', [App\Http\Controllers\Owner\PesantrenController::class, 'destroy'])->name('pesantren.destroy');
             
             // Withdrawal

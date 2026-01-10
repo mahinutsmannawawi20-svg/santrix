@@ -34,18 +34,26 @@
             </div>
         </form>
         
-        <!-- Export Button -->
-        <button style="padding: 10px 20px; background: white; border: 1px solid #e2e8f0; border-radius: 8px; color: #475569; font-size: 0.875rem; font-weight: 500; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='white'">
-            Export Data
-        </button>
-    </div>
+                <button form="bulkDeleteForm" id="bulkDeleteBtn" type="submit" onclick="return confirm('Hapus PERMANEN semua pesantren yang dipilih beserta datanya? Aksi ini tidak dapat dibatalkan!');" style="display: none; padding: 10px 20px; background: #fee2e2; border: 1px solid #fecaca; border-radius: 8px; color: #b91c1c; font-size: 0.875rem; font-weight: 600; cursor: pointer;">
+                    <i data-feather="trash-2" style="width: 14px; height: 14px; vertical-align: middle; margin-right: 6px;"></i> Delete Selected
+                </button>
 
-    <!-- Table -->
-    <div style="overflow-x: auto;">
-        <table style="width: 100%; border-collapse: collapse; text-align: left;">
-            <thead>
-                <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #64748b; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">
-                    <th style="padding: 16px 24px; font-weight: 600;">Pesantren</th>
+                <button style="padding: 10px 20px; background: white; border: 1px solid #e2e8f0; border-radius: 8px; color: #475569; font-size: 0.875rem; font-weight: 500; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='white'">
+                    Export Data
+                </button>
+            </div>
+        
+            <!-- Table -->
+            <form id="bulkDeleteForm" action="{{ route('owner.pesantren.bulk-destroy') }}" method="POST">
+                @csrf
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                    <thead>
+                        <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #64748b; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                            <th style="padding: 16px 24px;">
+                                <input type="checkbox" id="selectAll" onclick="toggleAll(this)" style="width: 16px; height: 16px; cursor: pointer;">
+                            </th>
+                            <th style="padding: 16px 24px; font-weight: 600;">Pesantren</th>
                     <th style="padding: 16px 24px; font-weight: 600;">Subdomain</th>
                     <th style="padding: 16px 24px; font-weight: 600;">Admin</th>
                     <th style="padding: 16px 24px; font-weight: 600;">Package</th>
@@ -54,10 +62,13 @@
                     <th style="padding: 16px 24px; font-weight: 600; text-align: right;">Action</th>
                 </tr>
             </thead>
-            <tbody style="font-size: 0.875rem; color: #1e2937;">
-                @forelse($pesantrens as $p)
-                <tr style="border-bottom: 1px solid #f1f5f9; transition: background 0.2s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='white'">
-                    <td style="padding: 16px 24px;">
+                <tbody style="font-size: 0.875rem; color: #1e2937;">
+                    @forelse($pesantrens as $p)
+                    <tr style="border-bottom: 1px solid #f1f5f9; transition: background 0.2s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='white'">
+                        <td style="padding: 16px 24px;">
+                            <input type="checkbox" name="ids[]" value="{{ $p->id }}" class="bulk-checkbox" onchange="toggleBulkBtn()" style="width: 16px; height: 16px; cursor: pointer;">
+                        </td>
+                        <td style="padding: 16px 24px;">
                         <div style="font-weight: 500;">{{ $p->nama }}</div>
                         <div style="font-size: 0.75rem; color: #9ca3af;">#{{ $p->id }}</div>
                     </td>
@@ -115,8 +126,8 @@
                     </td>
                 </tr>
                 @empty
-                <tr>
-                    <td colspan="7" style="padding: 48px; text-align: center;">
+                    <tr>
+                        <td colspan="8" style="padding: 48px; text-align: center;">
                         <i data-feather="inbox" style="width: 48px; height: 48px; color: #cbd5e1; margin-bottom: 12px;"></i>
                         <h3 style="margin: 0; color: #1e2937; font-size: 1rem; font-weight: 600;">No tenants found</h3>
                         <p style="margin: 4px 0 0; color: #9ca3af; font-size: 0.875rem;">Try adjusting search or filters.</p>
@@ -126,6 +137,7 @@
             </tbody>
         </table>
     </div>
+    </form>
 
     <!-- Pagination -->
     @if($pesantrens->hasPages())
@@ -134,4 +146,25 @@
     </div>
     @endif
 </div>
+</div>
+
+<script>
+    function toggleAll(source) {
+        checkboxes = document.querySelectorAll('.bulk-checkbox');
+        for(var i=0, n=checkboxes.length;i<n;i++) {
+            checkboxes[i].checked = source.checked;
+        }
+        toggleBulkBtn();
+    }
+
+    function toggleBulkBtn() {
+        const checkboxes = document.querySelectorAll('.bulk-checkbox:checked');
+        const btn = document.getElementById('bulkDeleteBtn');
+        if(checkboxes.length > 0) {
+            btn.style.display = 'inline-flex';
+        } else {
+            btn.style.display = 'none';
+        }
+    }
+</script>
 @endsection
