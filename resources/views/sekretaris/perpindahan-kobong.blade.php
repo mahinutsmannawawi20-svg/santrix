@@ -136,8 +136,8 @@
 @push('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const routeKobongByAsrama = "{{ route('sekretaris.api.kobong-by-asrama', ':id') }}";
-        const routeSantriByKobong = "{{ route('sekretaris.api.santri-by-kobong', ':id') }}"; // NEW API needed or reuse existing
+        const routeKobongByAsrama = "{{ route('sekretaris.api.kobong-by-asrama', 0) }}";
+        const routeSantriByKobong = "{{ route('sekretaris.api.santri-by-kobong', 0) }}"; // NEW API needed or reuse existing
         // Wait, SekreatrisBulkController has getSantriByKobong($kobongId) method?
         // Let's check controller. Yes: getSantriByKobong($kobongId) (Lines 496 controller)
         // I need to register route for it: secretary.api.santri-by-kobong
@@ -169,7 +169,7 @@
                 return;
             }
 
-            fetch(routeKobongByAsrama.replace(':id', asramaId))
+            fetch(routeKobongByAsrama.replace('/0', '/' + asramaId))
                 .then(res => res.json())
                 .then(data => {
                     select.innerHTML = '<option value="">Pilih Kobong</option>' + 
@@ -185,7 +185,7 @@
             // Route definition logic needs to be verified. 
             // Assuming route('sekretaris.api.santri-by-kobong', ':id') exists
             // If not, I must add it.
-            const url = "{{ route('sekretaris.api.santri-by-kobong', ':id') }}".replace(':id', kobongId);
+            const url = routeSantriByKobong.replace('/0', '/' + kobongId);
             
             fetch(url)
                 .then(res => res.json())

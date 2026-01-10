@@ -211,8 +211,8 @@
 
         // API Routes
         const routeSantriFiltered = "{{ route('sekretaris.api.santri-filtered') }}";
-        const routeKobongByAsrama = "{{ route('sekretaris.api.kobong-by-asrama', ':id') }}";
-        const routeKobongStats = "{{ route('sekretaris.api.kobong-stats', ':id') }}";
+        const routeKobongByAsrama = "{{ route('sekretaris.api.kobong-by-asrama', 0) }}";
+        const routeKobongStats = "{{ route('sekretaris.api.kobong-stats', 0) }}";
 
         // Load santri based on filter
         const loadBtn = document.getElementById('load_santri_btn');
@@ -344,7 +344,7 @@
             if (kobongData[asramaId]) {
                 populateKobongSelect(kobongSelect, kobongData[asramaId]);
             } else {
-                fetch(routeKobongByAsrama.replace(':id', asramaId))
+                fetch(routeKobongByAsrama.replace('/0', '/' + asramaId))
                     .then(response => response.json())
                     .then(data => {
                         kobongData[asramaId] = data;
@@ -449,7 +449,7 @@
                 if (kobongData[asramaId]) {
                     populateKobongSelect(kobongSelect, kobongData[asramaId]);
                 } else {
-                    fetch(routeKobongByAsrama.replace(':id', asramaId))
+                    fetch(routeKobongByAsrama.replace('/0', '/' + asramaId))
                         .then(response => response.json())
                         .then(data => {
                             kobongData[asramaId] = data;
@@ -507,7 +507,7 @@
                     return;
                 }
 
-                fetch(routeKobongStats.replace(':id', asramaId))
+                fetch(routeKobongStats.replace('/0', '/' + asramaId))
                     .then(response => response.json())
                     .then(data => renderStats(data))
                     .catch(e => console.error("Stat error", e));
