@@ -167,6 +167,10 @@ Route::prefix('pendidikan')->middleware(['auth', 'role:pendidikan'])->name('pend
     Route::match(['put', 'post'], '/jadwal/{id}', [App\Http\Controllers\PendidikanController::class, 'updateJadwal'])->name('jadwal.update');
     Route::delete('/jadwal/{id}', [App\Http\Controllers\PendidikanController::class, 'destroyJadwal'])->name('jadwal.destroy');
     
+    // Kelas - Wali Kelas Management (AJAX endpoints)
+    Route::post('/kelas/{id}/update-wali-kelas', [App\Http\Controllers\PendidikanController::class, 'updateWaliKelas'])->name('kelas.update-wali-kelas');
+    Route::post('/kelas/{id}/update-wali-kelas-dual', [App\Http\Controllers\PendidikanController::class, 'updateWaliKelasDual'])->name('kelas.update-wali-kelas-dual');
+    
     // Kalender Pendidikan
     Route::get('/kalender', [App\Http\Controllers\PendidikanController::class, 'kalender'])->name('kalender');
     Route::post('/kalender', [App\Http\Controllers\PendidikanController::class, 'storeKalender'])->name('kalender.store');
