@@ -390,8 +390,11 @@ class SekretarisController extends Controller
     // Mutasi Santri
     public function mutasiSantri()
     {
-        $santriAktif = Santri::where('is_active', true)->get();
-        $mutasi = MutasiSantri::with('santri')->latest()->paginate(15);
+        $pesantrenId = Auth::user()->pesantren_id;
+        $santriAktif = Santri::where('pesantren_id', $pesantrenId)->where('is_active', true)->get();
+        $mutasi = MutasiSantri::with(['santri' => function($q) use ($pesantrenId) {
+            $q->where('pesantren_id', $pesantrenId);
+        }])->where('pesantren_id', $pesantrenId)->latest()->paginate(15);
         
         return view('sekretaris.mutasi.index', compact('santriAktif', 'mutasi'));
     }
