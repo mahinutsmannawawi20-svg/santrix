@@ -253,6 +253,8 @@ Route::prefix('sekretaris')->middleware(['auth', 'role:sekretaris'])->name('sekr
     
     // Kartu Digital (NEW)
     Route::get('/kartu-digital', [App\Http\Controllers\KartuDigitalController::class, 'index'])->name('kartu-digital');
+    Route::get('/kartu-digital/{id}/preview', [App\Http\Controllers\KartuDigitalController::class, 'previewPdf'])->name('kartu-digital.preview');
+    Route::get('/kartu-digital/{id}/download', [App\Http\Controllers\KartuDigitalController::class, 'downloadPdf'])->name('kartu-digital.download');
 
     // Mutasi Santri
     Route::get('/mutasi-santri', [App\Http\Controllers\SekretarisController::class, 'mutasiSantri'])->name('mutasi-santri');
