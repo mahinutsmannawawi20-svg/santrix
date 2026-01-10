@@ -623,7 +623,9 @@ class PendidikanController extends Controller
     // Mata Pelajaran - Index
     public function mapel(Request $request)
     {
-        $query = MataPelajaran::with('kelas'); // Eager load kelas relationship
+        $pesantrenId = Auth::user()->pesantren_id;
+        
+        $query = MataPelajaran::where('pesantren_id', $pesantrenId)->with('kelas'); // Eager load kelas relationship
         
         // Filter by kelas if provided
         if ($request->filled('kelas_id')) {
@@ -638,8 +640,8 @@ class PendidikanController extends Controller
         }
         
         $mapel = $query->latest()->paginate(15);
-        $kelasList = Kelas::all();
-        $tahunAjaranList = TahunAjaran::orderBy('nama', 'desc')->pluck('nama');
+        $kelasList = Kelas::where('pesantren_id', $pesantrenId)->get();
+        $tahunAjaranList = TahunAjaran::where('pesantren_id', $pesantrenId)->orderBy('nama', 'desc')->pluck('nama');
         
         return view('pendidikan.mapel.index', compact('mapel', 'kelasList', 'tahunAjaranList'));
     }
@@ -1505,17 +1507,22 @@ class PendidikanController extends Controller
     // Absensi - Rekap
     public function rekapAbsensi(Request $request)
     {
+        $pesantrenId = Auth::user()->pesantren_id;
         $kelasId = $request->kelas_id;
         $tahun = $request->tahun ?? date('Y');
         $mingguMulai = $request->minggu_mulai ?? 1;
         $mingguSelesai = $request->minggu_selesai ?? date('W');
         
-        $kelas = Kelas::find($kelasId);
-        $santriList = Santri::where('kelas_id', $kelasId)->where('is_active', true)->get();
+        $kelas = Kelas::where('pesantren_id', $pesantrenId)->find($kelasId);
+        $santriList = Santri::where('pesantren_id', $pesantrenId)
+            ->where('kelas_id', $kelasId)
+            ->where('is_active', true)
+            ->get();
         
         $rekap = [];
         foreach ($santriList as $santri) {
-            $data = \App\Models\AbsensiSantri::where('santri_id', $santri->id)
+            $data = \App\Models\AbsensiSantri::where('pesantren_id', $pesantrenId)
+                ->where('santri_id', $santri->id)
                 ->where('tahun', $tahun)
                 ->whereBetween('minggu_ke', [$mingguMulai, $mingguSelesai])
                 ->get();
@@ -1541,7 +1548,7 @@ class PendidikanController extends Controller
             return $b['total_alfa'] <=> $a['total_alfa'];
         });
         
-        $kelasList = Kelas::all();
+        $kelasList = Kelas::where('pesantren_id', $pesantrenId)->get();
         
         return view('pendidikan.absensi.rekap', compact('rekap', 'kelas', 'kelasList', 'tahun', 'mingguMulai', 'mingguSelesai'));
     }
