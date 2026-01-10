@@ -61,6 +61,26 @@ class Pesantren extends Model
         return $this->hasManyThrough(Invoice::class, Subscription::class);
     }
 
+    public function santri()
+    {
+        return $this->hasMany(Santri::class);
+    }
+
+    public function asrama()
+    {
+        return $this->hasMany(Asrama::class);
+    }
+
+    public function kelas()
+    {
+        return $this->hasMany(Kelas::class);
+    }
+
+    public function mataPelajaran()
+    {
+        return $this->hasMany(MataPelajaran::class);
+    }
+
     // Helper to get connected users/santri count
     public function getSantriCountAttribute()
     {
