@@ -259,6 +259,8 @@ Route::prefix('sekretaris')->middleware(['auth', 'role:sekretaris'])->name('sekr
     // Mutasi Santri
     Route::get('/mutasi-santri', [App\Http\Controllers\SekretarisController::class, 'mutasiSantri'])->name('mutasi-santri');
     Route::post('/mutasi-santri', [App\Http\Controllers\SekretarisController::class, 'storeMutasi'])->name('mutasi-santri.store');
+    Route::match(['put', 'post'], '/mutasi-santri/{id}', [App\Http\Controllers\SekretarisController::class, 'updateMutasi'])->name('mutasi-santri.update');
+    Route::delete('/mutasi-santri/{id}', [App\Http\Controllers\SekretarisController::class, 'destroyMutasi'])->name('mutasi-santri.destroy');
     
     // Kenaikan Kelas
     Route::get('/kenaikan-kelas', [App\Http\Controllers\SekretarisBulkController::class, 'showKenaikanKelas'])->name('kenaikan-kelas');
