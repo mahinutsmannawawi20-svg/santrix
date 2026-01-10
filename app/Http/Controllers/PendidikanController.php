@@ -667,6 +667,9 @@ class PendidikanController extends Controller
         
         // Handle boolean fields
         $validated['has_weekly_exam'] = $request->has('has_weekly_exam');
+        
+        // Add pesantren_id for tenant isolation
+        $validated['pesantren_id'] = Auth::user()->pesantren_id;
 
         $mapel = MataPelajaran::create($validated);
         
